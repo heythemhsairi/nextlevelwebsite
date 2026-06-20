@@ -1,0 +1,39 @@
+---
+interface Props { items?: string[]; }
+const {
+  items = [
+    'الـ System يربح، موش الزهر',
+    'Your editing team',
+    'تـ post كل أسبوع',
+    'High quality videos',
+    'Your growth partner',
+  ],
+} = Astro.props;
+const line = items.join('  ✦  ') + '  ✦  ';
+---
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <span>{line}</span><span>{line}</span><span>{line}</span><span>{line}</span>
+  </div>
+</div>
+
+<style>
+  .marquee {
+    background: linear-gradient(90deg, var(--red-deep), var(--red), var(--red-deep));
+    color: var(--red-ink);
+    overflow: hidden;
+    white-space: nowrap;
+    border-block: 1px solid rgba(255,255,255,.12);
+    box-shadow: 0 0 40px -8px rgba(255,42,42,.7);
+  }
+  .marquee__track { display: inline-flex; animation: scroll 38s linear infinite; }
+  .marquee__track span {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 14px; letter-spacing: .12em;
+    padding: 10px 0; padding-inline-start: 8px;
+  }
+  @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .marquee:hover .marquee__track { animation-play-state: paused; }
+</style>

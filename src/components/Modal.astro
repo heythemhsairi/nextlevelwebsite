@@ -1,0 +1,44 @@
+---
+// Lightweight video/CTA modal, opened by any [data-video] element.
+---
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal__box">
+    <button class="modal__close" id="modalClose" aria-label="close">×</button>
+    <div class="modal__play" aria-hidden="true"><span></span></div>
+    <h3 id="modalTitle" class="latin">Showreel</h3>
+    <p id="modalDesc">الفيديو الحقيقي يتحط هنا.</p>
+    <a href="/#form" class="btn btn--solid">نبدأو نخدمو معاك ←</a>
+  </div>
+</div>
+
+<style>
+  .modal {
+    position: fixed; inset: 0; z-index: 90; background: rgba(0,0,0,.9);
+    backdrop-filter: blur(8px); display: grid; place-items: center; padding: 20px;
+    opacity: 0; pointer-events: none; transition: opacity .25s var(--ease);
+  }
+  .modal.open { opacity: 1; pointer-events: auto; }
+  .modal__box {
+    position: relative;
+    background: linear-gradient(180deg, var(--surface-2), var(--surface));
+    border: 1px solid var(--line-2); border-radius: var(--radius-lg); width: min(460px, 100%);
+    padding: 48px 34px; text-align: center; transform: scale(.94); transition: transform .3s var(--ease);
+    box-shadow: 0 40px 90px -30px rgba(255,42,42,.5), 0 0 0 1px rgba(255,42,42,.08);
+  }
+  .modal.open .modal__box { transform: scale(1); }
+  .modal__play {
+    width: 76px; height: 76px; margin: 0 auto 20px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--red), var(--red-deep)); display: grid; place-items: center;
+    box-shadow: 0 0 40px -6px rgba(255,42,42,.9);
+  }
+  .modal__play span { width: 0; height: 0; border-style: solid; border-width: 12px 0 12px 19px;
+    border-color: transparent transparent transparent #fff; margin-left: 5px; direction: ltr; }
+  .modal__box h3 { font-family: var(--font-display); font-weight: 800; font-size: 26px; margin-bottom: 6px; }
+  .modal__box p { color: var(--dim); margin-bottom: 24px; }
+  .modal__close {
+    position: absolute; top: 18px; inset-inline-end: 18px; width: 42px; height: 42px; border-radius: 50%;
+    background: var(--surface-3); border: 1px solid var(--line-2); color: var(--white);
+    font-size: 22px; cursor: pointer; transition: .2s;
+  }
+  .modal__close:hover { border-color: var(--red); color: var(--red); }
+</style>

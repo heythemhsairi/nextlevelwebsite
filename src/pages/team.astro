@@ -1,0 +1,134 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { values, team, teamStats } from '../config';
+---
+<Base
+  title="Next Level — الـ Team متاعنا"
+  description="الفريق ورا Next Level — editors، motion designers و strategists يخدمو معاك كـ partner واحد."
+>
+  <Nav current="/team" />
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="container reveal">
+      <span class="eyebrow" style="justify-content:center">Meet The Team</span>
+      <h1 class="page-hero__title">
+        مش <span class="grad latin">Freelancer</span> وحدو…<br />
+        <span class="grad latin">Team</span> كامل يخدم معاك
+      </h1>
+      <p class="lead" style="margin:24px auto 0">ورا كل فيديو في Next Level فمّا فريق: editors، motion designers و strategists. تخدم معانا كأنك عندك département مونتاج داخلي — بلا ما تـ recruter حتى واحد.</p>
+    </div>
+  </section>
+
+  <!-- VALUES -->
+  <section class="section section--line">
+    <div class="container reveal">
+      <p class="eyebrow">كيفاش نفكرو</p>
+      <h2 class="section__title">الـ <span class="accent latin">Values</span> متاعنا</h2>
+      <div class="values">
+        {values.map((v, i) => (
+          <div class="value">
+            <span class="value__n latin">0{i + 1}</span>
+            <b class="latin">{v.title}</b>
+            <p>{v.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="section section--alt">
+    <div class="container reveal">
+      <p class="eyebrow">The People</p>
+      <h2 class="section__title">الفريق <span class="accent">متاعنا</span></h2>
+      <p class="lead" style="margin-top:24px">الناس اللي يخدمو على الـ content متاعك كل يوم.</p>
+      <div class="team-grid">
+        {team.map((m) => (
+          <div class="member">
+            <div class="member__photo"><span class="latin">{m.initials}</span></div>
+            <div class="member__body">
+              <h3 class="latin">{m.name}</h3>
+              <div class="member__role latin">{m.role}</div>
+              <p>{m.body}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="section section--line">
+    <div class="container reveal">
+      <div class="metrics">
+        {teamStats.map((s) => (
+          <div class="metric">
+            <b class="latin" data-count={s.value} data-prefix={s.prefix ?? ''} data-suffix={s.suffix ?? ''}>
+              {(s.prefix ?? '') + '0' + (s.suffix ?? '')}
+            </b>
+            <span>{s.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="ctaband">
+    <div class="container reveal">
+      <h2 class="ctaband__title">تحب الـ <span class="accent">Team</span> هاذي تخدم معاك؟</h2>
+      <p class="lead" style="margin:18px auto 0">نضيفولك القوة متاعنا للـ brand متاعك، نبداو من اليوم.</p>
+      <a href="/#form" class="btn btn--solid btn--lg" style="margin-top:30px">نبدأو نخدمو معاك ←</a>
+    </div>
+  </section>
+
+  <Footer />
+</Base>
+
+<style>
+  .page-hero { text-align: center; padding-block: clamp(56px,8vw,100px) 0; position: relative; overflow: hidden;
+    background: radial-gradient(60% 50% at 50% -10%, rgba(255,42,42,.14), transparent 65%); }
+  .page-hero__title { font-family: var(--font-ar); font-weight: 900;
+    font-size: clamp(38px,6.6vw,84px); line-height: 1.12; margin-top: 22px; text-wrap: balance; }
+  .page-hero__title .grad { font-family: var(--font-display); font-weight: 800; letter-spacing: -.02em; }
+
+  .values { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-top: clamp(44px,6vw,64px); }
+  .value { padding: 36px 30px; border-radius: var(--radius); text-align: center; border: 1px solid var(--line);
+    background: linear-gradient(180deg, var(--surface-2), var(--surface)); transition: transform .35s var(--ease), border-color .35s, box-shadow .35s; }
+  .value:hover { transform: translateY(-6px); border-color: rgba(255,42,42,.4); box-shadow: 0 28px 56px -32px rgba(255,42,42,.5); }
+  .value__n { font-family: var(--font-display); font-weight: 800; font-size: 14px; color: var(--red); letter-spacing: .14em; }
+  .value b { display: block; font-family: var(--font-display); font-weight: 700; font-size: 24px; margin: 12px 0 10px; letter-spacing: -.02em; }
+  .value p { color: var(--dim); }
+
+  .team-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-top: clamp(44px,6vw,60px); }
+  .member { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line);
+    background: var(--surface-2); transition: .35s var(--ease); }
+  .member:hover { transform: translateY(-6px); border-color: rgba(255,42,42,.5); box-shadow: 0 28px 56px -30px rgba(255,42,42,.6); }
+  .member__photo { aspect-ratio: 1; display: grid; place-items: center; position: relative;
+    background: linear-gradient(135deg,#1c1416,#0d0a0c); }
+  .member__photo::after { content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 120%, rgba(255,42,42,.16), transparent 60%); }
+  .member__photo span { font-family: var(--font-display); font-weight: 800; font-size: 52px; color: #3a2a2c; position: relative; z-index: 1; }
+  .member__body { padding: 24px; }
+  .member__body h3 { font-family: var(--font-display); font-weight: 700; font-size: 21px; letter-spacing: -.02em; }
+  .member__role { color: var(--red); font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; margin: 4px 0 12px; }
+  .member__body p { color: var(--dim); font-size: 14.5px; }
+
+  /* metrics styling is shared in global.css */
+
+  .ctaband { padding-block: clamp(72px,10vw,130px); text-align: center; position: relative; overflow: hidden;
+    background: radial-gradient(60% 100% at 50% 0%, rgba(var(--red-rgb),.18), transparent 60%), var(--surface); border-block: 1px solid var(--line); }
+  .ctaband__title { font-family: var(--font-ar); font-weight: 900; font-size: clamp(36px,7vw,86px); line-height: 1.08; text-wrap: balance; }
+  .ctaband__title .accent { color: var(--red); }
+  .ctaband .lead { margin-inline: auto; max-width: 52ch; }
+
+  @media (max-width: 900px) {
+    .values, .team-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px) {
+    .values, .team-grid { grid-template-columns: 1fr; }
+  }
+</style>

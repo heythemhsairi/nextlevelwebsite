@@ -1,0 +1,86 @@
+---
+import { nav, hero } from '../config';
+interface Props { current?: string; }
+const { current = '/' } = Astro.props;
+---
+<header class="nav" id="nav">
+  <div class="container nav__inner">
+    <a href="/" class="logo" aria-label="Next Level">Next<span>Level</span><i class="logo__dot"></i></a>
+
+    <nav class="nav__links">
+      {nav.map((item) => (
+        <a href={item.href} class={current === item.href ? 'active' : ''}>{item.label}</a>
+      ))}
+    </nav>
+
+    <div class="nav__right">
+      <a href="/#form" class="btn btn--solid nav__cta">ابدأ توة <span class="arrow">←</span></a>
+      <button class="burger" id="burger" aria-label="القائمة" aria-controls="drawer" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="drawer" id="drawer">
+  {nav.map((item) => (
+    <a href={item.href} class={current === item.href ? 'active' : ''}>{item.label}</a>
+  ))}
+  <a href="/#form" class="btn btn--solid">ابدأ توة ←</a>
+</div>
+
+<style>
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(5,5,5,.6);
+    backdrop-filter: blur(18px) saturate(140%); -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border-bottom: 1px solid transparent; transition: border-color .3s, background .3s;
+  }
+  .nav.scrolled { border-color: var(--line); background: rgba(5,5,5,.85); }
+  .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 78px; }
+
+  .logo {
+    font-family: var(--font-display); font-weight: 800;
+    font-size: 25px; letter-spacing: -.02em; display: inline-flex; align-items: center;
+    direction: ltr; unicode-bidi: isolate;
+  }
+  .logo span { color: var(--red); }
+  .logo__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); margin-inline-start: 5px;
+    box-shadow: 0 0 14px var(--red); }
+
+  .nav__links { display: flex; gap: 30px; align-items: center; }
+  .nav__links a {
+    font-weight: 600; font-size: 14.5px; color: var(--dim); transition: color .2s;
+    position: relative;
+  }
+  .nav__links a:hover, .nav__links a.active { color: var(--white); }
+  .nav__links a.active::after {
+    content: ''; position: absolute; inset-inline: 0; bottom: -8px; height: 2px; border-radius: 2px;
+    background: var(--red); box-shadow: 0 0 10px var(--red);
+  }
+  .nav__right { display: flex; align-items: center; gap: 14px; }
+  .nav__cta { padding: 11px 22px; font-size: 13.5px; }
+
+  .burger { display: none; flex-direction: column; gap: 6px; background: none; border: none; cursor: pointer; padding: 6px; }
+  .burger span { width: 26px; height: 2px; border-radius: 2px; background: var(--white); transition: .3s var(--ease); }
+  .burger.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+  .burger.open span:nth-child(2) { opacity: 0; }
+  .burger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+  .drawer {
+    position: fixed; inset: 0; z-index: 49;
+    background: radial-gradient(120% 80% at 50% 0%, rgba(255,42,42,.12), transparent 55%), var(--black);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+    opacity: 0; pointer-events: none; transition: opacity .3s var(--ease);
+  }
+  .drawer.open { opacity: 1; pointer-events: auto; }
+  .drawer a { font-family: var(--font-display); font-weight: 700; font-size: 28px; color: var(--dim); padding: 12px; }
+  .drawer a:hover, .drawer a.active { color: var(--red); }
+  .drawer .btn { margin-top: 22px; }
+
+  @media (max-width: 900px) {
+    .nav__links { display: none; }
+    .burger { display: flex; }
+    .nav__cta { display: none; }
+  }
+</style>
