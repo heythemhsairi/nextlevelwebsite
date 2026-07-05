@@ -1,5 +1,6 @@
 ---
-import { nav, hero } from '../config';
+import { nav, CTA } from '../config';
+import BookCta from './BookCta.astro';
 interface Props { current?: string; }
 const { current = '/' } = Astro.props;
 ---
@@ -14,7 +15,7 @@ const { current = '/' } = Astro.props;
     </nav>
 
     <div class="nav__right">
-      <a href="/#form" class="btn btn--solid nav__cta">ابدأ توة <span class="arrow">←</span></a>
+      <BookCta class="btn btn--solid nav__cta" label={CTA.primary} />
       <button class="burger" id="burger" aria-label="القائمة" aria-controls="drawer" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -26,7 +27,7 @@ const { current = '/' } = Astro.props;
   {nav.map((item) => (
     <a href={item.href} class={current === item.href ? 'active' : ''}>{item.label}</a>
   ))}
-  <a href="/#form" class="btn btn--solid">ابدأ توة ←</a>
+  <BookCta class="btn btn--solid" label={CTA.primary} />
 </div>
 
 <style>
