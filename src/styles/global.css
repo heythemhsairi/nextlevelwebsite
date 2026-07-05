@@ -4,32 +4,33 @@
    ========================================================================= */
 
 :root {
-  /* canvas */
-  --black:    #050505;   /* page background — near pure black */
-  --surface:  #0C0B0C;   /* raised section */
-  --surface-2:#141113;   /* card */
-  --surface-3:#1C1719;   /* input / hover */
+  /* ── WARM CINEMATIC palette — film-grade bronze/amber on warm black ── */
+  /* canvas — warm black (slightly brown-shifted, not neutral) */
+  --black:    #0A0806;   /* page background — warm near-black */
+  --surface:  #100C08;   /* raised section */
+  --surface-2:#17120C;   /* card */
+  --surface-3:#221A11;   /* input / hover */
 
-  /* ink */
-  --white:    #FAFAFA;
-  --dim:      #ABA4A8;   /* secondary text — ~7.6:1 on black */
-  --dim-2:    #837C81;   /* tertiary text — ~5:1 on black (AA) */
-  --line:     rgba(255,255,255,.08);
-  --line-2:   rgba(255,255,255,.14);
+  /* ink — warm off-white */
+  --white:    #F3ECE0;
+  --dim:      #B3A896;   /* secondary text */
+  --dim-2:    #877C6A;   /* tertiary text (AA on warm black) */
+  --line:     rgba(243,236,224,.09);
+  --line-2:   rgba(243,236,224,.16);
 
-  /* red — the whole identity (derive rgba glows from this) */
-  --red:      #FF2A2A;   /* neon scarlet accent */
-  --red-hot:  #FF4D4D;   /* lighter hover */
-  --red-deep: #B00C12;   /* gradient base */
-  --red-blood:#7A0509;   /* deep shadow red */
-  --red-ink:  #FFFFFF;   /* text on red */
-  --red-rgb:  255, 42, 42;
+  /* accent — bronze / amber (variable names kept for compatibility) */
+  --red:      #E0A54A;   /* signature bronze-amber */
+  --red-hot:  #F0BE6A;   /* lighter hover / gradient top */
+  --red-deep: #A56A22;   /* gradient base */
+  --red-blood:#6E4415;   /* deep shadow amber */
+  --red-ink:  #17120C;   /* text on the amber fill (dark, for contrast) */
+  --red-rgb:  224, 165, 74;
 
   --whatsapp: #25D366;
 
-  /* deep surface fills used in media stages */
-  --fill-red:  linear-gradient(160deg, #1a1012, #0a0708);
-  --fill-dark: linear-gradient(135deg, #1c1416, #0d0a0c);
+  /* deep surface fills used in media stages — warm */
+  --fill-red:  linear-gradient(160deg, #1c1408, #0c0905);
+  --fill-dark: linear-gradient(135deg, #1a140c, #0c0906);
   --fill-card: linear-gradient(180deg, var(--surface-2), var(--surface));
 
   --maxw: 1200px;
@@ -50,6 +51,7 @@
   --font-display: 'Sora', 'Inter', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
   --font-ar: 'Cairo', 'Inter', system-ui, sans-serif;
+  --font-serif: 'Fraunces', Georgia, serif;   /* luxe display accents (Latin) */
 
   --ease: cubic-bezier(.22,1,.36,1);
   --lift: -6px;          /* shared hover lift for tiles/cards */
@@ -82,8 +84,8 @@ body {
 body::after {
   content: ''; position: fixed; inset: -20%; z-index: -2; pointer-events: none;
   background:
-    radial-gradient(38% 30% at 22% 12%, rgba(255,42,42,.10), transparent 60%),
-    radial-gradient(42% 34% at 82% 78%, rgba(176,12,18,.10), transparent 62%),
+    radial-gradient(38% 30% at 22% 12%, rgba(224,165,74,.10), transparent 60%),
+    radial-gradient(42% 34% at 82% 78%, rgba(165,106,34,.10), transparent 62%),
     radial-gradient(60% 60% at 50% 50%, rgba(0,0,0,.5), transparent 70%);
   filter: blur(30px);
   animation: aurora 34s ease-in-out infinite alternate;
@@ -155,8 +157,9 @@ body::before {
 .bleed { width: 100vw; position: relative; inset-inline-start: 50%; transform: translateX(-50%); }
 
 /* overline heading (film-title style) */
-.overline { font-family: var(--font-display); font-weight: 800; text-transform: uppercase;
-  font-size: clamp(12px,1.4vw,15px); letter-spacing: .18em; color: var(--red); }
+/* luxe editorial overline — serif italic, small, amber */
+.overline { font-family: var(--font-serif); font-style: italic; font-weight: 500; text-transform: none;
+  font-size: clamp(15px,1.7vw,20px); letter-spacing: .01em; color: var(--red); }
 
 /* ---- ghosted watermark word behind a section (editorial depth) ---- */
 .watermark { position: relative; overflow: hidden; }
