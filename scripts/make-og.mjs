@@ -18,15 +18,14 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" v
   <rect x="0" y="0" width="1200" height="6" fill="url(#r)"/>
 
   <g font-family="Sora, Arial, sans-serif">
-    <text x="90" y="150" fill="#FF2A2A" font-size="26" font-weight="700" letter-spacing="6">YOUR EDITING TEAM — TUNISIA</text>
+    <text x="90" y="150" fill="#FF2A2A" font-size="24" font-weight="700" letter-spacing="6">MEDIA PRODUCTION HOUSE — TUNISIA</text>
     <text x="86" y="300" fill="#FAFAFA" font-size="118" font-weight="800" letter-spacing="-3">Next<tspan fill="#FF2A2A">Level</tspan></text>
-    <text x="90" y="392" fill="#ABA4A8" font-size="40" font-weight="600">إنت صوّر — احنا نوصلوك للـ Next Level</text>
+    <text x="90" y="384" fill="#FAFAFA" font-size="38" font-weight="700">We make experts look like the authority they are.</text>
+    <text x="90" y="438" fill="#ABA4A8" font-size="30" font-weight="600">You show up. We handle the rest.</text>
   </g>
 
   <g font-family="Sora, Arial, sans-serif">
-    <rect x="90" y="470" width="430" height="74" rx="37" fill="url(#r)"/>
-    <text x="305" y="518" fill="#fff" font-size="30" font-weight="700" text-anchor="middle">نبدأو نخدمو معاك ←</text>
-    <text x="560" y="518" fill="#ABA4A8" font-size="26" font-weight="600">+500 videos · 24–48h delivery</text>
+    <text x="90" y="548" fill="#ABA4A8" font-size="26" font-weight="600">For doctors · lawyers · consultants · founders</text>
   </g>
 
   <circle cx="1080" cy="120" r="9" fill="#FF2A2A"/>

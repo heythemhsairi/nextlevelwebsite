@@ -1,0 +1,160 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import BookCta from '../components/BookCta.astro';
+import { studio, system, CTA } from '../config';
+---
+<Base
+  title="Next Level — The Studio"
+  description="ورا كل authority، فمّا production تتكفّل بيها. Team واحد، full-stack، يخدم كـ partner واحد."
+>
+  <Nav current="/studio" />
+
+  <!-- FOUNDER OPEN -->
+  <section class="section studio-hero">
+    <div class="container reveal narrow">
+      <span class="eyebrow">{studio.eyebrow}</span>
+      <h1 class="studio-hero__title">{studio.title}</h1>
+      <div class="founder">
+        <div class="founder__photo"><span class="latin">{studio.founder.initials}</span></div>
+        <div class="founder__body">
+          <blockquote>“{studio.founder.statement}”</blockquote>
+          <div class="founder__sig">
+            <b class="latin">{studio.founder.name}</b>
+            <span class="latin">{studio.founder.role}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUES / WHY -->
+  <section class="section section--alt">
+    <div class="container reveal">
+      <span class="eyebrow">كيفاش نفكرو</span>
+      <h2 class="section__title">3 حاجات تفرّق <span class="accent latin">Next Level</span></h2>
+      <div class="vals">
+        {studio.values.map((v, i) => (
+          <div class="val">
+            <span class="val__n latin">0{i + 1}</span>
+            <b class="latin">{v.title}</b>
+            <p>{v.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS (the chain, expanded) -->
+  <section class="section section--line">
+    <div class="container reveal">
+      <span class="eyebrow">الـ Process</span>
+      <h2 class="section__title">إنت تحضر مرّة. <span class="accent">الباقي يصير بلاك.</span></h2>
+      <div class="chain">
+        {system.steps.map((s) => (
+          <div class="chain__step">
+            <span class="chain__n latin">{s.n}</span>
+            <h3 class="latin">{s.title}</h3>
+            <p class="chain__ar">{s.ar}</p>
+            <p>{s.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="section section--alt">
+    <div class="container reveal">
+      <span class="eyebrow">The People</span>
+      <h2 class="section__title">Team واحد — coverage كاملة</h2>
+      <p class="lead">موش أشخاص للكراء. أدوار في آلة وحدة: brand، direction، film، edit، refine.</p>
+      <div class="team-grid">
+        {studio.team.map((m) => (
+          <div class="member">
+            <div class="member__photo"><span class="latin">{m.initials}</span></div>
+            <div class="member__body">
+              <h3 class="latin">{m.name}</h3>
+              <div class="member__role latin">{m.role}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="promise-band">
+    <div class="container reveal">
+      <h2 class="promise-band__title">تحب الـ <span class="accent latin">Studio</span> هاذي تخدم معاك؟</h2>
+      <p class="promise-band__en latin">You show up. We handle the rest.</p>
+      <BookCta class="btn btn--solid btn--lg" label={CTA.primary} />
+    </div>
+  </section>
+
+  <Footer />
+</Base>
+
+<style>
+  .narrow { max-width: 860px; }
+  .section__title { margin-top: 14px; }
+
+  .studio-hero { padding-top: clamp(70px,10vw,120px); }
+  .studio-hero__title { font-family: var(--font-ar); font-weight: 900; line-height: 1.12;
+    font-size: clamp(34px,5.4vw,68px); margin-top: 18px; text-wrap: balance; }
+
+  .founder { display: grid; grid-template-columns: 160px 1fr; gap: 34px; align-items: center; margin-top: 48px;
+    padding-top: 40px; border-top: 1px solid var(--line); }
+  .founder__photo { aspect-ratio: 1; border-radius: var(--radius); overflow: hidden; display: grid; place-items: center;
+    background: var(--fill-dark); border: 1px solid var(--line); }
+  .founder__photo span { font-family: var(--font-display); font-weight: 800; font-size: 44px; color: #3a2a2c; }
+  .founder__body blockquote { font-family: var(--font-ar); font-weight: 700; font-size: clamp(19px,2.6vw,26px);
+    line-height: 1.5; }
+  .founder__sig { margin-top: 18px; display: flex; flex-direction: column; }
+  .founder__sig b { font-family: var(--font-display); font-weight: 700; font-size: 16px; }
+  .founder__sig span { color: var(--red); font-size: 13px; font-weight: 600; }
+
+  .vals { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-top: clamp(44px,6vw,60px); }
+  .val { padding: 36px 30px; border-radius: var(--radius); border: 1px solid var(--line); background: var(--fill-card);
+    transition: border-color .4s; }
+  .val:hover { border-color: var(--line-2); }
+  .val__n { font-family: var(--font-display); font-weight: 800; font-size: 14px; color: var(--red); letter-spacing: .12em; }
+  .val b { display: block; font-family: var(--font-display); font-weight: 700; font-size: 22px; margin: 12px 0 10px; }
+  .val p { color: var(--dim); }
+
+  /* chain (shared look with home) */
+  .chain { display: grid; grid-template-columns: repeat(5,1fr); gap: 0; margin-top: clamp(44px,6vw,64px); border-top: 1px solid var(--line); }
+  .chain__step { padding: 34px 26px 34px 0; border-inline-start: 1px solid var(--line); padding-inline-start: 26px; }
+  .chain__step:first-child { border-inline-start: none; padding-inline-start: 0; }
+  .chain__n { font-family: var(--font-display); font-weight: 800; font-size: 15px; color: var(--red); letter-spacing: .1em; }
+  .chain__step h3 { font-family: var(--font-display); font-weight: 700; font-size: 22px; margin: 14px 0 2px; }
+  .chain__ar { color: var(--dim); font-size: 14px; margin-bottom: 10px; }
+  .chain__step p:last-child { color: var(--dim); font-size: 14px; line-height: 1.6; }
+
+  .team-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: clamp(40px,6vw,56px); }
+  .member { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); background: var(--surface-2);
+    display: flex; align-items: center; gap: 18px; padding: 18px; transition: border-color .4s; }
+  .member:hover { border-color: var(--line-2); }
+  .member__photo { width: 64px; height: 64px; flex: none; border-radius: 50%; display: grid; place-items: center;
+    background: var(--fill-dark); }
+  .member__photo span { font-family: var(--font-display); font-weight: 800; font-size: 22px; color: #3a2a2c; }
+  .member__body h3 { font-family: var(--font-display); font-weight: 700; font-size: 17px; }
+  .member__role { color: var(--red); font-size: 12.5px; font-weight: 600; }
+
+  .promise-band { padding-block: clamp(90px,12vw,150px); text-align: center; border-block: 1px solid var(--line);
+    background: radial-gradient(70% 100% at 50% 0%, rgba(var(--red-rgb),.10), transparent 60%), var(--surface); }
+  .promise-band__title { font-family: var(--font-ar); font-weight: 900; font-size: clamp(32px,5.6vw,64px); line-height: 1.1; text-wrap: balance; }
+  .promise-band__en { font-family: var(--font-display); font-weight: 700; color: var(--dim); margin: 14px 0 34px; }
+
+  @media (max-width: 900px) {
+    .founder { grid-template-columns: 1fr; gap: 24px; }
+    .founder__photo { max-width: 140px; }
+    .vals { grid-template-columns: 1fr; }
+    .chain { grid-template-columns: 1fr 1fr; }
+    .chain__step { border-inline-start: none; border-top: 1px solid var(--line); padding-inline-start: 0; padding-top: 28px; }
+    .chain__step:first-child { border-top: none; }
+    .team-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px) { .team-grid { grid-template-columns: 1fr; } }
+</style>

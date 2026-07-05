@@ -1,13 +1,18 @@
 /* =========================================================================
-   NEXT LEVEL — single source of truth for content + contact info.
-   ⚠️ REPLACE the placeholders below before going live (marked TODO).
+   NEXT LEVEL — content source of truth.
+   Positioning: full-stack media production house that manufactures
+   authority for reputation-driven experts. "You show up. We handle the rest."
+   ⚠️ Replace placeholders marked TODO before real promotion.
    ========================================================================= */
 
 export const site = {
   name: 'Next Level',
   domain: 'NextLevel.tn',
+  tagline: 'We make experts look like the authority they are.',
   // TODO: real international WhatsApp number, no "+" or spaces.
   whatsapp: '21600000000',
+  // TODO: real booking link (Calendly / Cal.com). Falls back to #book form if empty.
+  bookingUrl: '',
   email: 'hello@nextlevel.tn',
   socials: {
     // TODO: replace with real profile URLs.
@@ -20,98 +25,130 @@ export const site = {
 export const whatsappLink = (text?: string) =>
   `https://wa.me/${site.whatsapp}${text ? `?text=${encodeURIComponent(text)}` : ''}`;
 
+export const CTA = {
+  primary: 'احجز مكالمة خاصة',      // Book a private call
+  primaryEn: 'Book a private call',
+  secondary: 'شوف الأعمال',         // See the work
+  whatsapp: 'كلّم الـ Studio',       // Talk to the studio
+};
+
 /* ---- NAV ---- */
 export const nav = [
   { label: 'الرئيسية', href: '/' },
   { label: 'الأعمال', href: '/#work' },
+  { label: 'الـ Studio', href: '/studio' },
   { label: 'الـ Packs', href: '/#packs' },
-  { label: 'الـ Team', href: '/team' },
   { label: 'FAQ', href: '/#faq' },
 ];
 
 /* ---- HERO ---- */
 export const hero = {
-  badge: 'Your Editing Team — Tunisia',
-  // headline split so we can color the accent words
-  titleLines: [
-    [{ t: 'الـ ' }, { t: 'Content', red: true }, { t: ' متاعك،' }],
-    [{ t: 'نوصلوه للـ ' }, { t: 'Next Level', red: true }],
-  ],
-  sub: 'ماهيش مشكلة budget، ماهيش مشكلة talent — هي مشكلة System. عطينا الـ footage متاعك واحنا الـ team متاع المونتاج اللي يخدم معاك كل أسبوع باش يبقى الـ content متاعك ثابت و حاضر.',
-  primaryCta: 'نبدأو نخدمو معاك',
-  secondaryCta: 'شوف الـ Packs',
+  eyebrow: 'Media Production House — Tunisia',
+  // headline lines; `red` marks the accent word
+  titleAr: 'نخليو الـ Expert يبان بالـ authority اللي فيه',
+  titleEn: 'We make experts look like the authority they are.',
+  sub: 'بنيت الـ reputation متاعك. الـ content لازم يوصلها. Next Level هي production house كاملة تتكفّل بالكل — الفكرة، الـ filming، الـ montage، الـ refinement — team واحد، كل شهر.',
+  promise: 'إنت تحضر. احنا نتكفّلو بالباقي.',
+  promiseEn: 'You show up. We handle the rest.',
+  trust: 'موثوق من أطباء، محامين، consultants و founders في تونس.',
 };
 
-/* ---- METRICS ---- */
-export const metrics = [
-  { value: 500, prefix: '+', label: 'Videos delivered' },
-  { value: 40, prefix: '+', label: 'Brands سعداء' },
-  { value: null, display: '24–48h', label: 'أول delivery' },
-  { value: null, display: '∞', label: 'Revisions' },
-];
+/* ---- REFRAME (the real problem) ---- */
+export const reframe = {
+  eyebrow: 'المشكلة الصحيحة',
+  title: 'إنت أحسن من الـ Content اللي يمثّلك',
+  body: 'في مجالك، إنتِ الاسم اللي الناس تثق فيه. أونلاين، تبان كيف الكل. الفجوة هاذي تكلّفك — في الـ perception، في الـ positioning، وفي الـ clients اللي ما كلّموكش خاطرهم ما تأكدوش.',
+  points: [
+    { k: 'الـ Perception', v: 'content ضعيف يخلّيك تبان أصغر من اللي إنت عليه فعلاً.' },
+    { k: 'الفوضى', v: 'freelancer هنا، monteur لهنا، designer آخر — إنت اللي تدير الكل.' },
+    { k: 'الـ Consistency', v: 'تـ post كي يجي الوقت. الـ reputation ما تتبناش هكا.' },
+  ],
+};
 
-/* ---- PROBLEM ---- */
-export const problems = [
-  {
-    title: 'Consistency',
-    body: 'تـ post كل أسبوع بـ نظام واضح. الـ algorithm يحب اللي يخدم بانتظام، موش وقتما يجي الوقت.',
-  },
-  {
-    title: 'Quality ثابتة',
-    body: 'نفس المستوى في كل فيديو. عندنا process و checklist يضمنولك quality ما تتقلبش.',
-  },
-  {
-    title: 'Speed',
-    body: 'الـ momentum يضيع كي تستنا برشا. احنا نوصلوك بسرعة باش تبقى دايما present في الـ feed.',
-  },
-];
+/* ---- BEFORE / AFTER ---- */
+export const beforeAfter = {
+  eyebrow: 'الفرق',
+  title: 'الفرق موش الـ camera — الفرق هو الـ production',
+  sub: 'نفس الشخص. نفس الـ expertise. وحدة متروكة للزهر، والأخرى production. اسحب باش تشوف معنى "handled".',
+  before: '/media/ba-before.jpg',
+  after: '/media/ba-after.jpg',
+};
 
-/* ---- COMPARE (the system) ---- */
-export const compare = {
+/* ---- THE SYSTEM (the chain) ---- */
+export const system = {
+  eyebrow: 'كيفاش نخدمو',
+  title: 'Team واحد. السلسلة الكاملة.',
+  sub: 'أغلب الناس يجمّعو videographer و monteur و designer و يتمنّاو تمشي. احنا ما نعطيوكش أجزاء — نتكفّلو بالـ process كامل، من الألف للياء.',
+  steps: [
+    { n: '01', title: 'Understand', ar: 'نفهمو', body: 'نتعلّمو الـ brand متاعك، مجالك، و كيفاش تحب تبان.' },
+    { n: '02', title: 'Shape', ar: 'نشكّلو', body: 'نحوّلو الـ expertise متاعك لأفكار تستاهل تتنشر.' },
+    { n: '03', title: 'Film', ar: 'نصوّرو', body: 'نصوّروك كيف ما يلزم، بـ calendar يحترم وقتك.' },
+    { n: '04', title: 'Edit', ar: 'نمنتجو', body: 'production بمستوى يوازي الـ standing متاعك.' },
+    { n: '05', title: 'Refine', ar: 'نصقلو', body: 'نثبتو في كل detail حتى يكون جاهز يمثّلك.' },
+  ],
+  footer: 'ما فماش freelancers باش تجري وراهم. ما فماش briefs باش تكتبهم. team واحد يعرف الـ brand متاعك.',
+};
+
+/* ---- SYSTEM, NOT ONE-OFFS ---- */
+export const cadence = {
+  eyebrow: 'System موش One-offs',
+  title: 'الـ Authority موش فيديو وحدة — هي إنك تحضر كل شهر',
+  sub: 'post وحدة تمشي في أسبوع. الـ reputation تتبنى بالحضور المستمر، بنفس المستوى، بلا فراغات. علاّه ما نبيعوش projects — نديرو system شهري، باش الحضور متاعك يتراكم و إنت راكز على خدمتك.',
   bad: {
     tag: 'الطريقة العادية',
     items: [
-      'فيديو وقتما يجي الوقت',
-      'Quality متقلبة من video للأخرى',
-      'Delivery بطيء و مواعيد مش مضبوطة',
-      'كل مرة تشرح من الزيرو',
+      'content كي يجي الوقت',
+      'quality تتقلّب من مرّة للأخرى',
+      'خمسة أشخاص باش تدير معاهم',
+      'إنت تبريفي، تجري، و تصلّح',
     ],
   },
   good: {
     tag: 'Next Level System',
     items: [
-      'Calendar ثابت، تـ post كل أسبوع',
-      'Quality ثابتة في كل فيديو',
-      'Delivery في وقتو، بـ مواعيد واضحة',
-      'Team يعرف الـ brand و الـ style متاعك',
+      'cadence شهري ثابت',
+      'نفس الـ standard، كل مرّة',
+      'team واحد، contact واحد',
+      'إنت تحضر. احنا نتكفّلو بالباقي.',
     ],
   },
 };
 
-/* ---- PROCESS ---- */
-export const steps = [
-  { n: '01', title: 'نتعرفو على الـ brand', body: 'نحكيو على الـ goals و الـ style اللي يمشي معاك.' },
-  { n: '02', title: 'ابعثلنا الـ Raw Footage', body: 'عطينا الـ footage متاعك، الباقي كامل علينا.' },
-  { n: '03', title: 'نحللو و نمنتجو', body: 'Edit + Hooks + Color + Sound design.' },
-  { n: '04', title: 'Quality Check و Delivery', body: 'نثبتو في كل detail و نسلموك ready-to-post.' },
-];
+/* ---- WHO IT'S FOR ---- */
+export const audience = {
+  eyebrow: 'لِشكون',
+  title: 'مصمّم للناس اللي الـ reputation متاعهم هي الـ business متاعهم',
+  sub: 'إذا الطريقة اللي تبان بيها تأثّر مباشرة على اللي تربحو — هاذا ليك:',
+  list: [
+    { who: 'أطباء و اختصاصيين', why: 'يبنيو الثقة قبل أول موعد.' },
+    { who: 'محامين', why: 'يلزمهم يبانو authority قدّ ما يترافعو.' },
+    { who: 'Consultants و Coaches', why: 'يبيعو expertise، موش ساعات.' },
+    { who: 'Founders', why: 'اللي وجههم هو الـ brand.' },
+  ],
+  note: 'موش للكل — و هاذا هو المقصود. ناخذو عدد محدود من الـ clients باش كل واحد ياخذ team يعرفو فعلاً.',
+};
+
+/* ---- PROOF ---- */
+export const proof = {
+  eyebrow: 'Proof',
+  title: 'شنوّة يتبدّل كي الـ production يتكفّل بيه',
+  sub: 'موش احنا نقولو — النتائج تحكي.',
+  // TODO: replace with real client outcomes + footage.
+  items: [
+    { poster: '/media/face-1011.jpg', quote: 'ولّى عندو حضور شهري ثابت — و بدا الناس تعرفو في مجالو.', who: 'اختصاصي، تونس' },
+    { poster: '/media/face-1027.jpg', quote: 'أخيراً تبان أونلاين كيف ما هي في القاعة.', who: 'محامية' },
+    { poster: '/media/face-1005.jpg', quote: 'حضور premium بلا ما نضيّع وقتي في الـ content.', who: 'Founder' },
+  ],
+};
 
 /* ---- WORK / PORTFOLIO ----
-   poster = thumbnail shown at rest; video = clip played on hover.
-   Swap these for your real exports (keep the 9:16 ratio). */
+   Swap the sample media in public/media/ for real client exports. */
 export const work = [
-  { tag: 'E-com Ad', caption: 'Hook في أول 3 ثواني', poster: '/media/poster-11.jpg', video: '/media/clip1.mp4' },
-  { tag: 'Talking Head', caption: 'Retention edit', poster: '/media/poster-24.jpg', video: '/media/clip4.mp4' },
-  { tag: 'Brand Reel', caption: 'Cinematic color', poster: '/media/poster-33.jpg', video: '/media/clip3.mp4' },
-  { tag: 'UGC', caption: 'Native style', poster: '/media/poster-48.jpg', video: '/media/clip2.mp4' },
-  { tag: 'Story Ad', caption: 'Fast cut', poster: '/media/poster-52.jpg', video: '/media/clip5.mp4' },
-];
-
-/* ---- TESTIMONIALS ---- */
-export const testimonials = [
-  { name: 'Wael Trabelsi', role: 'E-commerce', poster: '/media/face-1011.jpg' },
-  { name: 'Sarra Mejri', role: 'Skincare Brand', poster: '/media/face-1027.jpg' },
-  { name: 'Hamza Gharbi', role: 'Fitness Coach', poster: '/media/face-1005.jpg' },
+  { tag: 'Doctor', caption: 'Authority على المريض قبل الموعد', poster: '/media/poster-11.jpg', video: '/media/clip1.mp4' },
+  { tag: 'Lawyer', caption: 'حضور يوازي الـ standing', poster: '/media/poster-24.jpg', video: '/media/clip4.mp4' },
+  { tag: 'Consultant', caption: 'Expertise مصوّرة كيف يلزم', poster: '/media/poster-33.jpg', video: '/media/clip3.mp4' },
+  { tag: 'Coach', caption: 'Native style، production عالي', poster: '/media/poster-48.jpg', video: '/media/clip2.mp4' },
+  { tag: 'Founder', caption: 'الوجه اللي يمثّل الـ brand', poster: '/media/poster-52.jpg', video: '/media/clip5.mp4' },
 ];
 
 /* ---- SOCIAL LIVE GRID ---- */
@@ -120,88 +157,115 @@ export const socialThumbs = [
   '/media/sq-94.jpg', '/media/sq-15.jpg', '/media/sq-26.jpg',
 ];
 
-/* ---- HERO + BEFORE/AFTER media ---- */
 export const heroPoster = '/media/showreel.jpg';
-export const beforeAfter = { before: '/media/ba-before.jpg', after: '/media/ba-after.jpg' };
 
-/* ---- PRICING ---- */
-export const packs = [
+/* ---- OFFER — partnership tiers ---- */
+export const tiers = [
   {
-    kicker: 'Starter',
-    name: 'Starter Boost',
-    price: 'DT 500',
-    popular: false,
-    cta: 'نبدا بالـ Test',
-    feats: ['Revisions مجانية', 'Color grading و Visual Hooks', 'Up to 3 hooks لكل فيديو'],
+    name: 'Presence',
+    ar: 'للـ expert اللي يحب أخيراً يحضر بانتظام.',
+    price: 'from DT 1,000',
+    per: '/ شهر',
+    featured: false,
+    outcomes: [
+      'cadence شهري ثابت من content مصوّر و منتَج',
+      'team واحد يتكفّل بالكل، من الفكرة للتسليم',
+      'حضور حقيقي و credible يتبنى',
+    ],
+    best: 'مناسب: البداية، channel واحد واضح.',
+    cta: CTA.primary,
   },
   {
-    kicker: 'Growth',
-    name: 'Growth Engine',
-    price: 'DT 1500',
-    popular: true,
-    cta: 'نمشيو للـ Next Level',
-    feats: [
-      'Revisions مجانية',
-      'Color grading و Visual Hooks محترفة',
-      'Up to 3 hooks لكل فيديو',
-      'Content calendar شهري',
-      'Team ثابت يعرف الـ brand متاعك',
+    name: 'Authority',
+    ar: 'للـ expert اللي واجد يولّي الاسم في مجالو.',
+    price: 'from DT 1,500',
+    per: '/ شهر',
+    featured: true,
+    outcomes: [
+      'كل اللي في Presence',
+      'content plan شهري مشكّل حسب مجالك',
+      'production بأولوية و team يعامل الـ brand متاعك كامتداد ليك',
+      'الـ system كامل يخدم بأقصى قوّتو',
     ],
+    best: 'مناسب: المحترفين الجدّيين اللي يحبو يملكو مجالهم.',
+    cta: CTA.primary,
   },
   {
-    kicker: 'Pro',
-    name: 'Momentum Pack',
-    price: 'DT 1000',
-    popular: false,
-    cta: 'نبدا الـ Momentum',
-    feats: [
-      'Revisions مجانية',
-      'Color grading و Visual Hooks محترفة',
-      'Up to 3 hooks لكل فيديو',
-      'Content calendar نص شهري',
+    name: 'Signature',
+    ar: 'للـ founders و الأسماء اللي يحبو production partner مفصّل.',
+    price: 'By application',
+    per: '',
+    featured: false,
+    outcomes: [
+      'engagement مفصّل — cadence خاص',
+      'creative direction أعمق',
+      'ملكية كاملة للحضور الإعلامي متاعك',
+      'ناخذو عدد قليل جداً من هاذوما',
     ],
+    best: 'مناسب: authorities راسخين يحبو الكل يتكفّل بيه بأعلى مستوى.',
+    cta: 'قدّم طلب',
   },
 ];
 
 /* ---- FAQ ---- */
 export const faqs = [
   {
-    q: 'شنوة بالضبط تعملوا؟',
-    a: 'احنا الـ editing team متاعك. نعملو edit لأي صاحب business يحب يبني محتوى — من talking head للـ ads للـ UGC — بـ system ثابت كل أسبوع.',
+    q: 'قدّاش لازمني نكون involved؟',
+    a: 'بأقل ما يمكن. احنا نتكفّلو بالـ strategy و الـ production و التسليم. خدمتك الوحيدة إنك تحضر نهار الـ filming. هاذا هو المعنى الكامل متاع "we handle the rest".',
   },
   {
-    q: 'الخدمة هذي تصلح لأي نوع بيزنس؟',
-    a: 'إيه. تصلح لأي business يحب presence قوية على السوشيال — e-commerce، personal brand، خدمات، restos… أي حاجة.',
+    q: 'هاذي خدمة مرّة وحدة ولا مستمرّة؟',
+    a: 'مستمرّة. الـ authority تتبنى بالـ consistency، علاّه نخدمو كـ system شهري — موش projects متفرّقة.',
   },
   {
-    q: 'قداش تاخو وقت؟',
-    a: 'الـ delivery يكون سريع و في مواعيد واضحة نتفقو عليهم من البداية، باش تبقى دايما في وقتك.',
+    q: 'إنتوما تعملو غير montage؟',
+    a: 'لا. الـ montage خطوة وحدة. احنا نملكو السلسلة الكاملة — من تشكيل الفكرة، للـ filming، للقطعة النهائية المصقولة.',
   },
   {
-    q: 'كيفاش نبدأ؟',
-    a: 'عمّر الـ form لوطة، وفي أقل من 24 ساعة نكلموك على WhatsApp مباشرة — بلا أي التزام.',
+    q: 'أنا موش "content person" — تنجم تخدم معايا؟',
+    a: 'هاذا بالضبط شكون مصمّم ليه. إنت تجيب الـ expertise. احنا نخلّيوها تبان كيف يلزم.',
+  },
+  {
+    q: 'كيفاش نبداو؟',
+    a: 'مكالمة خاصة. نتعلّمو مجالك و أهدافك، نوريّوك شنوّة ممكن، و إذا كان fit نبداو. بلا ضغط، بلا التزام.',
   },
 ];
 
-/* ---- TEAM PAGE ---- */
-export const values = [
-  { title: 'Partnership', body: 'احنا extension للـ team متاعك، موش مجرد service. نجاحك هو نجاحنا.' },
-  { title: 'Craft', body: 'نهتمو بالـ detail الصغير اللي يفرّق بين فيديو عادي و فيديو يـ stop الـ scroll.' },
-  { title: 'Consistency', body: 'نسلموك في وقتنا، بنفس الـ quality، في كل مرة. النظام قبل كل شيء.' },
-];
+/* ---- THE STUDIO (about) ---- */
+export const studio = {
+  eyebrow: 'The Studio',
+  title: 'ورا كل authority، فمّا production تتكفّل بيها',
+  founder: {
+    name: 'Yassine Ben Ali',
+    role: 'Founder & Creative Director',
+    initials: 'YB',
+    // TODO: real founder photo -> /media/founder.jpg
+    statement: 'بديت Next Level خاطر أحسن المحترفين في تونس كانو يتغطّاو أونلاين من ناس نصف الـ expertise متاعهم و ضعف الـ production. المشكلة هاذي تتحلّ.',
+  },
+  values: [
+    { title: 'Full-stack', body: 'team واحد يملك السلسلة كاملة. موش أجزاء، موش freelancers.' },
+    { title: 'System', body: 'حضور يتراكم كل شهر. الـ consistency هي المنتج.' },
+    { title: 'For the person', body: 'مصمّم حسبك إنت — موش template. نعرفو الـ brand متاعك.' },
+  ],
+  team: [
+    { initials: 'YB', name: 'Yassine Ben Ali', role: 'Founder & Creative Director' },
+    { initials: 'RM', name: 'Rania Mansour', role: 'Senior Editor' },
+    { initials: 'KH', name: 'Khalil Haddad', role: 'Motion & Direction' },
+    { initials: 'IS', name: 'Ines Sassi', role: 'Content Strategy' },
+    { initials: 'AM', name: 'Aymen Mabrouk', role: 'Colorist & Sound' },
+    { initials: 'LF', name: 'Lina Ferchichi', role: 'Client Partner' },
+  ],
+};
 
-export const team = [
-  { initials: 'YB', name: 'Yassine Ben Ali', role: 'Founder & Creative Lead', body: 'يحط الـ vision و الـ style العام، ويتأكد إلي كل فيديو يخدم الـ goal.' },
-  { initials: 'RM', name: 'Rania Mansour', role: 'Senior Video Editor', body: 'متخصصة في الـ retention editing و الـ storytelling اللي يخلي الناس تكمّل المشاهدة.' },
-  { initials: 'KH', name: 'Khalil Haddad', role: 'Motion Designer', body: 'الـ animations، الـ transitions و الـ visual hooks اللي يعطيو الفيديو روح.' },
-  { initials: 'IS', name: 'Ines Sassi', role: 'Content Strategist', body: 'تبني الـ calendar و الـ hooks باش الـ content يجيب نتائج، موش غير views.' },
-  { initials: 'AM', name: 'Aymen Mabrouk', role: 'Colorist & Sound', body: 'Color grading سينمائي و sound design يرفعو الـ production value.' },
-  { initials: 'LF', name: 'Lina Ferchichi', role: 'Client Success', body: 'الـ contact المباشر متاعك — تتابع كل project و تتأكد إلي راك راضي.' },
-];
-
-export const teamStats = [
-  { value: 6, label: 'Team members' },
-  { value: 500, prefix: '+', label: 'Videos delivered' },
-  { value: 40, prefix: '+', label: 'Brands' },
-  { value: 98, suffix: '%', label: 'Clients يرجعو' },
-];
+/* ---- BOOK A CALL ---- */
+export const book = {
+  eyebrow: 'Book a Call',
+  title: 'مكالمة خاصة',
+  sub: '15 دقيقة. نتعلّمو مجالك و أهدافك، نوريّوك شنوّة ممكن، و إذا كان fit نبداو. بلا ضغط.',
+  fields: [
+    { name: 'name', label: 'الاسم متاعك', placeholder: 'Ex: Dr. Ahmed…', type: 'text', required: true },
+    { name: 'phone', label: 'نومرو الـ WhatsApp', placeholder: '216XXXXXXXX', type: 'tel', required: true },
+  ],
+  areas: ['طبيب / اختصاصي', 'محامي', 'Consultant / Coach', 'Founder / Personal brand', 'أخرى'],
+  goals: ['نبني حضور من الصفر', 'نحسّن الـ perception متاعي', 'نثبّت cadence شهري', 'نحب نشوف شنوّة ممكن'],
+};
