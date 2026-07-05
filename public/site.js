@@ -119,6 +119,26 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  /* soft parallax on [data-parallax] elements (disabled for reduced-motion) */
+  if (!reduceMotion) {
+    const parallax = Array.from(document.querySelectorAll('[data-parallax]'));
+    if (parallax.length) {
+      let px = false;
+      const applyParallax = () => {
+        const vh = window.innerHeight;
+        parallax.forEach((el) => {
+          const r = el.getBoundingClientRect();
+          const center = r.top + r.height / 2;
+          const offset = (center - vh / 2) / vh;      // -1..1 across viewport
+          el.style.setProperty('--py', (offset * -22).toFixed(1) + 'px');
+        });
+        px = false;
+      };
+      window.addEventListener('scroll', () => { if (!px) { requestAnimationFrame(applyParallax); px = true; } }, { passive: true });
+      applyParallax();
+    }
+  }
+
   /* hover/focus-to-play portfolio clips */
   document.querySelectorAll('.shot__media video').forEach((v) => {
     const card = v.closest('.shot');

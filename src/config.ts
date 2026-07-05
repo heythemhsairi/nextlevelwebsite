@@ -159,6 +159,17 @@ export const socialThumbs = [
 
 export const heroPoster = '/media/showreel.jpg';
 
+/* ---- INTRO VIDEO (horizontal cinematic anchor in the hero) ----
+   TODO: replace intro.mp4 / intro-poster.jpg with the real graded showreel.
+   `intro` = muted autoplay loop band; `showreel` = full video opened by play. */
+export const intro = {
+  video: '/media/intro.mp4',
+  poster: '/media/intro-poster.jpg',
+  showreel: '/media/intro.mp4',      // TODO: full-length reel for the modal
+  caption: '٩٠ ثانية تكفي باش تفهم الفرق — هاذا مستوى الـ production اللي يمثّلك.',
+  captionEn: 'Ninety seconds. This is the standard that will represent you.',
+};
+
 /* ---- OFFER — partnership tiers ---- */
 export const tiers = [
   {
