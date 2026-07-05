@@ -5,21 +5,26 @@ import Footer from '../components/Footer.astro';
 import Modal from '../components/Modal.astro';
 import BookCta from '../components/BookCta.astro';
 import {
-  site, hero, intro, reframe, beforeAfter, system, cadence, audience,
+  hero, intro, reframe, beforeAfter, system, cadence, audience,
   proof, work, tiers, faqs, CTA, whatsappLink,
 } from '../config';
+
+const [proofLead, ...proofRest] = proof.items;
 ---
 <Base>
   <Nav current="/" />
 
-  <!-- ================= HERO ================= -->
+  <!-- ═══════════════ HERO — cinematic, asymmetric ═══════════════ -->
   <section class="hero" id="hero">
-    <div class="container hero__inner reveal">
-      <div class="hero__text">
-        <span class="eyebrow latin">{hero.eyebrow}</span>
+    <div class="hero__bg" aria-hidden="true"></div>
+    <span class="hero__ghost latin" aria-hidden="true">NEXT LEVEL</span>
+
+    <div class="hero__grid">
+      <!-- meta column -->
+      <div class="hero__meta reveal">
+        <span class="meta-label"><span class="accent">●</span> {hero.eyebrow}</span>
         <h1 class="hero__title">{hero.titleAr}</h1>
         <p class="hero__en latin">{hero.titleEn}</p>
-        <p class="lead hero__sub">{hero.sub}</p>
         <p class="hero__promise">إنت تحضر. <span class="accent">احنا نتكفّلو بالباقي.</span></p>
         <div class="hero__cta">
           <BookCta class="btn btn--solid btn--lg" label={CTA.primary} />
@@ -27,100 +32,100 @@ import {
             <span class="playdot" aria-hidden="true"></span> شوف الـ Reel
           </button>
         </div>
+        <p class="hero__trust">{hero.trust}</p>
       </div>
-    </div>
 
-    <!-- horizontal intro video stage (the anchor) -->
-    <div class="intro reveal" data-parallax>
-      <div class="intro__stage" role="button" tabindex="0" aria-label="شغّل الـ Showreel"
-           data-video="Next Level — Showreel" data-desc="الـ showreel الكامل متاعنا.">
-        <video src={intro.video} poster={intro.poster} muted loop autoplay playsinline preload="metadata"></video>
-        <div class="intro__vignette" aria-hidden="true"></div>
-        <div class="intro__play" aria-hidden="true"><span></span></div>
-        <span class="intro__label latin">Showreel</span>
-      </div>
-      <p class="intro__caption">{intro.caption} <span class="latin dim">{intro.captionEn}</span></p>
-    </div>
-
-    <p class="container hero__trust reveal">{hero.trust}</p>
-  </section>
-
-  <!-- ================= REFRAME ================= -->
-  <section class="section section--line">
-    <div class="container reveal narrow">
-      <span class="eyebrow">{reframe.eyebrow}</span>
-      <h2 class="section__title big">إنت <span class="accent">أحسن</span> من الـ Content اللي يمثّلك</h2>
-      <p class="lead">{reframe.body}</p>
-      <div class="reframe">
-        {reframe.points.map((p) => (
-          <div class="reframe__row">
-            <b class="latin">{p.k}</b>
-            <span>{p.v}</span>
+      <!-- film frame -->
+      <div class="hero__film reveal" data-parallax>
+        <div class="hero__stage brackets" role="button" tabindex="0" aria-label="شغّل الـ Showreel"
+             data-video="Next Level — Showreel" data-desc="الـ showreel الكامل متاعنا.">
+          <video src={intro.video} poster={intro.poster} muted loop autoplay playsinline preload="metadata"></video>
+          <div class="hero__vignette" aria-hidden="true"></div>
+          <div class="hero__filmmeta">
+            <span class="meta-label latin">● REC · Showreel</span>
+            <span class="meta-label latin">00:00 / 01:30</span>
           </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= BEFORE / AFTER ================= -->
-  <section class="section section--alt" id="work">
-    <div class="container reveal">
-      <span class="eyebrow">{beforeAfter.eyebrow}</span>
-      <h2 class="section__title">الفرق موش الـ <span class="latin">camera</span> — الفرق هو الـ <span class="accent latin">production</span></h2>
-      <p class="lead center">{beforeAfter.sub}</p>
-      <div class="ba-wrap">
-        <div class="ba" role="slider" tabindex="0" aria-label="مقارنة قبل و بعد الـ production"
-             aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
-          <div class="ba__layer ba__after"><img src={beforeAfter.after} alt="بعد الـ production" width="1280" height="720" /></div>
-          <div class="ba__layer ba__before"><img src={beforeAfter.before} alt="قبل — raw" width="1280" height="720" /></div>
-          <span class="ba__tag ba__tag--b latin">Before</span>
-          <span class="ba__tag ba__tag--a latin">After</span>
-          <div class="ba__handle"><div class="ba__grip" aria-hidden="true">⟷</div></div>
+          <div class="hero__play" aria-hidden="true"><span></span></div>
         </div>
       </div>
-
-      <!-- work gallery -->
-      <div class="gallery">
-        {work.map((w) => (
-          <figure class="shot" role="button" tabindex="0" aria-label={`شوف ${w.tag}`}
-                  data-video={w.tag} data-desc={`${w.tag} — Next Level.`}>
-            <div class="shot__media">
-              <video src={w.video} poster={w.poster} muted loop playsinline preload="none"></video>
-              <div class="shot__play" aria-hidden="true"><span></span></div>
-            </div>
-            <figcaption><span class="tag latin">{w.tag}</span> {w.caption}</figcaption>
-          </figure>
-        ))}
-      </div>
     </div>
+    <p class="hero__caption container">{intro.caption} <span class="latin dim">{intro.captionEn}</span></p>
   </section>
 
-  <!-- ================= THE SYSTEM ================= -->
-  <section class="section section--line watermark" data-word="SYSTEM">
-    <div class="container reveal">
-      <span class="eyebrow">{system.eyebrow}</span>
-      <h2 class="section__title">Team واحد. <span class="accent">السلسلة الكاملة.</span></h2>
-      <p class="lead">{system.sub}</p>
-      <div class="chain">
-        {system.steps.map((s) => (
-          <div class="chain__step">
-            <span class="chain__n latin">{s.n}</span>
-            <h3 class="latin">{s.title}</h3>
-            <p class="chain__ar">{s.ar}</p>
-            <p>{s.body}</p>
+  <!-- ═══════════════ 01 · REFRAME — quiet ═══════════════ -->
+  <section class="zone zone--quiet zone--edge">
+    <span class="zindex"><b>01</b> — المشكلة</span>
+    <div class="container reframe-wrap reveal">
+      <p class="overline">The Reframe</p>
+      <h2 class="reframe-title">إنت <span class="accent">أحسن</span> من الـ Content اللي يمثّلك</h2>
+      <p class="lead reframe-body">{reframe.body}</p>
+      <div class="reframe">
+        {reframe.points.map((p, i) => (
+          <div class="reframe__row">
+            <span class="reframe__n latin">0{i + 1}</span>
+            <b class="latin">{p.k}</b>
+            <span class="reframe__v">{p.v}</span>
           </div>
         ))}
       </div>
-      <p class="chain__foot">{system.footer}</p>
     </div>
   </section>
 
-  <!-- ================= SYSTEM NOT ONE-OFFS ================= -->
-  <section class="section section--alt">
-    <div class="container reveal">
-      <span class="eyebrow">{cadence.eyebrow}</span>
-      <h2 class="section__title">الـ <span class="accent latin">Authority</span> موش فيديو وحدة — هي إنك تحضر كل شهر</h2>
-      <p class="lead">{cadence.sub}</p>
+  <!-- ═══════════════ 02 · BEFORE / AFTER — loud, full-bleed centerpiece ═══════════════ -->
+  <section class="zone zone--loud zone--dark ba-zone" id="work">
+    <span class="zindex"><b>02</b> — الفرق</span>
+    <div class="container ba-head reveal">
+      <p class="overline">The Difference</p>
+      <h2 class="ba-title">الفرق موش الـ <span class="latin">camera</span><br />الفرق هو الـ <span class="accent latin">production</span></h2>
+    </div>
+    <div class="ba-stage bleed reveal" data-parallax>
+      <div class="ba brackets" role="slider" tabindex="0" aria-label="مقارنة قبل و بعد الـ production"
+           aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+        <div class="ba__layer ba__after"><img src={beforeAfter.after} alt="بعد الـ production" width="1920" height="1080" /></div>
+        <div class="ba__layer ba__before"><img src={beforeAfter.before} alt="قبل — raw" width="1920" height="1080" /></div>
+        <span class="ba__tag ba__tag--b latin">Before · Raw</span>
+        <span class="ba__tag ba__tag--a latin">After · Next Level</span>
+        <div class="ba__handle"><div class="ba__grip" aria-hidden="true">⟷</div></div>
+      </div>
+    </div>
+    <p class="container ba-sub reveal">{beforeAfter.sub}</p>
+  </section>
+
+  <!-- ═══════════════ 03 · THE SYSTEM — pinned, sequential ═══════════════ -->
+  <section class="zone system-zone watermark" data-word="SYSTEM" id="system">
+    <span class="zindex"><b>03</b> — الـ System</span>
+    <div class="system-pin">
+      <div class="container system-grid">
+        <div class="system-head reveal">
+          <p class="overline">The System</p>
+          <h2 class="system-title">Team واحد.<br /><span class="accent">السلسلة الكاملة.</span></h2>
+          <p class="lead">{system.sub}</p>
+          <p class="system-foot">{system.footer}</p>
+        </div>
+        <ol class="system-steps">
+          {system.steps.map((s, i) => (
+            <li class="sstep" data-step={i}>
+              <span class="sstep__n latin">{s.n}</span>
+              <div class="sstep__body">
+                <h3 class="latin">{s.title} <span class="sstep__ar">{s.ar}</span></h3>
+                <p>{s.body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 04 · CADENCE — quiet, asymmetric ═══════════════ -->
+  <section class="zone zone--quiet zone--edge">
+    <span class="zindex"><b>04</b> — Consistency</span>
+    <div class="container cadence-grid reveal">
+      <div class="cadence-head">
+        <p class="overline">System, not one-offs</p>
+        <h2 class="cadence-title">الـ <span class="accent latin">Authority</span> موش فيديو وحدة — هي إنك تحضر كل شهر</h2>
+        <p class="lead">{cadence.sub}</p>
+      </div>
       <div class="compare">
         <div class="compare__col compare__col--bad">
           <span class="compare__tag">{cadence.bad.tag}</span>
@@ -134,17 +139,18 @@ import {
     </div>
   </section>
 
-  <!-- ================= WHO IT'S FOR ================= -->
-  <section class="section section--line">
+  <!-- ═══════════════ 05 · WHO — quiet, editorial ═══════════════ -->
+  <section class="zone zone--quiet zone--edge">
+    <span class="zindex"><b>05</b> — لِشكون</span>
     <div class="container reveal">
-      <span class="eyebrow">{audience.eyebrow}</span>
-      <h2 class="section__title">مصمّم للناس اللي الـ <span class="accent latin">reputation</span> متاعهم هي الـ business متاعهم</h2>
-      <p class="lead">{audience.sub}</p>
+      <p class="overline">Who it's for</p>
+      <h2 class="who-title">مصمّم للناس اللي الـ <span class="accent latin">reputation</span> متاعهم هي الـ business متاعهم</h2>
       <div class="who">
-        {audience.list.map((a) => (
+        {audience.list.map((a, i) => (
           <div class="who__row">
+            <span class="who__n latin">0{i + 1}</span>
             <b>{a.who}</b>
-            <span>{a.why}</span>
+            <span class="who__why">{a.why}</span>
           </div>
         ))}
       </div>
@@ -152,29 +158,50 @@ import {
     </div>
   </section>
 
-  <!-- ================= PROOF ================= -->
-  <section class="section section--alt">
-    <div class="container reveal">
-      <span class="eyebrow">{proof.eyebrow}</span>
-      <h2 class="section__title">شنوّة يتبدّل كي الـ <span class="accent latin">production</span> يتكفّل بيه</h2>
-      <p class="lead center">{proof.sub}</p>
-      <div class="proof">
-        {proof.items.map((p) => (
-          <figure class="proof__card">
-            <div class="proof__media"><img src={p.poster} alt="" width="640" height="480" loading="lazy" /></div>
+  <!-- ═══════════════ 06 · PROOF — loud, asymmetric editorial ═══════════════ -->
+  <section class="zone zone--loud zone--dark proof-zone">
+    <span class="zindex"><b>06</b> — Proof</span>
+    <div class="container proof-head reveal">
+      <p class="overline">Proof</p>
+      <h2 class="proof-title">شنوّة يتبدّل كي الـ <span class="accent latin">production</span> يتكفّل بيه</h2>
+    </div>
+    <div class="container proof-grid reveal">
+      <!-- lead pulled-quote -->
+      <figure class="proof-lead">
+        <div class="proof-lead__media"><img src={proofLead.poster} alt="" width="720" height="900" loading="lazy" /></div>
+        <blockquote>“{proofLead.quote}”</blockquote>
+        <figcaption>{proofLead.who}</figcaption>
+      </figure>
+      <!-- supporting quotes + clips -->
+      <div class="proof-side">
+        {proofRest.map((p) => (
+          <figure class="proof-quote">
             <blockquote>“{p.quote}”</blockquote>
             <figcaption>{p.who}</figcaption>
           </figure>
         ))}
+        <div class="proof-clips">
+          {work.slice(0, 3).map((w) => (
+            <figure class="shot" role="button" tabindex="0" aria-label={`شوف ${w.tag}`}
+                    data-video={w.tag} data-desc={`${w.tag} — Next Level.`}>
+              <div class="shot__media">
+                <video src={w.video} poster={w.poster} muted loop playsinline preload="none"></video>
+                <div class="shot__play" aria-hidden="true"><span></span></div>
+              </div>
+              <figcaption><span class="tag latin">{w.tag}</span></figcaption>
+            </figure>
+          ))}
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ================= OFFER / TIERS ================= -->
-  <section class="section section--line" id="packs">
+  <!-- ═══════════════ 07 · TIERS — medium, hierarchy ═══════════════ -->
+  <section class="zone zone--medium zone--edge" id="packs">
+    <span class="zindex"><b>07</b> — Packs</span>
     <div class="container reveal">
-      <span class="eyebrow">Packs</span>
-      <h2 class="section__title">اختار مستوى الـ <span class="accent latin">Partnership</span></h2>
+      <p class="overline">Partnership</p>
+      <h2 class="tiers-title">اختار مستوى الـ <span class="accent latin">Partnership</span></h2>
       <p class="lead center">موش feature list — مستويات شراكة. من fit للـ system الكامل.</p>
       <div class="tiers">
         {tiers.map((t) => (
@@ -196,20 +223,22 @@ import {
     </div>
   </section>
 
-  <!-- ================= PROMISE BAND ================= -->
-  <section class="promise-band watermark" data-word="AUTHORITY">
+  <!-- ═══════════════ 08 · PROMISE — the climax ═══════════════ -->
+  <section class="promise watermark" data-word="AUTHORITY">
+    <div class="promise__bg" aria-hidden="true"></div>
     <div class="container reveal">
-      <h2 class="promise-band__title">إنت تحضر. <span class="accent">احنا نتكفّلو بالباقي.</span></h2>
-      <p class="promise-band__en latin">You show up. We handle the rest.</p>
+      <p class="overline">You show up. We handle the rest.</p>
+      <h2 class="promise__title">إنت تحضر.<br /><span class="accent">احنا نتكفّلو بالباقي.</span></h2>
       <BookCta class="btn btn--solid btn--lg" label={CTA.primary} />
     </div>
   </section>
 
-  <!-- ================= FAQ ================= -->
-  <section class="section section--line" id="faq">
-    <div class="container reveal narrow">
-      <span class="eyebrow">FAQ</span>
-      <h2 class="section__title big">أسئلة</h2>
+  <!-- ═══════════════ FAQ — quiet ═══════════════ -->
+  <section class="zone zone--quiet zone--edge" id="faq">
+    <span class="zindex"><b>09</b> — FAQ</span>
+    <div class="container narrow reveal">
+      <p class="overline">Questions</p>
+      <h2 class="faq-title">أسئلة</h2>
       <div class="faq">
         {faqs.map((f) => (
           <details class="faq__item">
@@ -224,160 +253,187 @@ import {
   <Modal />
   <Footer />
 </Base>
-
 <style>
-  /* ---------- shared section helpers ---------- */
-  .narrow { max-width: 820px; }
-  .lead.center, .lead { margin-top: 22px; }
+  /* ═══════════ shared ═══════════ */
+  .narrow { max-width: 760px; }
+  .lead { color: var(--dim); font-size: clamp(16px,2vw,19px); line-height: 1.7; margin-top: 22px; max-width: 62ch; }
   .lead.center { margin-inline: auto; text-align: center; }
-  .section__title { margin-top: 14px; }
-  .section__title.big { font-size: clamp(38px, 6vw, 76px); }
 
-  /* ---------- hero ---------- */
-  .hero { padding-block: clamp(64px, 11vh, 130px) clamp(50px, 7vw, 90px); position: relative; text-align: center; }
-  .hero__inner { max-width: 920px; }
-  .hero__text { display: flex; flex-direction: column; align-items: center; }
-  .hero__title { font-family: var(--font-ar); font-weight: 900; line-height: 1.08;
-    font-size: clamp(38px, 6.4vw, 90px); margin-top: 22px; text-wrap: balance; }
-  .hero__en { font-family: var(--font-display); font-weight: 700; color: var(--dim);
-    font-size: clamp(16px, 2.4vw, 24px); margin-top: 16px; letter-spacing: -.01em; }
-  .hero__sub { max-width: 660px; text-align: center; }
-  .hero__promise { font-family: var(--font-ar); font-weight: 900; font-size: clamp(22px, 3vw, 34px); margin-top: 28px; }
-  .hero__cta { display: flex; gap: 14px; margin-top: 34px; flex-wrap: wrap; justify-content: center; }
-  .hero__cta .playdot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); box-shadow: 0 0 10px var(--red); display: inline-block; }
-  .hero__trust { color: var(--dim-2); font-size: 14px; margin-top: 40px; text-align: center; }
-
-  /* ---------- intro video stage (the anchor) ---------- */
-  .intro { max-width: 1180px; margin: clamp(44px,6vw,72px) auto 0; padding-inline: var(--gutter); position: relative; }
-  .intro__stage {
-    position: relative; aspect-ratio: 16/9; overflow: hidden; border-radius: var(--radius-lg);
-    border: 1px solid var(--line-2); cursor: pointer; background: var(--fill-dark);
-    box-shadow: 0 60px 120px -60px rgba(var(--red-rgb), .5);
-    transition: transform .5s var(--ease), box-shadow .5s var(--ease);
-  }
-  /* red edge-bloom leaking from behind the stage */
-  .intro::before {
-    content: ''; position: absolute; inset: 8% var(--gutter) -6%; z-index: -1; border-radius: 40px;
-    background: radial-gradient(60% 60% at 50% 50%, rgba(var(--red-rgb),.28), transparent 70%); filter: blur(60px);
-  }
-  .intro__stage video { position: absolute; inset: -6%; width: 112%; height: 112%; object-fit: cover;
-    transform: translateY(var(--py, 0)); will-change: transform; }
-  .intro__vignette { position: absolute; inset: 0; pointer-events: none;
+  /* ═══════════ HERO ═══════════ */
+  .hero { position: relative; overflow: hidden; padding-block: clamp(48px,7vw,90px) clamp(56px,8vw,110px); }
+  .hero__bg { position: absolute; inset: 0; z-index: 0; pointer-events: none;
     background:
-      linear-gradient(to bottom, rgba(5,5,5,.5), transparent 22%, transparent 72%, rgba(5,5,5,.75)),
-      radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(5,5,5,.55)); }
-  .intro__stage:hover { transform: translateY(-6px); box-shadow: 0 70px 130px -55px rgba(var(--red-rgb),.65); }
-  .intro__play { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 2;
-    width: 76px; height: 76px; border-radius: 50%; background: var(--red); display: grid; place-items: center;
-    box-shadow: 0 0 46px -8px rgba(var(--red-rgb),.9); transition: transform .3s var(--ease); }
-  .intro__stage:hover .intro__play { transform: translate(-50%,-50%) scale(1.08); }
-  .intro__play span { width: 0; height: 0; border-style: solid; border-width: 12px 0 12px 20px;
+      radial-gradient(50% 45% at 82% 4%, rgba(var(--red-rgb),.20), transparent 62%),
+      radial-gradient(40% 40% at 8% 40%, rgba(176,12,18,.10), transparent 60%); }
+  /* bloom bleeds into the section below */
+  .hero::after { content: ''; position: absolute; left: 0; right: 0; bottom: -120px; height: 220px; z-index: 0; pointer-events: none;
+    background: radial-gradient(50% 100% at 72% 0, rgba(var(--red-rgb),.10), transparent 70%); }
+  .hero__ghost { position: absolute; z-index: 0; top: 50%; inset-inline-start: 50%; transform: translate(-50%,-50%);
+    font-family: var(--font-display); font-weight: 800; font-size: clamp(120px,20vw,300px); letter-spacing: -.03em;
+    color: rgba(255,255,255,.02); white-space: nowrap; pointer-events: none; }
+
+  .hero__grid { position: relative; z-index: 1; max-width: var(--maxw); margin-inline: auto; padding-inline: var(--gutter);
+    display: grid; grid-template-columns: 0.92fr 1.35fr; gap: clamp(28px,4vw,56px); align-items: center; }
+  .hero__meta { display: flex; flex-direction: column; align-items: flex-start; }
+  .hero__title { font-family: var(--font-ar); font-weight: 900; line-height: 1.04;
+    font-size: clamp(40px,5.6vw,84px); margin-top: 22px; text-wrap: balance; }
+  .hero__en { font-family: var(--font-display); font-weight: 700; color: var(--dim);
+    font-size: clamp(15px,1.7vw,21px); margin-top: 14px; letter-spacing: -.01em; }
+  .hero__promise { font-family: var(--font-ar); font-weight: 900; font-size: clamp(20px,2.6vw,30px); margin-top: 26px; }
+  .hero__cta { display: flex; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
+  .hero__cta .playdot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); box-shadow: 0 0 10px var(--red); display: inline-block; }
+  .hero__trust { color: var(--dim-2); font-size: 13.5px; margin-top: 28px; }
+
+  .hero__film { position: relative; }
+  .hero__stage { position: relative; aspect-ratio: 16/10; border-radius: var(--radius-lg); overflow: hidden;
+    border: 1px solid var(--line-2); cursor: pointer; background: var(--fill-dark);
+    box-shadow: 0 70px 130px -60px rgba(var(--red-rgb),.55);
+    transform: translateY(var(--py,0)); transition: transform .5s var(--ease), box-shadow .5s var(--ease); }
+  .hero__stage:hover { box-shadow: 0 80px 150px -55px rgba(var(--red-rgb),.7); }
+  .hero__stage video { position: absolute; inset: -4%; width: 108%; height: 108%; object-fit: cover; }
+  .hero__vignette { position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(to bottom, rgba(5,5,5,.4), transparent 24%, transparent 66%, rgba(5,5,5,.78)),
+                radial-gradient(120% 100% at 50% 50%, transparent 52%, rgba(5,5,5,.5)); }
+  .hero__filmmeta { position: absolute; inset-inline: 20px; top: 16px; z-index: 2; display: flex; justify-content: space-between; }
+  .hero__filmmeta .meta-label { color: rgba(250,250,250,.72); }
+  .hero__play { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 2;
+    width: 74px; height: 74px; border-radius: 50%; background: var(--red); display: grid; place-items: center;
+    box-shadow: 0 0 44px -8px rgba(var(--red-rgb),.9); transition: transform .3s var(--ease); }
+  .hero__stage:hover .hero__play { transform: translate(-50%,-50%) scale(1.08); }
+  .hero__play span { width: 0; height: 0; border-style: solid; border-width: 12px 0 12px 20px;
     border-color: transparent transparent transparent #fff; margin-left: 5px; direction: ltr; }
-  .intro__label { position: absolute; top: 18px; inset-inline-start: 22px; z-index: 2;
-    font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: rgba(250,250,250,.7); }
-  .intro__caption { text-align: center; color: var(--dim); font-size: 15px; margin-top: 22px; }
-  .intro__caption .dim { color: var(--dim-2); }
+  .hero__caption { position: relative; z-index: 1; text-align: center; color: var(--dim); font-size: 14.5px; margin-top: 30px; }
+  .hero__caption .dim { color: var(--dim-2); }
 
-  /* ---------- reframe ---------- */
-  .reframe { margin-top: 48px; display: flex; flex-direction: column; }
-  .reframe__row { display: grid; grid-template-columns: 200px 1fr; gap: 28px; align-items: baseline;
+  /* ═══════════ REFRAME ═══════════ */
+  .reframe-wrap { max-width: 760px; }
+  .reframe-title { font-family: var(--font-ar); font-weight: 900; font-size: clamp(30px,4.4vw,58px);
+    line-height: 1.14; margin-top: 16px; text-wrap: balance; }
+  .reframe-body { margin-bottom: 12px; }
+  .reframe { margin-top: 30px; }
+  .reframe__row { display: grid; grid-template-columns: 40px 190px 1fr; gap: 22px; align-items: baseline;
     padding: 26px 0; border-top: 1px solid var(--line); }
-  .reframe__row b { font-family: var(--font-display); font-weight: 700; font-size: 19px; color: var(--white); }
-  .reframe__row span { color: var(--dim); font-size: 17px; }
+  .reframe__n { font-family: var(--font-display); font-weight: 800; color: var(--red); font-size: 14px; }
+  .reframe__row b { font-family: var(--font-display); font-weight: 700; font-size: 19px; }
+  .reframe__v { color: var(--dim); }
 
-  /* ---------- before/after ---------- */
-  .ba-wrap { max-width: 900px; margin: clamp(40px,6vw,60px) auto 0; }
-  .ba { position: relative; aspect-ratio: 16/9; overflow: hidden; cursor: ew-resize; user-select: none;
-    border-radius: var(--radius); border: 1px solid var(--line-2); }
+  /* ═══════════ BEFORE / AFTER ═══════════ */
+  .ba-zone { padding-block: clamp(80px,10vw,150px); }
+  .ba-head { text-align: center; }
+  .ba-title { font-family: var(--font-ar); font-weight: 900; font-size: clamp(30px,5vw,66px); line-height: 1.08; margin-top: 14px; }
+  .ba-stage { margin-block: clamp(40px,6vw,64px); padding-inline: clamp(0px,4vw,60px); }
+  .ba { position: relative; max-width: 1320px; margin-inline: auto; aspect-ratio: 21/9; overflow: hidden;
+    cursor: ew-resize; user-select: none; border-radius: var(--radius); border: 1px solid var(--line-2);
+    box-shadow: 0 60px 120px -50px rgba(var(--red-rgb),.5); }
   .ba__layer { position: absolute; inset: 0; }
   .ba__layer img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .ba__before { clip-path: inset(0 0 0 50%); }
   .ba__before img { filter: contrast(.95); }
-  .ba__tag { position: absolute; top: 16px; font-family: var(--font-display); font-weight: 700; font-size: 12px;
-    letter-spacing: .04em; padding: 6px 14px; border-radius: 999px; background: rgba(0,0,0,.55); backdrop-filter: blur(6px); }
-  .ba__tag--b { inset-inline-start: 16px; color: var(--dim); }
-  .ba__tag--a { inset-inline-end: 16px; color: #fff; background: var(--red); }
-  .ba__handle { position: absolute; inset-block: 0; left: 50%; width: 2px; background: var(--white); transform: translateX(-50%); z-index: 3; }
+  .ba__tag { position: absolute; top: 18px; font-family: var(--font-display); font-weight: 700; font-size: 12px;
+    letter-spacing: .06em; padding: 7px 15px; border-radius: 999px; background: rgba(0,0,0,.5); backdrop-filter: blur(6px); }
+  .ba__tag--b { inset-inline-start: 18px; color: var(--dim); }
+  .ba__tag--a { inset-inline-end: 18px; color: #fff; background: var(--red); }
+  .ba__handle { position: absolute; inset-block: 0; left: 50%; width: 2px; background: var(--white); transform: translateX(-50%); z-index: 3;
+    box-shadow: 0 0 20px rgba(var(--red-rgb),.7); }
   .ba__grip { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-    width: 46px; height: 46px; border-radius: 50%; background: var(--red); color: #fff; display: grid; place-items: center; font-size: 16px; }
+    width: 52px; height: 52px; border-radius: 50%; background: var(--red); color: #fff; display: grid; place-items: center;
+    font-size: 17px; box-shadow: 0 10px 30px -6px rgba(var(--red-rgb),.9); }
+  .ba-sub { text-align: center; color: var(--dim); max-width: 620px; margin: 0 auto; }
 
-  /* ---------- gallery ---------- */
-  .gallery { display: grid; grid-template-columns: repeat(5,1fr); gap: 14px; margin-top: clamp(44px,6vw,64px); }
-  .shot { border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--line); background: var(--surface-2);
-    transition: transform .4s var(--ease), border-color .4s; cursor: pointer; }
-  .shot:hover { transform: translateY(var(--lift)); border-color: var(--line-2); }
-  .shot__media { aspect-ratio: 9/16; position: relative; background: var(--fill-dark); overflow: hidden; }
-  .shot__media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
-  .shot__media::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
-    background: linear-gradient(to top, rgba(5,5,5,.6), transparent 55%); }
-  .shot__play { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 2;
-    width: 46px; height: 46px; border-radius: 50%; background: var(--red); display: grid; place-items: center;
-    transition: opacity .3s, transform .3s; }
-  .shot__play span { width: 0; height: 0; border-style: solid; border-width: 8px 0 8px 13px;
-    border-color: transparent transparent transparent #fff; margin-left: 4px; direction: ltr; }
-  .shot:hover .shot__play { opacity: 0; }
-  .shot figcaption { padding: 14px; font-size: 12.5px; color: var(--dim); }
-  .tag { display: inline-block; background: var(--red); color: #fff; font-family: var(--font-display);
-    font-weight: 700; font-size: 10.5px; padding: 3px 10px; border-radius: 999px; margin-bottom: 6px; }
+  /* ═══════════ SYSTEM (pinned) ═══════════ */
+  .system-zone { padding-block: 0; }
+  .system-pin { }
+  .system-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(32px,5vw,72px); align-items: start;
+    padding-block: clamp(80px,10vw,140px); }
+  .system-head { position: sticky; top: 100px; }
+  .system-title { font-family: var(--font-ar); font-weight: 900; font-size: clamp(30px,4.6vw,60px); line-height: 1.08; margin-top: 14px; }
+  .system-foot { margin-top: 28px; color: var(--white); font-weight: 600; font-size: clamp(16px,1.9vw,19px); max-width: 42ch;
+    border-inline-start: 2px solid var(--red); padding-inline-start: 18px; }
+  .system-steps { display: flex; flex-direction: column; }
+  .sstep { display: grid; grid-template-columns: 64px 1fr; gap: 22px; align-items: start;
+    padding: clamp(24px,3vw,38px) 0; border-top: 1px solid var(--line); opacity: .34; transition: opacity .5s var(--ease); }
+  .sstep:first-child { border-top: none; }
+  .sstep.on { opacity: 1; }
+  .sstep__n { font-family: var(--font-display); font-weight: 800; font-size: clamp(30px,3.4vw,46px);
+    color: transparent; -webkit-text-stroke: 1.5px var(--red); }
+  .sstep.on .sstep__n { color: var(--red); -webkit-text-stroke: 0; }
+  .sstep__body h3 { font-family: var(--font-display); font-weight: 700; font-size: clamp(20px,2.2vw,27px); }
+  .sstep__ar { color: var(--dim); font-weight: 400; font-size: .7em; }
+  .sstep__body p { color: var(--dim); margin-top: 8px; line-height: 1.6; }
 
-  /* ---------- the chain / system ---------- */
-  .chain { position: relative; display: grid; grid-template-columns: repeat(5,1fr); gap: 0; margin-top: clamp(48px,6vw,68px);
-    border-top: 1px solid var(--line); }
-  /* self-drawing red connector that runs across the top as the section reveals */
-  .chain::before { content: ''; position: absolute; top: -1px; inset-inline: 0; height: 2px;
-    background: linear-gradient(90deg, var(--red), var(--red-deep));
-    transform: scaleX(0); transform-origin: right; transition: transform 1.1s var(--ease) .1s; }
-  .reveal.in .chain::before { transform: scaleX(1); }
-  .chain__step { padding: 34px 26px 34px 0; border-inline-start: 1px solid var(--line); padding-inline-start: 26px; }
-  .chain__step:first-child { border-inline-start: none; padding-inline-start: 0; }
-  .chain__n { font-family: var(--font-display); font-weight: 800; font-size: 15px; color: var(--red); letter-spacing: .1em; }
-  .chain__step h3 { font-family: var(--font-display); font-weight: 700; font-size: 22px; margin: 14px 0 2px; }
-  .chain__ar { color: var(--dim); font-size: 14px; margin-bottom: 10px; }
-  .chain__step p:last-child { color: var(--dim); font-size: 14px; line-height: 1.6; }
-  .chain__foot { margin-top: 40px; color: var(--white); font-size: clamp(17px,2.2vw,21px); max-width: 720px; font-weight: 600; }
-
-  /* ---------- compare ---------- */
-  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: clamp(44px,6vw,64px); }
-  .compare__col { padding: 36px 32px; border-radius: var(--radius); border: 1px solid var(--line); background: var(--fill-card); }
+  /* ═══════════ CADENCE ═══════════ */
+  .cadence-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(32px,5vw,64px); align-items: center; }
+  .cadence-head { position: relative; }
+  .cadence-title { font-family: var(--font-ar); font-weight: 900; font-size: clamp(28px,4vw,52px); line-height: 1.12; margin-top: 14px; }
+  .compare { display: grid; gap: 16px; }
+  .compare__col { padding: 30px 28px; border-radius: var(--radius); border: 1px solid var(--line); background: var(--fill-card); }
   .compare__col--good { border-color: rgba(var(--red-rgb),.35); background: linear-gradient(180deg, rgba(var(--red-rgb),.06), var(--surface)); }
   .compare__tag { display: inline-block; font-family: var(--font-display); font-weight: 700; font-size: 12px;
-    letter-spacing: .08em; text-transform: uppercase; padding: 6px 14px; border-radius: 999px; background: var(--surface-3); color: var(--dim); margin-bottom: 22px; }
+    letter-spacing: .08em; text-transform: uppercase; padding: 6px 14px; border-radius: 999px; background: var(--surface-3); color: var(--dim); margin-bottom: 20px; }
   .compare__tag--accent { background: var(--red); color: #fff; }
-  .compare__col ul { display: flex; flex-direction: column; gap: 14px; }
-  .compare__col li { display: flex; gap: 12px; font-size: 16px; color: var(--dim); }
+  .compare__col ul { display: flex; flex-direction: column; gap: 12px; }
+  .compare__col li { display: flex; gap: 12px; font-size: 15.5px; color: var(--dim); }
   .compare__col--good li { color: var(--white); }
   .compare__col li i { font-style: normal; font-weight: 800; color: var(--dim-2); }
   .compare__col--good li i { color: var(--red); }
 
-  /* ---------- who ---------- */
-  .who { margin-top: 46px; }
-  .who__row { display: grid; grid-template-columns: 260px 1fr; gap: 28px; align-items: baseline;
-    padding: 24px 0; border-top: 1px solid var(--line); }
-  .who__row b { font-family: var(--font-ar); font-weight: 900; font-size: 20px; }
-  .who__row span { color: var(--dim); }
-  .who__note { margin-top: 38px; color: var(--dim); font-size: 16px; max-width: 640px; border-inline-start: 2px solid var(--red); padding-inline-start: 20px; }
+  /* ═══════════ WHO ═══════════ */
+  .who-title { font-family: var(--font-ar); font-weight: 900; font-size: clamp(28px,4.4vw,58px); line-height: 1.12; margin-top: 14px; max-width: 20ch; }
+  .who { margin-top: 44px; }
+  .who__row { display: grid; grid-template-columns: 44px 320px 1fr; gap: 22px; align-items: baseline;
+    padding: 24px 0; border-top: 1px solid var(--line); transition: background .3s; }
+  .who__row:hover { background: rgba(255,255,255,.015); }
+  .who__n { font-family: var(--font-display); font-weight: 800; color: var(--red); font-size: 14px; }
+  .who__row b { font-family: var(--font-ar); font-weight: 900; font-size: clamp(19px,2.4vw,26px); }
+  .who__why { color: var(--dim); }
+  .who__note { margin-top: 40px; color: var(--dim); font-size: clamp(16px,2vw,19px); max-width: 640px;
+    border-inline-start: 2px solid var(--red); padding-inline-start: 20px; }
 
-  /* ---------- proof ---------- */
-  .proof { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-top: clamp(48px,6vw,64px); }
-  .proof__card { border-radius: var(--radius); border: 1px solid var(--line); background: var(--surface-2); overflow: hidden; padding-bottom: 24px; }
-  .proof__media { aspect-ratio: 4/3; overflow: hidden; background: var(--fill-dark); }
-  .proof__media img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(.25); }
-  .proof__card blockquote { padding: 22px 24px 8px; font-size: 17px; line-height: 1.6; }
-  .proof__card figcaption { padding: 0 24px; color: var(--red); font-family: var(--font-display); font-weight: 600; font-size: 13px; }
+  /* ═══════════ PROOF ═══════════ */
+  .proof-head { text-align: center; }
+  .proof-title { font-family: var(--font-ar); font-weight: 900; font-size: clamp(28px,4.4vw,56px); line-height: 1.1; margin-top: 14px; }
+  .proof-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(24px,3vw,44px); margin-top: clamp(44px,6vw,64px); align-items: start; }
+  .proof-lead { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line-2); background: var(--surface-2); }
+  .proof-lead__media { aspect-ratio: 4/5; overflow: hidden; background: var(--fill-dark); }
+  .proof-lead__media img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(.3); transition: filter .5s var(--ease), transform .6s var(--ease); }
+  .proof-lead:hover .proof-lead__media img { filter: grayscale(0); transform: scale(1.03); }
+  .proof-lead blockquote { padding: 28px 30px 6px; font-family: var(--font-ar); font-weight: 700; font-size: clamp(19px,2.4vw,26px); line-height: 1.5; }
+  .proof-lead figcaption { padding: 0 30px 28px; color: var(--red); font-family: var(--font-display); font-weight: 600; font-size: 13px; }
+  .proof-side { display: flex; flex-direction: column; gap: 18px; }
+  .proof-quote { border-radius: var(--radius); border: 1px solid var(--line); background: var(--fill-card); padding: 26px 28px; }
+  .proof-quote blockquote { font-size: 17px; line-height: 1.6; }
+  .proof-quote figcaption { color: var(--red); font-family: var(--font-display); font-weight: 600; font-size: 12.5px; margin-top: 12px; }
+  .proof-clips { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 2px; }
+  .shot { border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--line); background: var(--surface-2); cursor: pointer;
+    transition: transform .4s var(--ease), border-color .4s; }
+  .shot:hover { transform: translateY(-6px); border-color: rgba(var(--red-rgb),.5); }
+  .shot__media { aspect-ratio: 9/14; position: relative; background: var(--fill-dark); overflow: hidden; }
+  .shot__media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+  .shot__media::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background: linear-gradient(to top, rgba(5,5,5,.6), transparent 55%); }
+  .shot__play { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 2;
+    width: 38px; height: 38px; border-radius: 50%; background: var(--red); display: grid; place-items: center; transition: opacity .3s; }
+  .shot__play span { width: 0; height: 0; border-style: solid; border-width: 6px 0 6px 10px;
+    border-color: transparent transparent transparent #fff; margin-left: 3px; direction: ltr; }
+  .shot:hover .shot__play { opacity: 0; }
+  .shot figcaption { padding: 10px; }
+  .tag { display: inline-block; background: var(--red); color: #fff; font-family: var(--font-display);
+    font-weight: 700; font-size: 10px; padding: 3px 9px; border-radius: 999px; }
 
-  /* ---------- tiers ---------- */
-  .tiers { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-top: clamp(48px,6vw,68px); align-items: stretch; }
-  .tier { padding: 40px 34px; border-radius: var(--radius-lg); border: 1px solid var(--line); background: var(--fill-card);
-    display: flex; flex-direction: column; position: relative; transition: border-color .4s; }
-  .tier:hover { border-color: var(--line-2); }
-  .tier--featured { border-color: rgba(var(--red-rgb),.4); background: linear-gradient(180deg, rgba(var(--red-rgb),.07), var(--surface)); }
+  /* ═══════════ TIERS ═══════════ */
+  .tiers-title { font-family: var(--font-ar); font-weight: 900; font-size: clamp(28px,4.4vw,56px); line-height: 1.1; margin-top: 14px; text-align: center; }
+  .tiers-title + .lead { text-align: center; margin-inline: auto; }
+  .tiers { display: grid; grid-template-columns: 1fr 1.12fr 1fr; gap: 18px; margin-top: clamp(44px,6vw,64px); align-items: center; }
+  .tier { padding: 38px 32px; border-radius: var(--radius-lg); border: 1px solid var(--line); background: var(--fill-card);
+    display: flex; flex-direction: column; position: relative; transition: border-color .4s, transform .4s var(--ease); }
+  .tier:hover { border-color: var(--line-2); transform: translateY(-4px); }
+  .tier--featured { border-color: rgba(var(--red-rgb),.45); background: linear-gradient(180deg, rgba(var(--red-rgb),.08), var(--surface));
+    box-shadow: 0 0 80px -22px rgba(var(--red-rgb),.5); padding-top: 54px; }
   .tier__badge { position: absolute; top: 18px; left: 50%; transform: translateX(-50%); background: var(--red); color: #fff;
     font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: .04em; padding: 6px 16px; border-radius: 999px; white-space: nowrap; }
-  .tier--featured { padding-top: 54px; }
   .tier__name { font-family: var(--font-display); font-weight: 800; font-size: 26px; }
   .tier__ar { color: var(--dim); font-size: 14.5px; margin: 8px 0 20px; min-height: 42px; }
-  .tier__price { font-family: var(--font-display); font-weight: 800; font-size: 32px; padding-bottom: 22px;
-    border-bottom: 1px solid var(--line); margin-bottom: 22px; }
+  .tier__price { font-family: var(--font-display); font-weight: 800; font-size: 32px; padding-bottom: 22px; border-bottom: 1px solid var(--line); margin-bottom: 22px; }
   .tier__price small { font-family: var(--font-ar); font-weight: 400; font-size: 14px; color: var(--dim); margin-inline-start: 6px; }
   .tier--featured .tier__price { color: var(--red); }
   .tier__outcomes { display: flex; flex-direction: column; gap: 12px; margin-bottom: 22px; }
@@ -388,14 +444,16 @@ import {
   .tier--featured .tier__cta { background: var(--red); border-color: var(--red); color: #fff; }
   .tier--featured .tier__cta:hover { background: var(--red-hot); border-color: var(--red-hot); }
 
-  /* ---------- promise band ---------- */
-  .promise-band { padding-block: clamp(90px,12vw,160px); text-align: center; border-block: 1px solid var(--line);
-    background: radial-gradient(70% 100% at 50% 0%, rgba(var(--red-rgb),.10), transparent 60%), var(--surface); }
-  .promise-band__title { font-family: var(--font-ar); font-weight: 900; font-size: clamp(34px,6vw,76px); line-height: 1.1; text-wrap: balance; }
-  .promise-band__en { font-family: var(--font-display); font-weight: 700; color: var(--dim); margin: 14px 0 34px; font-size: clamp(15px,2vw,20px); }
+  /* ═══════════ PROMISE — climax ═══════════ */
+  .promise { position: relative; overflow: hidden; text-align: center; padding-block: clamp(110px,16vw,220px); background: #030303; border-block: 1px solid var(--line); }
+  .promise__bg { position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background: radial-gradient(60% 90% at 50% 45%, rgba(var(--red-rgb),.20), transparent 62%); }
+  .promise .container { position: relative; z-index: 1; }
+  .promise__title { font-family: var(--font-ar); font-weight: 900; font-size: clamp(44px,9vw,120px); line-height: 1.02; margin: 18px 0 38px; text-wrap: balance; }
 
-  /* ---------- faq ---------- */
-  .faq { margin-top: clamp(44px,6vw,56px); display: flex; flex-direction: column; gap: 12px; }
+  /* ═══════════ FAQ ═══════════ */
+  .faq-title { font-family: var(--font-ar); font-weight: 900; font-size: clamp(34px,5vw,64px); margin-top: 14px; }
+  .faq { margin-top: clamp(40px,5vw,52px); display: flex; flex-direction: column; gap: 12px; }
   .faq__item { border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface-2); overflow: hidden; }
   .faq__item[open] { border-color: var(--line-2); }
   .faq__item summary { list-style: none; cursor: pointer; padding: 22px 24px; font-weight: 600; font-size: 17px;
@@ -405,17 +463,23 @@ import {
   .faq__item[open] summary i { transform: rotate(45deg); }
   .faq__item p { color: var(--dim); padding: 0 24px 24px; line-height: 1.7; }
 
-  /* ---------- responsive ---------- */
-  @media (max-width: 900px) {
-    .chain { grid-template-columns: 1fr 1fr; }
-    .chain__step { border-inline-start: none; border-top: 1px solid var(--line); padding-inline-start: 0; padding-top: 28px; }
-    .chain__step:first-child { border-top: none; }
-    .gallery { grid-template-columns: repeat(2,1fr); }
-    .proof, .tiers, .compare { grid-template-columns: 1fr; }
+  /* ═══════════ RESPONSIVE ═══════════ */
+  @media (max-width: 1000px) {
+    .hero__grid { grid-template-columns: 1fr; gap: 34px; }
+    .hero__meta { align-items: center; text-align: center; }
+    .hero__meta .meta-label { align-self: center; }
+    .hero__cta { justify-content: center; }
+    .system-grid, .cadence-grid, .proof-grid { grid-template-columns: 1fr; }
+    .system-head { position: static; }
+    .tiers { grid-template-columns: 1fr; }
     .tier--featured { order: -1; }
-    .reframe__row, .who__row { grid-template-columns: 1fr; gap: 8px; }
+    .who__row { grid-template-columns: 34px 1fr; }
+    .who__why { grid-column: 2; color: var(--dim); }
+    .proof-clips { grid-template-columns: repeat(3,1fr); }
   }
-  @media (max-width: 560px) {
-    .gallery { grid-template-columns: 1fr 1fr; }
+  @media (max-width: 600px) {
+    .reframe__row { grid-template-columns: 30px 1fr; }
+    .reframe__v { grid-column: 2; }
+    .ba { aspect-ratio: 16/11; }
   }
 </style>

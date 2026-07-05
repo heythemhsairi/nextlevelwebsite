@@ -139,6 +139,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  /* pinned system — highlight steps sequentially as the section scrolls through */
+  const ssteps = Array.from(document.querySelectorAll('.sstep'));
+  if (ssteps.length) {
+    const lightSteps = () => {
+      const vh = window.innerHeight;
+      ssteps.forEach((el) => {
+        const r = el.getBoundingClientRect();
+        // "on" once the step's middle has risen above 62% of the viewport
+        el.classList.toggle('on', r.top + r.height / 2 < vh * 0.62);
+      });
+    };
+    let st = false;
+    window.addEventListener('scroll', () => { if (!st) { requestAnimationFrame(() => { lightSteps(); st = false; }); st = true; } }, { passive: true });
+    lightSteps();
+  }
+
   /* hover/focus-to-play portfolio clips */
   document.querySelectorAll('.shot__media video').forEach((v) => {
     const card = v.closest('.shot');
