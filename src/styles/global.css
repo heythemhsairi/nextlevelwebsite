@@ -106,6 +106,58 @@ body::before {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
+/* =========================================================================
+   ZONED ATMOSPHERE — per-section energy, framing, depth primitives
+   ========================================================================= */
+
+/* a "zone" wraps a section and sets its spatial energy */
+.zone { position: relative; }
+.zone--quiet   { padding-block: clamp(90px, 13vw, 190px); }   /* breathes */
+.zone--medium  { padding-block: clamp(80px, 10vw, 150px); }
+.zone--loud    { padding-block: clamp(70px, 9vw, 130px); }     /* cinematic, bleeds */
+.zone--edge    { border-top: 1px solid var(--line); }
+
+/* loud zones get a deep red bloom; quiet zones stay flat near-black */
+.zone--loud::before {
+  content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(70% 80% at 50% 12%, rgba(var(--red-rgb),.09), transparent 60%);
+}
+.zone--dark { background: #030303; }
+.zone > .container, .zone > * { position: relative; z-index: 1; }
+
+/* running left-edge index — film-strip / editorial device */
+.zindex {
+  position: absolute; top: clamp(40px,7vw,90px); inset-inline-start: clamp(14px,3vw,34px); z-index: 2;
+  display: flex; align-items: center; gap: 12px;
+  writing-mode: vertical-rl; transform: rotate(180deg); transform-origin: center;
+  font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: .28em;
+  text-transform: uppercase; color: var(--dim-2); pointer-events: none; user-select: none;
+}
+.zindex b { color: var(--red); }
+.zindex::after { content: ''; width: 1px; height: 46px; background: linear-gradient(var(--red), transparent); }
+@media (max-width: 1100px) { .zindex { display: none; } }
+
+/* corner brackets for cinematic frames */
+.brackets { position: relative; }
+.brackets::before, .brackets::after {
+  content: ''; position: absolute; width: 26px; height: 26px; pointer-events: none; z-index: 3;
+  border: 2px solid rgba(var(--red-rgb),.6);
+}
+.brackets::before { top: -8px; inset-inline-start: -8px; border-inline-end: none; border-block-end: none; }
+.brackets::after  { bottom: -8px; inset-inline-end: -8px; border-inline-start: none; border-block-start: none; }
+
+/* small film meta labels */
+.meta-label { font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: .24em;
+  text-transform: uppercase; color: var(--dim); }
+.meta-label .accent { color: var(--red); }
+
+/* full-bleed helper (breaks out of centered container) */
+.bleed { width: 100vw; position: relative; inset-inline-start: 50%; transform: translateX(-50%); }
+
+/* overline heading (film-title style) */
+.overline { font-family: var(--font-display); font-weight: 800; text-transform: uppercase;
+  font-size: clamp(12px,1.4vw,15px); letter-spacing: .18em; color: var(--red); }
+
 /* ---- ghosted watermark word behind a section (editorial depth) ---- */
 .watermark { position: relative; overflow: hidden; }
 .watermark > * { position: relative; z-index: 1; }
