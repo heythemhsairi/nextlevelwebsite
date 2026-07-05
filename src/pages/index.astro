@@ -6,7 +6,7 @@ import Modal from '../components/Modal.astro';
 import BookCta from '../components/BookCta.astro';
 import {
   hero, intro, reframe, beforeAfter, system, cadence, audience,
-  proof, work, tiers, faqs, CTA, whatsappLink,
+  proof, work, tiers, faqs, CTA, whatsappLink, hasRealWhatsapp,
 } from '../config';
 
 const [proofLead, ...proofRest] = proof.items;
@@ -14,50 +14,62 @@ const [proofLead, ...proofRest] = proof.items;
 <Base>
   <Nav current="/" />
 
-  <!-- ═══════════════ HERO — cinematic, asymmetric ═══════════════ -->
   <section class="hero" id="hero">
     <div class="hero__bg" aria-hidden="true"></div>
     <span class="hero__ghost latin" aria-hidden="true">NEXT LEVEL</span>
 
-    <div class="hero__grid">
-      <!-- meta column -->
+    <div class="hero__grid container">
       <div class="hero__meta reveal">
         <span class="meta-label"><span class="accent">●</span> {hero.eyebrow}</span>
         <h1 class="hero__title">{hero.titleAr}</h1>
         <p class="hero__en latin">{hero.titleEn}</p>
-        <p class="hero__promise">إنت تحضر. <span class="accent">احنا نتكفّلو بالباقي.</span></p>
+        <p class="hero__sub">{hero.sub}</p>
+        <p class="hero__promise">{hero.promise}</p>
         <div class="hero__cta">
           <BookCta class="btn btn--solid btn--lg" label={CTA.primary} />
-          <button class="btn btn--ghost btn--lg" data-video="Next Level — Showreel" data-desc="الـ showreel الكامل متاعنا.">
+          <button
+            class="btn btn--ghost btn--lg"
+            data-video="Next Level — Showreel"
+            data-video-src={intro.showreel}
+            data-video-poster={intro.poster}
+            data-desc="الـ showreel الكامل متاعنا."
+          >
             <span class="playdot" aria-hidden="true"></span> شوف الـ Reel
           </button>
         </div>
         <p class="hero__trust">{hero.trust}</p>
       </div>
 
-      <!-- film frame -->
       <div class="hero__film reveal" data-parallax>
-        <div class="hero__stage brackets" role="button" tabindex="0" aria-label="شغّل الـ Showreel"
-             data-video="Next Level — Showreel" data-desc="الـ showreel الكامل متاعنا.">
+        <div
+          class="hero__stage brackets"
+          role="button"
+          tabindex="0"
+          aria-label="شغّل الـ Showreel"
+          data-video="Next Level — Showreel"
+          data-video-src={intro.showreel}
+          data-video-poster={intro.poster}
+          data-desc="الـ showreel الكامل متاعنا."
+        >
           <video src={intro.video} poster={intro.poster} muted loop autoplay playsinline preload="metadata"></video>
           <div class="hero__vignette" aria-hidden="true"></div>
           <div class="hero__filmmeta">
-            <span class="meta-label latin">● REC · Showreel</span>
+            <span class="meta-label latin">● REC · Intro Film</span>
             <span class="meta-label latin">00:00 / 01:30</span>
           </div>
           <div class="hero__play" aria-hidden="true"><span></span></div>
         </div>
       </div>
     </div>
+
     <p class="hero__caption container">{intro.caption} <span class="latin dim">{intro.captionEn}</span></p>
   </section>
 
-  <!-- ═══════════════ 01 · REFRAME — quiet ═══════════════ -->
   <section class="zone zone--quiet zone--edge">
     <span class="zindex"><b>01</b> — المشكلة</span>
     <div class="container reframe-wrap reveal">
       <p class="overline">The Reframe</p>
-      <h2 class="reframe-title">إنت <span class="accent">أحسن</span> من الـ Content اللي يمثّلك</h2>
+      <h2 class="reframe-title">{reframe.title}</h2>
       <p class="lead reframe-body">{reframe.body}</p>
       <div class="reframe">
         {reframe.points.map((p, i) => (
@@ -71,7 +83,6 @@ const [proofLead, ...proofRest] = proof.items;
     </div>
   </section>
 
-  <!-- ═══════════════ 02 · BEFORE / AFTER — loud, full-bleed centerpiece ═══════════════ -->
   <section class="zone zone--loud zone--dark ba-zone" id="work">
     <span class="zindex"><b>02</b> — الفرق</span>
     <div class="container ba-head reveal">
@@ -79,10 +90,9 @@ const [proofLead, ...proofRest] = proof.items;
       <h2 class="ba-title">الفرق موش الـ <span class="latin">camera</span><br />الفرق هو الـ <span class="accent latin">production</span></h2>
     </div>
     <div class="ba-stage bleed reveal" data-parallax>
-      <div class="ba brackets" role="slider" tabindex="0" aria-label="مقارنة قبل و بعد الـ production"
-           aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+      <div class="ba brackets" role="slider" tabindex="0" aria-label="مقارنة قبل و بعد الـ production" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
         <div class="ba__layer ba__after"><img src={beforeAfter.after} alt="بعد الـ production" width="1920" height="1080" /></div>
-        <div class="ba__layer ba__before"><img src={beforeAfter.before} alt="قبل — raw" width="1920" height="1080" /></div>
+        <div class="ba__layer ba__before"><img src={beforeAfter.before} alt="قبل - raw" width="1920" height="1080" /></div>
         <span class="ba__tag ba__tag--b latin">Before · Raw</span>
         <span class="ba__tag ba__tag--a latin">After · Next Level</span>
         <div class="ba__handle"><div class="ba__grip" aria-hidden="true">⟷</div></div>
@@ -91,39 +101,35 @@ const [proofLead, ...proofRest] = proof.items;
     <p class="container ba-sub reveal">{beforeAfter.sub}</p>
   </section>
 
-  <!-- ═══════════════ 03 · THE SYSTEM — pinned, sequential ═══════════════ -->
   <section class="zone system-zone watermark" data-word="SYSTEM" id="system">
     <span class="zindex"><b>03</b> — الـ System</span>
-    <div class="system-pin">
-      <div class="container system-grid">
-        <div class="system-head reveal">
-          <p class="overline">The System</p>
-          <h2 class="system-title">Team واحد.<br /><span class="accent">السلسلة الكاملة.</span></h2>
-          <p class="lead">{system.sub}</p>
-          <p class="system-foot">{system.footer}</p>
-        </div>
-        <ol class="system-steps">
-          {system.steps.map((s, i) => (
-            <li class="sstep" data-step={i}>
-              <span class="sstep__n latin">{s.n}</span>
-              <div class="sstep__body">
-                <h3 class="latin">{s.title} <span class="sstep__ar">{s.ar}</span></h3>
-                <p>{s.body}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
+    <div class="container system-grid">
+      <div class="system-head reveal">
+        <p class="overline">The System</p>
+        <h2 class="system-title">Team واحد.<br /><span class="accent">السلسلة الكاملة.</span></h2>
+        <p class="lead">{system.sub}</p>
+        <p class="system-foot">{system.footer}</p>
       </div>
+      <ol class="system-steps">
+        {system.steps.map((s, i) => (
+          <li class="sstep" data-step={i}>
+            <span class="sstep__n latin">{s.n}</span>
+            <div class="sstep__body">
+              <h3 class="latin">{s.title} <span class="sstep__ar">{s.ar}</span></h3>
+              <p>{s.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
     </div>
   </section>
 
-  <!-- ═══════════════ 04 · CADENCE — quiet, asymmetric ═══════════════ -->
   <section class="zone zone--quiet zone--edge">
     <span class="zindex"><b>04</b> — Consistency</span>
     <div class="container cadence-grid reveal">
       <div class="cadence-head">
         <p class="overline">System, not one-offs</p>
-        <h2 class="cadence-title">الـ <span class="accent latin">Authority</span> موش فيديو وحدة — هي إنك تحضر كل شهر</h2>
+        <h2 class="cadence-title">{cadence.title}</h2>
         <p class="lead">{cadence.sub}</p>
       </div>
       <div class="compare">
@@ -139,12 +145,11 @@ const [proofLead, ...proofRest] = proof.items;
     </div>
   </section>
 
-  <!-- ═══════════════ 05 · WHO — quiet, editorial ═══════════════ -->
   <section class="zone zone--quiet zone--edge">
-    <span class="zindex"><b>05</b> — لِشكون</span>
+    <span class="zindex"><b>05</b> — لشكون</span>
     <div class="container reveal">
       <p class="overline">Who it's for</p>
-      <h2 class="who-title">مصمّم للناس اللي الـ <span class="accent latin">reputation</span> متاعهم هي الـ business متاعهم</h2>
+      <h2 class="who-title">{audience.title}</h2>
       <div class="who">
         {audience.list.map((a, i) => (
           <div class="who__row">
@@ -158,32 +163,38 @@ const [proofLead, ...proofRest] = proof.items;
     </div>
   </section>
 
-  <!-- ═══════════════ 06 · PROOF — loud, asymmetric editorial ═══════════════ -->
   <section class="zone zone--loud zone--dark proof-zone">
     <span class="zindex"><b>06</b> — Proof</span>
     <div class="container proof-head reveal">
       <p class="overline">Proof</p>
-      <h2 class="proof-title">شنوّة يتبدّل كي الـ <span class="accent latin">production</span> يتكفّل بيه</h2>
+      <h2 class="proof-title">{proof.title}</h2>
+      <p class="lead center">{proof.sub}</p>
     </div>
     <div class="container proof-grid reveal">
-      <!-- lead pulled-quote -->
       <figure class="proof-lead">
         <div class="proof-lead__media"><img src={proofLead.poster} alt="" width="720" height="900" loading="lazy" /></div>
-        <blockquote>“{proofLead.quote}”</blockquote>
+        <blockquote>{proofLead.quote}</blockquote>
         <figcaption>{proofLead.who}</figcaption>
       </figure>
-      <!-- supporting quotes + clips -->
       <div class="proof-side">
         {proofRest.map((p) => (
           <figure class="proof-quote">
-            <blockquote>“{p.quote}”</blockquote>
+            <blockquote>{p.quote}</blockquote>
             <figcaption>{p.who}</figcaption>
           </figure>
         ))}
         <div class="proof-clips">
           {work.slice(0, 3).map((w) => (
-            <figure class="shot" role="button" tabindex="0" aria-label={`شوف ${w.tag}`}
-                    data-video={w.tag} data-desc={`${w.tag} — Next Level.`}>
+            <figure
+              class="shot"
+              role="button"
+              tabindex="0"
+              aria-label={`شوف ${w.tag}`}
+              data-video={w.tag}
+              data-video-src={w.video}
+              data-video-poster={w.poster}
+              data-desc={w.caption}
+            >
               <div class="shot__media">
                 <video src={w.video} poster={w.poster} muted loop playsinline preload="none"></video>
                 <div class="shot__play" aria-hidden="true"><span></span></div>
@@ -196,13 +207,12 @@ const [proofLead, ...proofRest] = proof.items;
     </div>
   </section>
 
-  <!-- ═══════════════ 07 · TIERS — medium, hierarchy ═══════════════ -->
   <section class="zone zone--medium zone--edge" id="packs">
     <span class="zindex"><b>07</b> — Packs</span>
     <div class="container reveal">
       <p class="overline">Partnership</p>
       <h2 class="tiers-title">اختار مستوى الـ <span class="accent latin">Partnership</span></h2>
-      <p class="lead center">موش feature list — مستويات شراكة. من fit للـ system الكامل.</p>
+      <p class="lead center">موش feature list - مستويات شراكة. من fit للـ system الكاملة.</p>
       <div class="tiers">
         {tiers.map((t) => (
           <div class={`tier ${t.featured ? 'tier--featured' : ''}`}>
@@ -214,7 +224,7 @@ const [proofLead, ...proofRest] = proof.items;
               {t.outcomes.map((o) => <li><i>✓</i>{o}</li>)}
             </ul>
             <p class="tier__best">{t.best}</p>
-            {t.name === 'Signature'
+            {t.name === 'Signature' && hasRealWhatsapp
               ? <a href={whatsappLink('السلام عليكم، نحب نقدّم طلب للـ Signature.')} target="_blank" rel="noopener" class="btn btn--ghost tier__cta">{t.cta} ←</a>
               : <BookCta class="btn btn--ghost tier__cta" label={`${t.cta} ←`} />}
           </div>
@@ -223,19 +233,17 @@ const [proofLead, ...proofRest] = proof.items;
     </div>
   </section>
 
-  <!-- ═══════════════ 08 · PROMISE — the climax ═══════════════ -->
   <section class="promise watermark" data-word="AUTHORITY">
     <div class="promise__bg" aria-hidden="true"></div>
     <div class="container reveal">
-      <p class="overline">You show up. We handle the rest.</p>
-      <h2 class="promise__title">إنت تحضر.<br /><span class="accent">احنا نتكفّلو بالباقي.</span></h2>
+      <p class="overline">{hero.promiseEn}</p>
+      <h2 class="promise__title">إنت تحضر.<br /><span class="accent">احنا نتكفّلوا بالباقي.</span></h2>
       <BookCta class="btn btn--solid btn--lg" label={CTA.primary} />
     </div>
   </section>
 
-  <!-- ═══════════════ FAQ — quiet ═══════════════ -->
   <section class="zone zone--quiet zone--edge" id="faq">
-    <span class="zindex"><b>09</b> — FAQ</span>
+    <span class="zindex"><b>08</b> — FAQ</span>
     <div class="container narrow reveal">
       <p class="overline">Questions</p>
       <h2 class="faq-title">أسئلة</h2>
@@ -253,145 +261,109 @@ const [proofLead, ...proofRest] = proof.items;
   <Modal />
   <Footer />
 </Base>
+
 <style>
-  /* ═══════════ shared ═══════════ */
   .narrow { max-width: 760px; }
   .lead { color: var(--dim); font-size: clamp(16px,2vw,19px); line-height: 1.7; margin-top: 22px; max-width: 62ch; }
   .lead.center { margin-inline: auto; text-align: center; }
 
-  /* ═══════════ HERO ═══════════ */
   .hero { position: relative; overflow: hidden; padding-block: clamp(48px,7vw,90px) clamp(56px,8vw,110px); }
   .hero__bg { position: absolute; inset: 0; z-index: 0; pointer-events: none;
     background:
       radial-gradient(50% 45% at 82% 4%, rgba(var(--red-rgb),.20), transparent 62%),
-      radial-gradient(40% 40% at 8% 40%, rgba(176,12,18,.10), transparent 60%); }
-  /* bloom bleeds into the section below */
+      radial-gradient(40% 40% at 8% 40%, rgba(165,106,34,.10), transparent 60%); }
   .hero::after { content: ''; position: absolute; left: 0; right: 0; bottom: -120px; height: 220px; z-index: 0; pointer-events: none;
     background: radial-gradient(50% 100% at 72% 0, rgba(var(--red-rgb),.10), transparent 70%); }
   .hero__ghost { position: absolute; z-index: 0; top: 50%; inset-inline-start: 50%; transform: translate(-50%,-50%);
     font-family: var(--font-display); font-weight: 800; font-size: clamp(120px,20vw,300px); letter-spacing: -.03em;
     color: rgba(255,255,255,.02); white-space: nowrap; pointer-events: none; }
-
-  .hero__grid { position: relative; z-index: 1; max-width: var(--maxw); margin-inline: auto; padding-inline: var(--gutter);
-    display: grid; grid-template-columns: 0.92fr 1.35fr; gap: clamp(28px,4vw,56px); align-items: center; }
+  .hero__grid { position: relative; z-index: 1; display: grid; grid-template-columns: 0.92fr 1.35fr; gap: clamp(28px,4vw,56px); align-items: center; }
   .hero__meta { display: flex; flex-direction: column; align-items: flex-start; }
-  .hero__title { font-family: var(--font-ar); font-weight: 900; line-height: 1.04;
-    font-size: clamp(40px,5.6vw,84px); margin-top: 22px; text-wrap: balance; }
-  .hero__en { font-family: var(--font-display); font-weight: 700; color: var(--dim);
-    font-size: clamp(15px,1.7vw,21px); margin-top: 14px; letter-spacing: -.01em; }
-  .hero__promise { font-family: var(--font-ar); font-weight: 900; font-size: clamp(20px,2.6vw,30px); margin-top: 26px; }
-  .hero__cta { display: flex; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
+  .hero__title { font-family: var(--font-ar); font-weight: 900; line-height: 1.04; font-size: clamp(40px,5.6vw,84px); margin-top: 22px; text-wrap: balance; }
+  .hero__en { font-family: var(--font-display); font-weight: 700; color: var(--dim); font-size: clamp(15px,1.7vw,21px); margin-top: 14px; letter-spacing: -.01em; }
+  .hero__sub { color: var(--white); font-size: clamp(17px,2vw,21px); line-height: 1.75; margin-top: 18px; max-width: 34ch; }
+  .hero__promise { font-family: var(--font-ar); font-weight: 900; font-size: clamp(20px,2.6vw,30px); margin-top: 24px; }
+  .hero__cta { display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
   .hero__cta .playdot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); box-shadow: 0 0 10px var(--red); display: inline-block; }
-  .hero__trust { color: var(--dim-2); font-size: 13.5px; margin-top: 28px; }
-
+  .hero__trust { color: var(--dim-2); font-size: 13.5px; margin-top: 24px; max-width: 34ch; }
   .hero__film { position: relative; }
-  .hero__stage { position: relative; aspect-ratio: 16/10; border-radius: var(--radius-lg); overflow: hidden;
-    border: 1px solid var(--line-2); cursor: pointer; background: var(--fill-dark);
-    box-shadow: 0 70px 130px -60px rgba(var(--red-rgb),.55);
-    transform: translateY(var(--py,0)); transition: transform .5s var(--ease), box-shadow .5s var(--ease); }
+  .hero__stage { position: relative; aspect-ratio: 16/10; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--line-2); cursor: pointer; background: var(--fill-dark); box-shadow: 0 70px 130px -60px rgba(var(--red-rgb),.55); transform: translateY(var(--py,0)); transition: transform .5s var(--ease), box-shadow .5s var(--ease); }
   .hero__stage:hover { box-shadow: 0 80px 150px -55px rgba(var(--red-rgb),.7); }
   .hero__stage video { position: absolute; inset: -4%; width: 108%; height: 108%; object-fit: cover; }
-  .hero__vignette { position: absolute; inset: 0; pointer-events: none;
-    background: linear-gradient(to bottom, rgba(5,5,5,.4), transparent 24%, transparent 66%, rgba(5,5,5,.78)),
-                radial-gradient(120% 100% at 50% 50%, transparent 52%, rgba(5,5,5,.5)); }
+  .hero__vignette { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to bottom, rgba(5,5,5,.4), transparent 24%, transparent 66%, rgba(5,5,5,.78)), radial-gradient(120% 100% at 50% 50%, transparent 52%, rgba(5,5,5,.5)); }
   .hero__filmmeta { position: absolute; inset-inline: 20px; top: 16px; z-index: 2; display: flex; justify-content: space-between; }
   .hero__filmmeta .meta-label { color: rgba(250,250,250,.72); }
-  .hero__play { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 2;
-    width: 74px; height: 74px; border-radius: 50%; background: var(--red); display: grid; place-items: center;
-    box-shadow: 0 0 44px -8px rgba(var(--red-rgb),.9); transition: transform .3s var(--ease); }
+  .hero__play { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 2; width: 74px; height: 74px; border-radius: 50%; background: var(--red); display: grid; place-items: center; box-shadow: 0 0 44px -8px rgba(var(--red-rgb),.9); transition: transform .3s var(--ease); }
   .hero__stage:hover .hero__play { transform: translate(-50%,-50%) scale(1.08); }
-  .hero__play span { width: 0; height: 0; border-style: solid; border-width: 12px 0 12px 20px;
-    border-color: transparent transparent transparent #fff; margin-left: 5px; direction: ltr; }
+  .hero__play span { width: 0; height: 0; border-style: solid; border-width: 12px 0 12px 20px; border-color: transparent transparent transparent #fff; margin-left: 5px; direction: ltr; }
   .hero__caption { position: relative; z-index: 1; text-align: center; color: var(--dim); font-size: 14.5px; margin-top: 30px; }
   .hero__caption .dim { color: var(--dim-2); }
 
-  /* ═══════════ REFRAME ═══════════ */
   .reframe-wrap { max-width: 760px; }
-  .reframe-title { font-family: var(--font-ar); font-weight: 900; font-size: clamp(30px,4.4vw,58px);
-    line-height: 1.14; margin-top: 16px; text-wrap: balance; }
-  .reframe-body { margin-bottom: 12px; }
+  .reframe-title, .who-title, .proof-title, .tiers-title, .faq-title, .cadence-title, .system-title, .ba-title {
+    font-family: var(--font-ar); font-weight: 900; line-height: 1.12; margin-top: 14px;
+  }
+  .reframe-title { font-size: clamp(30px,4.4vw,58px); }
   .reframe { margin-top: 30px; }
-  .reframe__row { display: grid; grid-template-columns: 40px 190px 1fr; gap: 22px; align-items: baseline;
-    padding: 26px 0; border-top: 1px solid var(--line); }
+  .reframe__row { display: grid; grid-template-columns: 40px 190px 1fr; gap: 22px; align-items: baseline; padding: 26px 0; border-top: 1px solid var(--line); }
   .reframe__n { font-family: var(--font-display); font-weight: 800; color: var(--red); font-size: 14px; }
   .reframe__row b { font-family: var(--font-display); font-weight: 700; font-size: 19px; }
   .reframe__v { color: var(--dim); }
 
-  /* ═══════════ BEFORE / AFTER ═══════════ */
   .ba-zone { padding-block: clamp(80px,10vw,150px); }
   .ba-head { text-align: center; }
-  .ba-title { font-family: var(--font-ar); font-weight: 900; font-size: clamp(30px,5vw,66px); line-height: 1.08; margin-top: 14px; }
+  .ba-title { font-size: clamp(30px,5vw,66px); }
   .ba-stage { margin-block: clamp(40px,6vw,64px); padding-inline: clamp(0px,4vw,60px); }
-  .ba { position: relative; max-width: 1320px; margin-inline: auto; aspect-ratio: 21/9; overflow: hidden;
-    cursor: ew-resize; user-select: none; border-radius: var(--radius); border: 1px solid var(--line-2);
-    box-shadow: 0 60px 120px -50px rgba(var(--red-rgb),.5); }
+  .ba { position: relative; max-width: 1320px; margin-inline: auto; aspect-ratio: 21/9; overflow: hidden; cursor: ew-resize; user-select: none; border-radius: var(--radius); border: 1px solid var(--line-2); box-shadow: 0 60px 120px -50px rgba(var(--red-rgb),.5); }
   .ba__layer { position: absolute; inset: 0; }
   .ba__layer img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .ba__before { clip-path: inset(0 0 0 50%); }
-  .ba__before img { filter: contrast(.95); }
-  .ba__tag { position: absolute; top: 18px; font-family: var(--font-display); font-weight: 700; font-size: 12px;
-    letter-spacing: .06em; padding: 7px 15px; border-radius: 999px; background: rgba(0,0,0,.5); backdrop-filter: blur(6px); }
+  .ba__tag { position: absolute; top: 18px; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: .06em; padding: 7px 15px; border-radius: 999px; background: rgba(0,0,0,.5); backdrop-filter: blur(6px); }
   .ba__tag--b { inset-inline-start: 18px; color: var(--dim); }
-  .ba__tag--a { inset-inline-end: 18px; color: #fff; background: var(--red); }
-  .ba__handle { position: absolute; inset-block: 0; left: 50%; width: 2px; background: var(--white); transform: translateX(-50%); z-index: 3;
-    box-shadow: 0 0 20px rgba(var(--red-rgb),.7); }
-  .ba__grip { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-    width: 52px; height: 52px; border-radius: 50%; background: var(--red); color: #fff; display: grid; place-items: center;
-    font-size: 17px; box-shadow: 0 10px 30px -6px rgba(var(--red-rgb),.9); }
+  .ba__tag--a { inset-inline-end: 18px; color: var(--red-ink); background: var(--red); }
+  .ba__handle { position: absolute; inset-block: 0; left: 50%; width: 2px; background: var(--white); transform: translateX(-50%); z-index: 3; box-shadow: 0 0 20px rgba(var(--red-rgb),.7); }
+  .ba__grip { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 52px; height: 52px; border-radius: 50%; background: var(--red); color: var(--red-ink); display: grid; place-items: center; font-size: 17px; box-shadow: 0 10px 30px -6px rgba(var(--red-rgb),.9); }
   .ba-sub { text-align: center; color: var(--dim); max-width: 620px; margin: 0 auto; }
 
-  /* ═══════════ SYSTEM (pinned) ═══════════ */
   .system-zone { padding-block: 0; }
-  .system-pin { }
-  .system-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(32px,5vw,72px); align-items: start;
-    padding-block: clamp(80px,10vw,140px); }
+  .system-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(32px,5vw,72px); align-items: start; padding-block: clamp(80px,10vw,140px); }
   .system-head { position: sticky; top: 100px; }
-  .system-title { font-family: var(--font-ar); font-weight: 900; font-size: clamp(30px,4.6vw,60px); line-height: 1.08; margin-top: 14px; }
-  .system-foot { margin-top: 28px; color: var(--white); font-weight: 600; font-size: clamp(16px,1.9vw,19px); max-width: 42ch;
-    border-inline-start: 2px solid var(--red); padding-inline-start: 18px; }
+  .system-title { font-size: clamp(30px,4.6vw,60px); }
+  .system-foot { margin-top: 28px; color: var(--white); font-weight: 600; font-size: clamp(16px,1.9vw,19px); max-width: 42ch; border-inline-start: 2px solid var(--red); padding-inline-start: 18px; }
   .system-steps { display: flex; flex-direction: column; }
-  .sstep { display: grid; grid-template-columns: 64px 1fr; gap: 22px; align-items: start;
-    padding: clamp(24px,3vw,38px) 0; border-top: 1px solid var(--line); opacity: .34; transition: opacity .5s var(--ease); }
+  .sstep { display: grid; grid-template-columns: 64px 1fr; gap: 22px; align-items: start; padding: clamp(24px,3vw,38px) 0; border-top: 1px solid var(--line); opacity: .34; transition: opacity .5s var(--ease); }
   .sstep:first-child { border-top: none; }
   .sstep.on { opacity: 1; }
-  .sstep__n { font-family: var(--font-display); font-weight: 800; font-size: clamp(30px,3.4vw,46px);
-    color: transparent; -webkit-text-stroke: 1.5px var(--red); }
+  .sstep__n { font-family: var(--font-display); font-weight: 800; font-size: clamp(30px,3.4vw,46px); color: transparent; -webkit-text-stroke: 1.5px var(--red); }
   .sstep.on .sstep__n { color: var(--red); -webkit-text-stroke: 0; }
   .sstep__body h3 { font-family: var(--font-display); font-weight: 700; font-size: clamp(20px,2.2vw,27px); }
   .sstep__ar { color: var(--dim); font-weight: 400; font-size: .7em; }
   .sstep__body p { color: var(--dim); margin-top: 8px; line-height: 1.6; }
 
-  /* ═══════════ CADENCE ═══════════ */
   .cadence-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(32px,5vw,64px); align-items: center; }
-  .cadence-head { position: relative; }
-  .cadence-title { font-family: var(--font-ar); font-weight: 900; font-size: clamp(28px,4vw,52px); line-height: 1.12; margin-top: 14px; }
+  .cadence-title { font-size: clamp(28px,4vw,52px); }
   .compare { display: grid; gap: 16px; }
   .compare__col { padding: 30px 28px; border-radius: var(--radius); border: 1px solid var(--line); background: var(--fill-card); }
   .compare__col--good { border-color: rgba(var(--red-rgb),.35); background: linear-gradient(180deg, rgba(var(--red-rgb),.06), var(--surface)); }
-  .compare__tag { display: inline-block; font-family: var(--font-display); font-weight: 700; font-size: 12px;
-    letter-spacing: .08em; text-transform: uppercase; padding: 6px 14px; border-radius: 999px; background: var(--surface-3); color: var(--dim); margin-bottom: 20px; }
-  .compare__tag--accent { background: var(--red); color: #fff; }
+  .compare__tag { display: inline-block; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; padding: 6px 14px; border-radius: 999px; background: var(--surface-3); color: var(--dim); margin-bottom: 20px; }
+  .compare__tag--accent { background: var(--red); color: var(--red-ink); }
   .compare__col ul { display: flex; flex-direction: column; gap: 12px; }
   .compare__col li { display: flex; gap: 12px; font-size: 15.5px; color: var(--dim); }
   .compare__col--good li { color: var(--white); }
   .compare__col li i { font-style: normal; font-weight: 800; color: var(--dim-2); }
   .compare__col--good li i { color: var(--red); }
 
-  /* ═══════════ WHO ═══════════ */
-  .who-title { font-family: var(--font-ar); font-weight: 900; font-size: clamp(28px,4.4vw,58px); line-height: 1.12; margin-top: 14px; max-width: 20ch; }
+  .who-title { font-size: clamp(28px,4.4vw,58px); max-width: 20ch; }
   .who { margin-top: 44px; }
-  .who__row { display: grid; grid-template-columns: 44px 320px 1fr; gap: 22px; align-items: baseline;
-    padding: 24px 0; border-top: 1px solid var(--line); transition: background .3s; }
+  .who__row { display: grid; grid-template-columns: 44px 320px 1fr; gap: 22px; align-items: baseline; padding: 24px 0; border-top: 1px solid var(--line); transition: background .3s; }
   .who__row:hover { background: rgba(255,255,255,.015); }
   .who__n { font-family: var(--font-display); font-weight: 800; color: var(--red); font-size: 14px; }
   .who__row b { font-family: var(--font-ar); font-weight: 900; font-size: clamp(19px,2.4vw,26px); }
   .who__why { color: var(--dim); }
-  .who__note { margin-top: 40px; color: var(--dim); font-size: clamp(16px,2vw,19px); max-width: 640px;
-    border-inline-start: 2px solid var(--red); padding-inline-start: 20px; }
+  .who__note { margin-top: 40px; color: var(--dim); font-size: clamp(16px,2vw,19px); max-width: 640px; border-inline-start: 2px solid var(--red); padding-inline-start: 20px; }
 
-  /* ═══════════ PROOF ═══════════ */
   .proof-head { text-align: center; }
-  .proof-title { font-family: var(--font-ar); font-weight: 900; font-size: clamp(28px,4.4vw,56px); line-height: 1.1; margin-top: 14px; }
+  .proof-title { font-size: clamp(28px,4.4vw,56px); }
   .proof-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(24px,3vw,44px); margin-top: clamp(44px,6vw,64px); align-items: start; }
   .proof-lead { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line-2); background: var(--surface-2); }
   .proof-lead__media { aspect-ratio: 4/5; overflow: hidden; background: var(--fill-dark); }
@@ -403,34 +375,25 @@ const [proofLead, ...proofRest] = proof.items;
   .proof-quote { border-radius: var(--radius); border: 1px solid var(--line); background: var(--fill-card); padding: 26px 28px; }
   .proof-quote blockquote { font-size: 17px; line-height: 1.6; }
   .proof-quote figcaption { color: var(--red); font-family: var(--font-display); font-weight: 600; font-size: 12.5px; margin-top: 12px; }
-  .proof-clips { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 2px; }
-  .shot { border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--line); background: var(--surface-2); cursor: pointer;
-    transition: transform .4s var(--ease), border-color .4s; }
+  .proof-clips { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+  .shot { border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--line); background: var(--surface-2); cursor: pointer; transition: transform .4s var(--ease), border-color .4s; }
   .shot:hover { transform: translateY(-6px); border-color: rgba(var(--red-rgb),.5); }
   .shot__media { aspect-ratio: 9/14; position: relative; background: var(--fill-dark); overflow: hidden; }
   .shot__media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
-  .shot__media::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
-    background: linear-gradient(to top, rgba(5,5,5,.6), transparent 55%); }
-  .shot__play { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 2;
-    width: 38px; height: 38px; border-radius: 50%; background: var(--red); display: grid; place-items: center; transition: opacity .3s; }
-  .shot__play span { width: 0; height: 0; border-style: solid; border-width: 6px 0 6px 10px;
-    border-color: transparent transparent transparent #fff; margin-left: 3px; direction: ltr; }
+  .shot__media::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(to top, rgba(5,5,5,.6), transparent 55%); }
+  .shot__play { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 2; width: 38px; height: 38px; border-radius: 50%; background: var(--red); display: grid; place-items: center; transition: opacity .3s; }
+  .shot__play span { width: 0; height: 0; border-style: solid; border-width: 6px 0 6px 10px; border-color: transparent transparent transparent #fff; margin-left: 3px; direction: ltr; }
   .shot:hover .shot__play { opacity: 0; }
   .shot figcaption { padding: 10px; }
-  .tag { display: inline-block; background: var(--red); color: #fff; font-family: var(--font-display);
-    font-weight: 700; font-size: 10px; padding: 3px 9px; border-radius: 999px; }
+  .tag { display: inline-block; background: var(--red); color: var(--red-ink); font-family: var(--font-display); font-weight: 700; font-size: 10px; padding: 3px 9px; border-radius: 999px; }
 
-  /* ═══════════ TIERS ═══════════ */
-  .tiers-title { font-family: var(--font-ar); font-weight: 900; font-size: clamp(28px,4.4vw,56px); line-height: 1.1; margin-top: 14px; text-align: center; }
+  .tiers-title { font-size: clamp(28px,4.4vw,56px); text-align: center; }
   .tiers-title + .lead { text-align: center; margin-inline: auto; }
   .tiers { display: grid; grid-template-columns: 1fr 1.12fr 1fr; gap: 18px; margin-top: clamp(44px,6vw,64px); align-items: center; }
-  .tier { padding: 38px 32px; border-radius: var(--radius-lg); border: 1px solid var(--line); background: var(--fill-card);
-    display: flex; flex-direction: column; position: relative; transition: border-color .4s, transform .4s var(--ease); }
+  .tier { padding: 38px 32px; border-radius: var(--radius-lg); border: 1px solid var(--line); background: var(--fill-card); display: flex; flex-direction: column; position: relative; transition: border-color .4s, transform .4s var(--ease); }
   .tier:hover { border-color: var(--line-2); transform: translateY(-4px); }
-  .tier--featured { border-color: rgba(var(--red-rgb),.45); background: linear-gradient(180deg, rgba(var(--red-rgb),.08), var(--surface));
-    box-shadow: 0 0 80px -22px rgba(var(--red-rgb),.5); padding-top: 54px; }
-  .tier__badge { position: absolute; top: 18px; left: 50%; transform: translateX(-50%); background: var(--red); color: #fff;
-    font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: .04em; padding: 6px 16px; border-radius: 999px; white-space: nowrap; }
+  .tier--featured { border-color: rgba(var(--red-rgb),.45); background: linear-gradient(180deg, rgba(var(--red-rgb),.08), var(--surface)); box-shadow: 0 0 80px -22px rgba(var(--red-rgb),.5); padding-top: 54px; }
+  .tier__badge { position: absolute; top: 18px; left: 50%; transform: translateX(-50%); background: var(--red); color: var(--red-ink); font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: .04em; padding: 6px 16px; border-radius: 999px; white-space: nowrap; }
   .tier__name { font-family: var(--font-display); font-weight: 800; font-size: 26px; }
   .tier__ar { color: var(--dim); font-size: 14.5px; margin: 8px 0 20px; min-height: 42px; }
   .tier__price { font-family: var(--font-display); font-weight: 800; font-size: 32px; padding-bottom: 22px; border-bottom: 1px solid var(--line); margin-bottom: 22px; }
@@ -444,42 +407,37 @@ const [proofLead, ...proofRest] = proof.items;
   .tier--featured .tier__cta { background: var(--red); border-color: var(--red); color: #fff; }
   .tier--featured .tier__cta:hover { background: var(--red-hot); border-color: var(--red-hot); }
 
-  /* ═══════════ PROMISE — climax ═══════════ */
   .promise { position: relative; overflow: hidden; text-align: center; padding-block: clamp(110px,16vw,220px); background: #030303; border-block: 1px solid var(--line); }
-  .promise__bg { position: absolute; inset: 0; z-index: 0; pointer-events: none;
-    background: radial-gradient(60% 90% at 50% 45%, rgba(var(--red-rgb),.20), transparent 62%); }
+  .promise__bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(60% 90% at 50% 45%, rgba(var(--red-rgb),.20), transparent 62%); }
   .promise .container { position: relative; z-index: 1; }
   .promise__title { font-family: var(--font-ar); font-weight: 900; font-size: clamp(44px,9vw,120px); line-height: 1.02; margin: 18px 0 38px; text-wrap: balance; }
 
-  /* ═══════════ FAQ ═══════════ */
-  .faq-title { font-family: var(--font-ar); font-weight: 900; font-size: clamp(34px,5vw,64px); margin-top: 14px; }
+  .faq-title { font-size: clamp(34px,5vw,64px); }
   .faq { margin-top: clamp(40px,5vw,52px); display: flex; flex-direction: column; gap: 12px; }
   .faq__item { border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface-2); overflow: hidden; }
   .faq__item[open] { border-color: var(--line-2); }
-  .faq__item summary { list-style: none; cursor: pointer; padding: 22px 24px; font-weight: 600; font-size: 17px;
-    display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .faq__item summary { list-style: none; cursor: pointer; padding: 22px 24px; font-weight: 600; font-size: 17px; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
   .faq__item summary::-webkit-details-marker { display: none; }
   .faq__item summary i { font-style: normal; color: var(--red); font-size: 26px; transition: transform .3s var(--ease); }
   .faq__item[open] summary i { transform: rotate(45deg); }
   .faq__item p { color: var(--dim); padding: 0 24px 24px; line-height: 1.7; }
 
-  /* ═══════════ RESPONSIVE ═══════════ */
   @media (max-width: 1000px) {
-    .hero__grid { grid-template-columns: 1fr; gap: 34px; }
+    .hero__grid, .system-grid, .cadence-grid, .proof-grid { grid-template-columns: 1fr; }
     .hero__meta { align-items: center; text-align: center; }
-    .hero__meta .meta-label { align-self: center; }
     .hero__cta { justify-content: center; }
-    .system-grid, .cadence-grid, .proof-grid { grid-template-columns: 1fr; }
+    .hero__sub, .hero__trust { max-width: 42ch; }
     .system-head { position: static; }
     .tiers { grid-template-columns: 1fr; }
     .tier--featured { order: -1; }
     .who__row { grid-template-columns: 34px 1fr; }
-    .who__why { grid-column: 2; color: var(--dim); }
-    .proof-clips { grid-template-columns: repeat(3,1fr); }
+    .who__why { grid-column: 2; }
   }
-  @media (max-width: 600px) {
+
+  @media (max-width: 640px) {
     .reframe__row { grid-template-columns: 30px 1fr; }
     .reframe__v { grid-column: 2; }
     .ba { aspect-ratio: 16/11; }
+    .proof-clips { grid-template-columns: 1fr 1fr 1fr; }
   }
 </style>

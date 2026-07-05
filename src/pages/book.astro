@@ -2,26 +2,28 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import { site, book, studio, whatsappLink, CTA } from '../config';
+import { site, book, studio, whatsappLink, CTA, hasRealWhatsapp } from '../config';
+
+const fallbackMailto =
+  `mailto:${site.email}?subject=${encodeURIComponent('Next Level - Private Call Request')}`;
 ---
 <Base
   title="Next Level — احجز مكالمة خاصة"
-  description="15 دقيقة. نتعلّمو مجالك و أهدافك، نوريّوك شنوّة ممكن، و إذا كان fit نبداو."
+  description="15 دقيقة. نفهموا مجالك وأهدافك، ونوريّوك شنوّة ممكن إذا تحب Next Level تتكفّل بالحضور متاعك."
 >
   <Nav current="/book" />
 
   <section class="section book">
     <div class="container book__grid reveal">
-      <!-- left: framing -->
       <div class="book__intro">
         <span class="eyebrow">{book.eyebrow}</span>
         <h1 class="book__title">{book.title}</h1>
         <p class="lead">{book.sub}</p>
 
         <ul class="book__points">
-          <li><i>✓</i> 15 دقيقة، بلا التزام</li>
-          <li><i>✓</i> نتعلّمو مجالك و كيفاش تحب تبان</li>
-          <li><i>✓</i> نوريّوك شنوّة ممكن — و إذا كان fit نبداو</li>
+          <li><i>✓</i> 15 دقيقة، بلا تعقيد وبلا ضغط</li>
+          <li><i>✓</i> نفهموا مجالك، الـ positioning، وشنوّة يلزم يتبدّل</li>
+          <li><i>✓</i> إذا كان fit، نحدّدوا الخطوة اللي بعد</li>
         </ul>
 
         <div class="book__founder">
@@ -33,7 +35,6 @@ import { site, book, studio, whatsappLink, CTA } from '../config';
         </div>
       </div>
 
-      <!-- right: qualifier form -->
       <div class="book__panel">
         <form class="form" id="bookForm" novalidate>
           {book.fields.map((f) => (
@@ -49,7 +50,7 @@ import { site, book, studio, whatsappLink, CTA } from '../config';
             </select>
           </label>
 
-          <label>الهدف متاعك
+          <label>شنوّة تحب تغيّر؟
             <select name="goal" required>
               <option value="" disabled selected>اختار</option>
               {book.goals.map((g) => <option>{g}</option>)}
@@ -60,17 +61,19 @@ import { site, book, studio, whatsappLink, CTA } from '../config';
           <p class="form__ok" id="bookOk"></p>
         </form>
 
-        <div class="book__alt">
-          <span>ولا كلّمنا مباشرة</span>
-          <a href={whatsappLink('السلام عليكم Next Level 👋 نحب نحجز مكالمة.')} target="_blank" rel="noopener" class="btn btn--ghost">{CTA.whatsapp}</a>
-        </div>
+        {hasRealWhatsapp && (
+          <div class="book__alt">
+            <span>ولا كلّم الـ Studio مباشرة</span>
+            <a href={whatsappLink('السلام عليكم Next Level 👋 نحب نحجز مكالمة خاصة.')} target="_blank" rel="noopener" class="btn btn--ghost">{CTA.whatsapp}</a>
+          </div>
+        )}
       </div>
     </div>
   </section>
 
   <Footer />
 
-  <script is:inline define:vars={{ wa: site.whatsapp }}>
+  <script is:inline define:vars={{ wa: site.whatsapp, mailto: fallbackMailto, useWhatsapp: hasRealWhatsapp ? '1' : '' }}>
     document.getElementById('bookForm')?.addEventListener('submit', (e) => {
       e.preventDefault();
       const f = e.target;
@@ -81,7 +84,8 @@ import { site, book, studio, whatsappLink, CTA } from '../config';
         if (bad) { ok = false; first = first || i; }
       });
       if (!ok) { first && first.focus(); return; }
-      const msg =
+
+      const body =
 `السلام عليكم Next Level 👋
 • الاسم: ${f.name.value.trim()}
 • المجال: ${f.area.value}
@@ -89,11 +93,20 @@ import { site, book, studio, whatsappLink, CTA } from '../config';
 • WhatsApp: ${f.phone.value.trim()}
 
 نحب نحجز مكالمة خاصة.`;
-      const url = `https://wa.me/${wa}?text=${encodeURIComponent(msg)}`;
+
       const el = document.getElementById('bookOk');
-      const win = window.open(url, '_blank');
-      if (win) el.textContent = 'تمّت! ✅ كمّل الإرسال على الـ WhatsApp و احنا نجاوبوك بسرعة.';
-      else el.innerHTML = 'اضغط باش تكمّل ← <a href="' + url + '" target="_blank" rel="noopener" style="color:#fff;text-decoration:underline">افتح الـ WhatsApp</a>';
+
+      if (useWhatsapp) {
+        const url = `https://wa.me/${wa}?text=${encodeURIComponent(body)}`;
+        const win = window.open(url, '_blank');
+        if (win) el.textContent = 'تمّت! ✅ كمّل الإرسال على الـ WhatsApp واحنا نرجعولك بسرعة.';
+        else el.innerHTML = 'اضغط باش تكمّل ← <a href="' + url + '" target="_blank" rel="noopener" style="color:#fff;text-decoration:underline">افتح الـ WhatsApp</a>';
+      } else {
+        const url = `${mailto}&body=${encodeURIComponent(body)}`;
+        window.location.href = url;
+        el.textContent = 'تمّت! ✅ تفتحلك الـ email باش تبعث الطلب، ونجاوبوك من بعد.';
+      }
+
       el.classList.add('show');
     });
   </script>
@@ -115,18 +128,18 @@ import { site, book, studio, whatsappLink, CTA } from '../config';
   .book__panel { border: 1px solid var(--line-2); border-radius: var(--radius-lg); padding: clamp(24px,4vw,38px); background: var(--fill-card); }
   .form { display: flex; flex-direction: column; gap: 18px; }
   .form label { display: flex; flex-direction: column; gap: 8px; font-weight: 600; font-size: 14px; }
-  .form input, .form select { background: var(--surface-3); border: 1px solid var(--line-2); border-radius: var(--radius-sm);
-    padding: 15px 16px; color: var(--white); font-family: inherit; font-size: 15px; transition: border-color .2s, box-shadow .2s; }
+  .form input, .form select { background: var(--surface-3); border: 1px solid var(--line-2); border-radius: var(--radius-sm); padding: 15px 16px; color: var(--white); font-family: inherit; font-size: 15px; transition: border-color .2s, box-shadow .2s; }
   .form input:focus, .form select:focus { outline: none; border-color: var(--red); box-shadow: var(--ring); }
   .form input::placeholder { color: var(--dim-2); }
   .form .invalid { border-color: var(--red); box-shadow: var(--ring); }
   .form__submit { margin-top: 8px; width: 100%; }
-  .form__ok { display: none; color: #fff; font-weight: 600; text-align: center; background: rgba(var(--red-rgb),.12);
-    border: 1px solid rgba(var(--red-rgb),.35); border-radius: var(--radius-sm); padding: 14px; }
+  .form__ok { display: none; color: #fff; font-weight: 600; text-align: center; background: rgba(var(--red-rgb),.12); border: 1px solid rgba(var(--red-rgb),.35); border-radius: var(--radius-sm); padding: 14px; }
   .form__ok.show { display: block; }
   .book__alt { margin-top: 22px; padding-top: 22px; border-top: 1px solid var(--line); text-align: center; }
   .book__alt span { display: block; color: var(--dim); font-size: 14px; margin-bottom: 14px; }
   .book__alt .btn { width: 100%; }
 
-  @media (max-width: 820px) { .book__grid { grid-template-columns: 1fr; } }
+  @media (max-width: 820px) {
+    .book__grid { grid-template-columns: 1fr; }
+  }
 </style>
