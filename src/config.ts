@@ -88,11 +88,9 @@ export const hero = {
 };
 
 /* ---- 03 · INTRO FILM — carries the primary value proposition + page H1 ----
-   TODO client: the real horizontal service-introduction film does not exist in
-   the current Drive collection. Drop it at `video` below (16:9, with audio),
-   rebuild, and the play button activates automatically (index.astro checks
-   file existence at build time). Poster is a labelled temporary frame from
-   approved Next Level hero footage — replace together with the film. */
+   Uses the real "Intro Video" supplied via Drive (5.3s brand film with audio).
+   Playback stays gated on file existence at build time, so a future longer
+   cut is a drop-in replacement at the same path. */
 export const introFilm = {
   label: 'Intro Film',
   system: 'THE NEXT LEVEL SYSTEM',
@@ -101,8 +99,11 @@ export const introFilm = {
   play: 'شغّل الفيلم',
   soon: 'الفيلم الكامل قريبًا',
   servicesLink: 'اكتشف خدماتنا',
+  /* real Intro Video from the Drive collection — 1920×1080 h264 + AAC,
+     re-encoded CRF23 +faststart (10.6 MB source → ~2 MB web) */
   video: '/media/intro/services-intro.mp4',
   poster: '/media/intro/services-intro-poster.webp',
+  duration: '00:05',
 };
 
 /* ---- 02 · TRUST (facts only — no invented numbers) ---- */

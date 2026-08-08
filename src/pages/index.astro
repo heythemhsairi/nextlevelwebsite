@@ -90,54 +90,49 @@ const introFilmReady = existsSync(new URL(`../../public${introFilm.video}`, impo
       </div>
     </section>
 
-    <!-- ═══ 03 · INTRO FILM — the primary value proposition + page H1 ═══ -->
-    <section class="section--sm ifilm">
-      <div class="container">
-        <div class="ifilm__top">
-          <span class="meta"><span class="accent">●</span> {introFilm.label}</span>
+    <!-- ═══ 03 · INTRO FILM — one editorial composition: header row, wide film,
+         text grid below (H1 8 cols · details 4 cols) ═══ -->
+    <section class="ifilm">
+      <div class="ifilm__container">
+        <header class="ifilm__head reveal">
+          <span class="meta"><b class="accent">01</b> — INTRO FILM</span>
           <span class="meta latin">{introFilm.system}</span>
-        </div>
+        </header>
 
-        <figure class="ifilm__stage">
+        <figure class="ifilm__media reveal">
           <img
             src={introFilm.poster}
             alt=""
-            width="1600" height="892"
+            width="1600" height="900"
             loading="lazy"
             class="ifilm__poster"
           />
-          <div class="ifilm__shade" aria-hidden="true"></div>
-
-          <figcaption class="ifilm__side">
-            <p class="ifilm__sub">{introFilm.sub}</p>
-            <div class="ifilm__actions">
-              {introFilmReady ? (
-                <button
-                  type="button"
-                  class="ifilm__play"
-                  data-reel={introFilm.video}
-                  data-reel-poster={introFilm.poster}
-                >
-                  <span class="ifilm__play-ic" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                  </span>
-                  {introFilm.play}
-                  <span class="ifilm__sound latin" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 010 7"/></svg>
-                    Sound
-                  </span>
-                </button>
-              ) : (
-                <span class="ifilm__play ifilm__play--soon" aria-disabled="true">
-                  <span class="ifilm__play-ic" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                  </span>
-                  {introFilm.soon}
-                </span>
-              )}
-              <a href="/services" class="ifilm__svc">{introFilm.servicesLink} <span class="arrow" aria-hidden="true">←</span></a>
-            </div>
-          </figcaption>
+          {introFilmReady ? (
+            <button
+              type="button"
+              class="ifilm__play"
+              data-reel={introFilm.video}
+              data-reel-poster={introFilm.poster}
+              aria-label={`${introFilm.play} — Intro Film، بالصوت`}
+            >
+              <span class="ifilm__play-circle" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </span>
+              <span class="ifilm__play-row" aria-hidden="true">
+                {introFilm.play}
+                <i class="ifilm__dot"></i>
+                <span class="latin" dir="ltr">{introFilm.duration}</span>
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 010 7"/></svg>
+              </span>
+            </button>
+          ) : (
+            <span class="ifilm__play ifilm__play--soon" aria-disabled="true">
+              <span class="ifilm__play-circle" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </span>
+              <span class="ifilm__play-row">{introFilm.soon}</span>
+            </span>
+          )}
         </figure>
 
         <!-- the page's single semantic H1 — masked two-line reveal -->
@@ -146,6 +141,15 @@ const introFilmReady = existsSync(new URL(`../../public${introFilm.video}`, impo
             <span class="ifilm__line"><i>{line}</i></span>
           ))}
         </h1>
+
+        <div class="ifilm__aside reveal">
+          <p class="ifilm__sub">{introFilm.sub}</p>
+          <p class="ifilm__process meta latin" dir="ltr">Plan → Write → Shoot → Edit → Publish</p>
+        </div>
+
+        <a href="/services" class="ifilm__svc reveal">
+          {introFilm.servicesLink} <span class="arrow" aria-hidden="true">←</span>
+        </a>
       </div>
     </section>
 
@@ -316,64 +320,89 @@ const introFilmReady = existsSync(new URL(`../../public${introFilm.video}`, impo
   .trust__fields { grid-column: 2; color: var(--black-64); font-size: var(--text-sm); display: flex; gap: 10px; flex-wrap: wrap; }
   .trust__fields i { font-style: normal; color: var(--color-red); }
 
-  /* ═══ intro film ═══ */
-  .ifilm { padding-top: var(--section-y-sm); padding-bottom: clamp(56px, 8vw, 110px); }
-  .ifilm__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+  /* ═══ intro film — one editorial grid composition ═══ */
+  .ifilm {
+    background: var(--color-black);
+    padding-top: clamp(72px, 9vw, 140px);
+    padding-bottom: clamp(88px, 11vw, 180px);
+  }
+  /* wider shared container: the film consumes the content width.
+     The 78vh term keeps the TRUE 16:9 frame within the viewport on short
+     screens by shrinking the whole composition (header stays edge-aligned). */
+  .ifilm__container {
+    width: min(100% - 40px, 1440px, calc(78vh * 16 / 9));
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: minmax(0, 8fr) minmax(260px, 4fr);
+    grid-template-areas:
+      'head  head'
+      'media media'
+      'title aside'
+      'title cta';
+    column-gap: clamp(32px, 5vw, 72px);
+  }
 
-  .ifilm__stage {
+  /* header row — labels share one baseline, aligned to the film edges */
+  .ifilm__head {
+    grid-area: head;
+    display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+    padding-bottom: 14px; margin-bottom: 22px;
+    border-bottom: 1px solid var(--white-10);
+  }
+  .ifilm__head .accent { font-weight: 700; }
+
+  /* film frame — full content width, real 16:9 (height budget lives on the container) */
+  .ifilm__media {
+    grid-area: media;
     position: relative;
-    border-radius: var(--radius-large);
+    width: 100%;
+    aspect-ratio: 16 / 9;
     overflow: hidden;
-    border: 1px solid var(--white-08);
+    border-radius: clamp(14px, 1.5vw, 24px);
     background: var(--color-black);
   }
-  .ifilm__poster { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; }
-  /* shade only where the caption sits (bottom-end corner) */
-  .ifilm__shade {
-    position: absolute; inset: 0; pointer-events: none;
-    background: linear-gradient(to top, rgba(10, 8, 8, 0.72) 0%, rgba(10, 8, 8, 0.15) 34%, transparent 60%);
-  }
-  .ifilm__side {
-    position: absolute; bottom: clamp(18px, 3vw, 34px); inset-inline-end: clamp(18px, 3vw, 34px);
-    max-width: 380px;
-    display: flex; flex-direction: column; gap: 16px; align-items: flex-start;
-  }
-  .ifilm__sub { color: var(--white-70); font-size: var(--text-sm); line-height: 1.8; }
-  .ifilm__actions { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
-  .ifilm__play {
-    display: inline-flex; align-items: center; gap: 12px;
-    min-height: 52px; padding: 12px 24px;
-    background: var(--color-red); color: var(--color-white);
-    border: none; border-radius: var(--radius-small);
-    font-family: var(--font-arabic); font-weight: 700; font-size: var(--text-sm);
-    cursor: pointer; transition: background 0.2s;
-  }
-  .ifilm__play:hover { background: #C9271E; }
-  .ifilm__play--soon { background: var(--black-72); color: var(--white-55); cursor: default; border: 1px solid var(--white-10); }
-  .ifilm__play-ic { display: inline-flex; }
-  .ifilm__sound {
-    display: inline-flex; align-items: center; gap: 5px;
-    font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
-    opacity: 0.8; border-inline-start: 1px solid rgba(244, 241, 238, 0.3); padding-inline-start: 10px;
-  }
-  .ifilm__svc {
-    color: var(--white-70); font-weight: 600; font-size: var(--text-sm);
-    min-height: 44px; display: inline-flex; align-items: center;
-  }
-  .ifilm__svc:hover { color: var(--color-white); }
+  .ifilm__poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
-  /* monumental Arabic H1 — overlaps the stage's lower edge like a film title */
+  /* centered play control — circle + one-line label (title, duration, sound) */
+  .ifilm__play {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+    width: 100%; border: none; background: rgba(10, 8, 8, 0.14);
+    color: var(--color-white); cursor: pointer;
+    font-family: var(--font-arabic);
+    transition: background 0.25s var(--ease);
+  }
+  .ifilm__play:hover { background: rgba(10, 8, 8, 0.3); }
+  .ifilm__play-circle {
+    width: 84px; height: 84px; border-radius: 50%;
+    background: var(--color-red); color: var(--color-white);
+    display: grid; place-items: center;
+    padding-inline-start: 6px; /* optical centering of the triangle */
+    transition: transform 0.25s var(--ease);
+  }
+  .ifilm__play:hover .ifilm__play-circle { transform: scale(1.07); }
+  .ifilm__play-row {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-weight: 700; font-size: var(--text-sm);
+    background: var(--black-72); border-radius: var(--radius-small);
+    padding: 8px 16px; backdrop-filter: blur(6px);
+  }
+  .ifilm__dot { width: 4px; height: 4px; border-radius: 50%; background: var(--color-red); }
+  .ifilm__play--soon { cursor: default; }
+  .ifilm__play--soon .ifilm__play-circle { background: var(--black-72); border: 1px solid var(--white-16); }
+
+  /* monumental H1 — its own controlled space, 8 columns, start-aligned (RTL right) */
   .ifilm__title {
+    grid-area: title;
+    align-self: end;
+    margin-top: clamp(40px, 5vw, 72px);
     font-family: var(--font-arabic);
     font-weight: 700;
-    font-size: clamp(54px, 7vw, 132px);
-    line-height: 1.04;
+    font-size: clamp(58px, 7.2vw, 128px);
+    line-height: 1.05; /* Arabic ascenders/descenders need more than Latin 0.94 */
     color: var(--color-white);
     text-wrap: balance;
-    margin-top: calc(clamp(54px, 7vw, 132px) * -0.62);
-    padding-inline-start: clamp(4px, 2vw, 40px);
-    position: relative; z-index: 2;
-    pointer-events: none;
+    max-width: 12ch;
   }
   /* masked two-line reveal (site.js adds .in once, on viewport entry) */
   .ifilm__line { display: block; overflow: hidden; }
@@ -387,6 +416,28 @@ const introFilmReady = existsSync(new URL(`../../public${introFilm.video}`, impo
   @media (prefers-reduced-motion: reduce) {
     .ifilm__line i { transform: none; }
   }
+
+  /* details column — 4 columns, bottom-aligned with the headline baseline */
+  .ifilm__aside {
+    grid-area: aside;
+    align-self: end;
+    margin-top: clamp(40px, 5vw, 72px);
+    display: flex; flex-direction: column; gap: 18px;
+  }
+  .ifilm__sub { color: var(--white-70); font-size: var(--text-base); line-height: 1.85; max-width: 38ch; }
+  .ifilm__process { font-size: 11px; }
+
+  .ifilm__svc {
+    grid-area: cta;
+    justify-self: start;
+    margin-top: 18px;
+    display: inline-flex; align-items: center; gap: 10px;
+    min-height: 44px;
+    color: var(--color-white); font-weight: 700; font-size: var(--text-base);
+    border-bottom: 2px solid var(--color-red);
+    transition: color 0.2s;
+  }
+  .ifilm__svc:hover { color: var(--color-red); }
 
   /* ═══ work ═══ */
   .work-sec__head { display: flex; flex-direction: column; gap: 16px; max-width: 640px; }
@@ -462,22 +513,20 @@ const introFilmReady = existsSync(new URL(`../../public${introFilm.video}`, impo
     .svc__panel--line { margin-top: 0; }
   }
   @media (max-width: 900px) {
-    /* intro film: stacked composition — no overlay, no overlap */
+    /* intro film: clean vertical stack —
+       labels → headline → copy → film (play inside) → services link */
+    .ifilm { padding-top: 72px; padding-bottom: 96px; }
+    .ifilm__container { display: flex; flex-direction: column; }
+    .ifilm__head { order: 1; }
     .ifilm__title {
-      margin-top: 0; padding-inline-start: 0;
-      order: -1;
-      font-size: clamp(42px, 12vw, 66px); line-height: 1.08;
-      margin-bottom: 20px;
-      pointer-events: auto;
+      order: 2; align-self: stretch;
+      margin-top: 8px; max-width: none;
+      font-size: clamp(42px, 13vw, 66px); line-height: 1.06;
     }
-    .ifilm .container { display: flex; flex-direction: column; }
-    .ifilm__top { order: -2; }
-    .ifilm__side {
-      position: static; max-width: none;
-      padding: 18px 2px 0;
-    }
-    .ifilm__shade { display: none; }
-    .ifilm__sub { color: var(--white-70); }
+    .ifilm__aside { order: 3; margin-top: 18px; }
+    .ifilm__media { order: 4; margin-top: 24px; max-height: none; }
+    .ifilm__svc { order: 5; margin-top: 24px; align-self: flex-start; }
+    .ifilm__play-circle { width: 64px; height: 64px; }
   }
   @media (max-width: 760px) {
     .trust__grid { grid-template-columns: 1fr; gap: var(--space-4); }
