@@ -233,6 +233,34 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 }
 
 /* =========================================================================
+   MODAL SHELL — shared centering for every native <dialog>.
+   Root-cause note: the universal margin reset above kills the UA's
+   `margin: auto` on <dialog>; with `inset: 0` in an RTL document the box
+   then collapses to the top + inline-start edge (the "upper-right corner"
+   bug). Explicit inset:0 + margin:auto centers on BOTH axes regardless of
+   direction, scroll position, or ancestor transforms (dialogs live in the
+   top layer, above nav/hero/gallery/WhatsApp float by definition).
+   ========================================================================= */
+dialog.mshell {
+  position: fixed;
+  inset: 0;
+  margin: auto;                 /* the actual fix */
+  width: fit-content;
+  height: fit-content;
+  max-width: min(1200px, calc(100dvw - 32px));
+  max-height: calc(100dvh - 32px);
+  border: none;
+  padding: 0;
+  background: transparent;
+  color: var(--color-white);
+}
+dialog.mshell::backdrop {
+  background: rgba(10, 8, 8, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* =========================================================================
    GLASS — selective use only (portal, overlays, nav)
    ========================================================================= */
 .glass {

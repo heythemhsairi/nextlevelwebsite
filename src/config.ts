@@ -84,20 +84,20 @@ export const hero = {
   videoMobile: '/media/hero/hero-mobile.mp4',
   posterDesktop: '/media/hero/hero-desktop-poster.webp',
   posterMobile: '/media/hero/hero-mobile-poster.webp',
-  meta: { location: 'Tunis, TN', label: 'Hero Film' },
+  meta: { location: 'Tunis, TN', label: 'Hero Video' },
 };
 
-/* ---- 03 · INTRO FILM — carries the primary value proposition + page H1 ----
+/* ---- 03 · INTRO VIDEO — carries the primary value proposition + page H1 ----
    Uses the real "Intro Video" supplied via Drive (5.3s brand film with audio).
    Playback stays gated on file existence at build time, so a future longer
    cut is a drop-in replacement at the same path. */
-export const introFilm = {
-  label: 'Intro Film',
+export const introVideo = {
+  label: 'Intro Video',
   system: 'THE NEXT LEVEL SYSTEM',
   titleLines: ['سمعتك سبقتك.', 'يلزمها حضور يوازيها.'],
-  sub: 'في الفيلم هذا نوريّوك كيفاش نخدموا: من الفكرة والـscripts، للتصوير، للمونتاج والنشر.',
-  play: 'شغّل الفيلم',
-  soon: 'الفيلم الكامل قريبًا',
+  sub: 'في الفيديو هذا نوريّوك كيفاش نخدموا: من الفكرة والـscripts، للتصوير، للمونتاج والنشر.',
+  play: 'شغّل الفيديو',
+  soon: 'الفيديو الكامل قريبًا',
   servicesLink: 'اكتشف خدماتنا',
   /* real Intro Video from the Drive collection — 1920×1080 h264 + AAC,
      re-encoded CRF23 +faststart (10.6 MB source → ~2 MB web) */

@@ -39,6 +39,7 @@ const others = workItems.filter((w) => w.collection === item.collection && w.slu
             class="pj-play"
             data-reel={item.fullVideo}
             data-reel-poster={item.poster}
+            data-reel-ar={item.aspectRatio}
             aria-label={`شغّل فيديو ${item.title}`}
           >
             <img src={item.poster} alt={`Poster — ${item.title}`} width="720" height="1280" />

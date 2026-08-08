@@ -99,8 +99,8 @@ const progress = Math.round((done / demoMonth.posts.length) * 100);
 </div>
 
 <!-- shared post detail dialog -->
-<dialog class="pd glass" id="postDialog" aria-labelledby="pdTitle">
-  <button class="pd__close" aria-label="سكّر">
+<dialog class="pd glass mshell" id="postDialog" aria-labelledby="pdTitle">
+  <button class="pd__close" aria-label="إغلاق">
     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
   </button>
   <p class="pd__demo latin">{portalIntro.demoBadge}</p>
@@ -173,13 +173,15 @@ const progress = Math.round((done / demoMonth.posts.length) * 100);
   .cal__lg { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: var(--white-55); }
 
   /* ---- post dialog ---- */
+  /* centering + backdrop come from the shared .mshell shell */
   .pd {
     border: 1px solid var(--white-16); border-radius: var(--radius-large);
     padding: clamp(20px, 4vw, 32px);
-    width: min(440px, calc(100vw - 32px));
+    width: min(560px, calc(100dvw - 32px));
+    max-height: min(760px, calc(100dvh - 32px));
+    overflow: auto;
     color: var(--color-white);
   }
-  .pd::backdrop { background: rgba(10, 8, 8, 0.8); backdrop-filter: blur(6px); }
   .pd__close {
     position: absolute; top: 14px; inset-inline-end: 14px;
     width: 44px; height: 44px; display: grid; place-items: center;

@@ -7,7 +7,7 @@ import PortalCalendar from '../components/PortalCalendar.astro';
 import WorkGallery from '../components/react/WorkGallery';
 import { existsSync } from 'node:fs';
 import {
-  hero, introFilm, trust, workIntro, workItems, servicesIntro, services,
+  hero, introVideo, trust, workIntro, workItems, servicesIntro, services,
   portalIntro, foundersIntro, founders, finalCta, CTA, whatsappLink,
 } from '../config';
 
@@ -22,11 +22,12 @@ const galleryItems = workItems.map((w) => ({
   categoryLabel: w.categoryAr,
   fullVideo: w.fullVideo,
   poster: w.poster,
+  aspectRatio: w.aspectRatio,
 }));
 
-/* Intro Film playback activates automatically once the real file lands
+/* Intro Video playback activates automatically once the real file lands
    (build-time check — drop the mp4 in public/ and rebuild). */
-const introFilmReady = existsSync(new URL(`../../public${introFilm.video}`, import.meta.url));
+const introVideoReady = existsSync(new URL(`../../public${introVideo.video}`, import.meta.url));
 ---
 <Base
   title="Next Level — Media Production House في تونس"
@@ -90,38 +91,39 @@ const introFilmReady = existsSync(new URL(`../../public${introFilm.video}`, impo
       </div>
     </section>
 
-    <!-- ═══ 03 · INTRO FILM — one editorial composition: header row, wide film,
+    <!-- ═══ 03 · INTRO VIDEO — one editorial composition: header row, wide film,
          text grid below (H1 8 cols · details 4 cols) ═══ -->
     <section class="ifilm">
       <div class="ifilm__container">
         <header class="ifilm__head reveal">
-          <span class="meta"><b class="accent">01</b> — INTRO FILM</span>
-          <span class="meta latin">{introFilm.system}</span>
+          <span class="meta"><b class="accent">01</b> — INTRO VIDEO</span>
+          <span class="meta latin">{introVideo.system}</span>
         </header>
 
         <figure class="ifilm__media reveal">
           <img
-            src={introFilm.poster}
+            src={introVideo.poster}
             alt=""
             width="1600" height="900"
             loading="lazy"
             class="ifilm__poster"
           />
-          {introFilmReady ? (
+          {introVideoReady ? (
             <button
               type="button"
               class="ifilm__play"
-              data-reel={introFilm.video}
-              data-reel-poster={introFilm.poster}
-              aria-label={`${introFilm.play} — Intro Film، بالصوت`}
+              data-reel={introVideo.video}
+              data-reel-poster={introVideo.poster}
+              data-reel-ar="landscape"
+              aria-label={`${introVideo.play} — Intro Video، بالصوت`}
             >
               <span class="ifilm__play-circle" aria-hidden="true">
                 <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
               </span>
               <span class="ifilm__play-row" aria-hidden="true">
-                {introFilm.play}
+                {introVideo.play}
                 <i class="ifilm__dot"></i>
-                <span class="latin" dir="ltr">{introFilm.duration}</span>
+                <span class="latin" dir="ltr">{introVideo.duration}</span>
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 010 7"/></svg>
               </span>
             </button>
@@ -130,25 +132,25 @@ const introFilmReady = existsSync(new URL(`../../public${introFilm.video}`, impo
               <span class="ifilm__play-circle" aria-hidden="true">
                 <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
               </span>
-              <span class="ifilm__play-row">{introFilm.soon}</span>
+              <span class="ifilm__play-row">{introVideo.soon}</span>
             </span>
           )}
         </figure>
 
         <!-- the page's single semantic H1 — masked two-line reveal -->
         <h1 class="ifilm__title mask" dir="rtl">
-          {introFilm.titleLines.map((line) => (
+          {introVideo.titleLines.map((line) => (
             <span class="ifilm__line"><i>{line}</i></span>
           ))}
         </h1>
 
         <div class="ifilm__aside reveal">
-          <p class="ifilm__sub">{introFilm.sub}</p>
+          <p class="ifilm__sub">{introVideo.sub}</p>
           <p class="ifilm__process meta latin" dir="ltr">Plan → Write → Shoot → Edit → Publish</p>
         </div>
 
         <a href="/services" class="ifilm__svc reveal">
-          {introFilm.servicesLink} <span class="arrow" aria-hidden="true">←</span>
+          {introVideo.servicesLink} <span class="arrow" aria-hidden="true">←</span>
         </a>
       </div>
     </section>
@@ -391,36 +393,50 @@ const introFilmReady = existsSync(new URL(`../../public${introFilm.video}`, impo
   .ifilm__play--soon { cursor: default; }
   .ifilm__play--soon .ifilm__play-circle { background: var(--black-72); border: 1px solid var(--white-16); }
 
-  /* monumental H1 — its own controlled space, 8 columns, start-aligned (RTL right) */
+  /* monumental H1 — its own controlled space, 8 columns, start-aligned (RTL right).
+     Clipping fix: roomier line-height + padding for Thmanyah ascenders/descenders,
+     min-width:0 so the grid can't squeeze it, and the reveal mask RELEASES after
+     the animation (.done from site.js) so nothing stays clipped at rest. */
   .ifilm__title {
     grid-area: title;
     align-self: end;
+    min-width: 0;
     margin-top: clamp(40px, 5vw, 72px);
+    padding-block: 0.12em 0.18em;
     font-family: var(--font-arabic);
     font-weight: 700;
-    font-size: clamp(58px, 7.2vw, 128px);
-    line-height: 1.05; /* Arabic ascenders/descenders need more than Latin 0.94 */
+    font-size: clamp(52px, 6.2vw, 112px);
+    /* Thmanyah's content box is ~1.21em — anything tighter bleeds glyph ink
+       outside the line box (the measured clipping). 1.22 = zero bleed
+       (measured content area = 1.21em). */
+    line-height: 1.22;
     color: var(--color-white);
     text-wrap: balance;
-    max-width: 12ch;
+    /* the 8-col grid track is the width constraint — a ch-based cap computes
+       too narrow for Thmanyah and forced a third wrapped line */
+    max-width: none;
+    overflow: visible;
   }
-  /* masked two-line reveal (site.js adds .in once, on viewport entry) */
-  .ifilm__line { display: block; overflow: hidden; }
-  .ifilm__line i {
-    display: block; font-style: normal;
-    transform: translateY(112%);
+  .ifilm__line { display: block; overflow: visible; }
+  .ifilm__line i { display: block; font-style: normal; }
+  /* reveal runs only with JS present (html.js) and clips only until .done */
+  :global(html.js) .mask:not(.done) .ifilm__line { overflow: hidden; }
+  :global(html.js) .ifilm__line i {
+    transform: translateY(130%);
     transition: transform 0.85s var(--ease);
   }
-  .ifilm__line:nth-child(2) i { transition-delay: 0.12s; }
-  .mask.in .ifilm__line i { transform: none; }
+  :global(html.js) .ifilm__line:nth-child(2) i { transition-delay: 0.12s; }
+  :global(html.js) .mask.in .ifilm__line i { transform: none; }
   @media (prefers-reduced-motion: reduce) {
-    .ifilm__line i { transform: none; }
+    :global(html.js) .ifilm__line i { transform: none; }
+    :global(html.js) .mask:not(.done) .ifilm__line { overflow: visible; }
   }
 
   /* details column — 4 columns, bottom-aligned with the headline baseline */
   .ifilm__aside {
     grid-area: aside;
     align-self: end;
+    min-width: 0;
     margin-top: clamp(40px, 5vw, 72px);
     display: flex; flex-direction: column; gap: 18px;
   }
@@ -521,7 +537,8 @@ const introFilmReady = existsSync(new URL(`../../public${introFilm.video}`, impo
     .ifilm__title {
       order: 2; align-self: stretch;
       margin-top: 8px; max-width: none;
-      font-size: clamp(42px, 13vw, 66px); line-height: 1.06;
+      font-size: clamp(42px, 12vw, 64px); line-height: 1.22;
+      padding-block: 0.12em 0.2em;
     }
     .ifilm__aside { order: 3; margin-top: 18px; }
     .ifilm__media { order: 4; margin-top: 24px; max-height: none; }

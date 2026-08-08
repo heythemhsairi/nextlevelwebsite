@@ -88,6 +88,15 @@ document.addEventListener('DOMContentLoaded', () => {
   );
   document.querySelectorAll('.reveal, .reveal-stagger, .mask').forEach((el) => io.observe(el));
 
+  /* masked headlines: release the per-line clipping once the reveal finishes,
+     so Arabic ascenders/descenders are never cut in the resting state */
+  document.querySelectorAll('.mask').forEach((el) => {
+    if (reduceMotion) { el.classList.add('done'); return; }
+    el.addEventListener('transitionend', () => el.classList.add('done'), { once: true, capture: true });
+    // safety: if no transition fires (already in view edge cases), release anyway
+    setTimeout(() => el.classList.add('done'), 2500);
+  });
+
   /* ---- responsive hero video ----
      Pick ONE source per breakpoint. Reduced-motion or Save-Data users keep
      the static poster (no video bytes at all). */
@@ -137,8 +146,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const btn = e.target.closest('[data-reel]');
       if (!btn) return;
       lastFocus = btn;
-      // pause the background hero film while a modal video plays
+      // pause the background hero video while a modal video plays
       document.getElementById('heroVideo')?.pause();
+      // size the frame for the content's orientation before metadata loads
+      reel.dataset.ar = btn.dataset.reelAr === 'portrait' ? 'portrait' : 'landscape';
       if (player) {
         if (btn.dataset.reelPoster) player.setAttribute('poster', btn.dataset.reelPoster);
         player.src = btn.dataset.reel;

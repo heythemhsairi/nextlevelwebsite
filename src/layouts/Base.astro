@@ -80,6 +80,9 @@ const orgSchema = {
   />
 
   <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+  <!-- masked-reveal typography only activates when JS is present;
+       without JS, headlines render as plain visible text -->
+  <script is:inline>document.documentElement.classList.add('js');</script>
 </head>
 <body>
   <a href="#main-content" class="skip-link">تخطّى إلى المحتوى</a>

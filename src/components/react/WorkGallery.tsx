@@ -29,6 +29,7 @@ export interface WorkItem {
   categoryLabel: string; // localized category for the meta bar
   fullVideo: string;     // explicit-action playback via the shared reel modal
   poster: string;
+  aspectRatio: 'portrait' | 'landscape' | 'square';
 }
 
 interface Props {
@@ -366,6 +367,7 @@ function FallbackCarousel({ items }: { items: WorkItem[] }) {
           role="listitem"
           data-reel={it.fullVideo}
           data-reel-poster={it.poster}
+          data-reel-ar={it.aspectRatio}
           aria-label={`شغّل: ${it.title} — ${it.client}`}
         >
           <span className="wg-card__frame">
@@ -455,6 +457,7 @@ export default function WorkGallery({ items, bend = 2.4, textColor = '#F4F1EE' }
           className="wg-play"
           data-reel={current.fullVideo}
           data-reel-poster={current.poster}
+          data-reel-ar={current.aspectRatio}
           aria-label={`شغّل: ${current.title}`}
         >
           <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
