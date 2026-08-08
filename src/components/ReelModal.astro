@@ -1,0 +1,30 @@
+---
+/* Showreel dialog — native <dialog>, opened by any [data-reel] trigger.
+   Native dialog gives us focus trap, Escape and ::backdrop for free. */
+---
+<dialog class="reel" id="reelModal" aria-label="Showreel">
+  <div class="reel__box">
+    <button class="reel__close" aria-label="سكّر">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <video controls playsinline preload="metadata"></video>
+  </div>
+</dialog>
+
+<style>
+  .reel { border: none; padding: 0; background: transparent; max-width: min(960px, calc(100vw - 32px)); width: 100%; }
+  .reel::backdrop { background: rgba(10, 8, 8, 0.88); backdrop-filter: blur(8px); }
+  .reel__box {
+    position: relative; border-radius: var(--radius-large); overflow: hidden;
+    border: 1px solid var(--white-16); background: #000;
+  }
+  .reel__box video { width: 100%; aspect-ratio: 16 / 9; display: block; background: #000; }
+  .reel__close {
+    position: absolute; top: 12px; inset-inline-end: 12px; z-index: 2;
+    width: 44px; height: 44px; display: grid; place-items: center;
+    background: var(--black-72); color: var(--color-white);
+    border: 1px solid var(--white-16); border-radius: var(--radius-small);
+    cursor: pointer; transition: color 0.2s, border-color 0.2s;
+  }
+  .reel__close:hover { color: var(--color-red); border-color: var(--color-red); }
+</style>

@@ -1,0 +1,73 @@
+/* WorkGallery — brand styling (no component-library defaults) */
+
+.wg { position: relative; }
+
+.wg-stage {
+  width: 100%;
+  height: clamp(380px, 52vh, 560px);
+  cursor: grab;
+  touch-action: pan-y; /* vertical page scroll stays native on touch */
+}
+.wg-stage:active { cursor: grabbing; }
+.wg-stage canvas { display: block; }
+
+.wg-controls {
+  display: flex; align-items: center; justify-content: center; gap: 18px;
+  margin-top: 8px;
+}
+.wg-btn {
+  width: 48px; height: 48px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--white-16);
+  border-radius: var(--radius-small);
+  color: var(--color-white);
+  background: transparent;
+  transition: border-color 0.2s, color 0.2s;
+  cursor: pointer;
+}
+.wg-btn:hover { border-color: var(--color-red); color: var(--color-red); }
+.wg-hint {
+  font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--white-55);
+}
+
+/* ---- fallback: editorial swipe carousel (scroll-snap, native) ---- */
+.wg-fallback {
+  display: flex; gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-block: 4px 16px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--red-40) transparent;
+}
+.wg-card {
+  flex: 0 0 min(72vw, 300px);
+  scroll-snap-align: center;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.wg-card__frame {
+  position: relative; display: block;
+  aspect-ratio: 4 / 5; overflow: hidden;
+  border-radius: var(--radius-medium);
+  border: 1px solid var(--white-10);
+  background: #141010;
+}
+.wg-card__frame img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.5s var(--ease);
+}
+.wg-card:hover .wg-card__frame img { transform: scale(1.04); }
+.wg-badge {
+  position: absolute; top: 10px; inset-inline-start: 10px;
+  padding: 4px 10px; font-size: 11px; font-weight: 600;
+  background: var(--black-72); color: var(--white-70);
+  border: 1px solid var(--white-16); border-radius: var(--radius-small);
+  backdrop-filter: blur(6px);
+}
+.wg-card__meta { display: flex; flex-direction: column; gap: 2px; padding-inline: 2px; }
+.wg-card__cat {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--color-red);
+}
+.wg-card__title { font-weight: 700; font-size: var(--text-sm); color: var(--color-white); }

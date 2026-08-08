@@ -2,475 +2,350 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import Modal from '../components/Modal.astro';
-import BookCta from '../components/BookCta.astro';
+import ReelModal from '../components/ReelModal.astro';
+import PortalCalendar from '../components/PortalCalendar.astro';
+import WorkGallery from '../components/react/WorkGallery';
 import {
-  hero, intro, reframe, beforeAfter, system, cadence, audience,
-  proof, work, tiers, faqs, CTA, whatsappLink, hasRealWhatsapp,
+  hero, trust, workIntro, projects, servicesIntro, services,
+  portalIntro, foundersIntro, founders, finalCta, CTA, whatsappLink,
 } from '../config';
 
-const [proofLead, ...proofRest] = proof.items;
+const galleryItems = projects.map((p) => ({
+  image: p.poster,
+  text: p.title,
+  category: p.category,
+  href: `/work/${p.slug}`,
+  placeholder: p.placeholder,
+}));
 ---
-<Base>
+<Base
+  title="Next Level — Media Production House في تونس"
+  description="نخططو، نكتبوا، نصوّرو وننتجو content يخلّي خبرتك تبان كيما تستاهل. production house تونسية للأطباء، المحامين، الـ consultants والـ founders."
+>
   <Nav current="/" />
 
   <main id="main-content">
-  <!-- ═══════════ FULLSCREEN FILM HERO ═══════════ -->
-  <section class="hero" id="hero">
-    <!-- the film fills the whole hero -->
-    <div class="hero__film" data-parallax>
-      <video src={intro.video} poster={intro.poster} muted loop autoplay playsinline preload="metadata"></video>
-    </div>
-    <div class="hero__scrim" aria-hidden="true"></div>
-    <div class="hero__grain" aria-hidden="true"></div>
-
-    <!-- top framing bar -->
-    <div class="hero__topbar container">
-      <span class="meta-label latin"><span class="accent">●</span> REC · Intro Film</span>
-      <span class="meta-label latin">Tunis — 00:00 / 01:30</span>
-    </div>
-
-    <!-- overlaid content, lower -->
-    <div class="hero__content container reveal">
-      <span class="meta-label hero__eyebrow"><span class="accent">●</span> {hero.eyebrow}</span>
-      <h1 class="hero__title">{hero.titleAr}</h1>
-      <p class="hero__en latin">{hero.titleEn}</p>
-      <p class="hero__promise">{hero.promise}</p>
-      <div class="hero__cta">
-        <BookCta class="btn btn--solid btn--lg" label={CTA.primary} />
-        <button
-          class="btn btn--ghost btn--lg hero__reel"
-          data-video="Next Level — Showreel"
-          data-video-src={intro.showreel}
-          data-video-poster={intro.poster}
-          data-desc="الـ showreel الكامل متاعنا."
-        >
-          <span class="playdot" aria-hidden="true"></span> شوف الـ Reel الكامل
-        </button>
+    <!-- ═══ 01 · CINEMATIC HERO ═══ -->
+    <section class="hero">
+      <div class="hero__media" aria-hidden="true">
+        <video
+          src={hero.video}
+          poster={hero.poster}
+          muted
+          loop
+          autoplay
+          playsinline
+          preload="metadata"
+        ></video>
       </div>
-      <p class="hero__trust">{hero.trust}</p>
-    </div>
+      <div class="hero__scrim" aria-hidden="true"></div>
 
-    <!-- scroll cue -->
-    <a href="#work" class="hero__scroll" aria-label="اقرا أكثر">
-      <span class="hero__scroll-line" aria-hidden="true"></span>
-      <span class="latin">Scroll</span>
-    </a>
-
-    <!-- big brand button to open full reel over the whole hero -->
-    <button
-      class="hero__playbig"
-      aria-label="شغّل الـ Showreel الكامل"
-      data-video="Next Level — Showreel"
-      data-video-src={intro.showreel}
-      data-video-poster={intro.poster}
-      data-desc="الـ showreel الكامل متاعنا."
-    ><span aria-hidden="true"></span></button>
-  </section>
-
-  <section class="zone zone--quiet zone--edge">
-    <span class="zindex"><b>01</b> — المشكلة</span>
-    <div class="container reframe-wrap reveal">
-      <p class="overline">The Reframe</p>
-      <h2 class="reframe-title">{reframe.title}</h2>
-      <p class="lead reframe-body">{reframe.body}</p>
-      <div class="reframe">
-        {reframe.points.map((p, i) => (
-          <div class="reframe__row">
-            <span class="reframe__n latin">0{i + 1}</span>
-            <b class="latin">{p.k}</b>
-            <span class="reframe__v">{p.v}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="zone zone--loud zone--dark ba-zone" id="work">
-    <span class="zindex"><b>02</b> — الفرق</span>
-    <div class="container ba-head reveal">
-      <p class="overline">The Difference</p>
-      <h2 class="ba-title">الفرق موش الـ <span class="latin">camera</span><br />الفرق هو الـ <span class="accent latin">production</span></h2>
-    </div>
-    <div class="ba-stage reveal" data-parallax>
-      <div class="ba brackets" role="slider" tabindex="0" aria-label="مقارنة قبل و بعد الـ production" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
-        <div class="ba__layer ba__after"><img src={beforeAfter.after} alt="بعد الـ production" width="1920" height="1080" /></div>
-        <div class="ba__layer ba__before"><img src={beforeAfter.before} alt="قبل - raw" width="1920" height="1080" /></div>
-        <span class="ba__tag ba__tag--b latin">Before · Raw</span>
-        <span class="ba__tag ba__tag--a latin">After · Next Level</span>
-        <div class="ba__handle"><div class="ba__grip" aria-hidden="true">⟷</div></div>
-      </div>
-    </div>
-    <p class="container ba-sub reveal">{beforeAfter.sub}</p>
-  </section>
-
-  <section class="zone system-zone watermark" data-word="SYSTEM" id="system">
-    <span class="zindex"><b>03</b> — الـ System</span>
-    <div class="container system-grid">
-      <div class="system-head reveal">
-        <p class="overline">The System</p>
-        <h2 class="system-title">Team واحد.<br /><span class="accent">السلسلة الكاملة.</span></h2>
-        <p class="lead">{system.sub}</p>
-        <p class="system-foot">{system.footer}</p>
-      </div>
-      <ol class="system-steps">
-        {system.steps.map((s, i) => (
-          <li class="sstep" data-step={i}>
-            <span class="sstep__n latin">{s.n}</span>
-            <div class="sstep__body">
-              <h3 class="latin">{s.title} <span class="sstep__ar">{s.ar}</span></h3>
-              <p>{s.body}</p>
-            </div>
-          </li>
-        ))}
-      </ol>
-    </div>
-  </section>
-
-  <section class="zone zone--quiet zone--edge">
-    <span class="zindex"><b>04</b> — Consistency</span>
-    <div class="container cadence-grid reveal">
-      <div class="cadence-head">
-        <p class="overline">System, not one-offs</p>
-        <h2 class="cadence-title">{cadence.title}</h2>
-        <p class="lead">{cadence.sub}</p>
-      </div>
-      <div class="compare">
-        <div class="compare__col compare__col--bad">
-          <span class="compare__tag">{cadence.bad.tag}</span>
-          <ul>{cadence.bad.items.map((t) => <li><i>—</i>{t}</li>)}</ul>
+      <div class="hero__frame container">
+        <div class="hero__meta">
+          <span class="meta"><span class="accent">●</span> REC — {hero.meta.label}</span>
+          <span class="meta latin">{hero.meta.location}</span>
         </div>
-        <div class="compare__col compare__col--good">
-          <span class="compare__tag compare__tag--accent">{cadence.good.tag}</span>
-          <ul>{cadence.good.items.map((t) => <li><i>✓</i>{t}</li>)}</ul>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <section class="zone zone--quiet zone--edge">
-    <span class="zindex"><b>05</b> — لشكون</span>
-    <div class="container reveal">
-      <p class="overline">Who it's for</p>
-      <h2 class="who-title">{audience.title}</h2>
-      <div class="who">
-        {audience.list.map((a, i) => (
-          <div class="who__row">
-            <span class="who__n latin">0{i + 1}</span>
-            <b>{a.who}</b>
-            <span class="who__why">{a.why}</span>
-          </div>
-        ))}
-      </div>
-      <p class="who__note">{audience.note}</p>
-    </div>
-  </section>
-
-  <section class="zone zone--loud zone--dark proof-zone">
-    <span class="zindex"><b>06</b> — Proof</span>
-    <div class="container proof-head reveal">
-      <p class="overline">Proof</p>
-      <h2 class="proof-title">{proof.title}</h2>
-      <p class="lead center">{proof.sub}</p>
-    </div>
-    <div class="container proof-grid reveal">
-      <figure class="proof-lead">
-        <div class="proof-lead__media"><img src={proofLead.poster} alt="" width="720" height="900" loading="lazy" /></div>
-        <blockquote>{proofLead.quote}</blockquote>
-        <figcaption>{proofLead.who}</figcaption>
-      </figure>
-      <div class="proof-side">
-        {proofRest.map((p) => (
-          <figure class="proof-quote">
-            <blockquote>{p.quote}</blockquote>
-            <figcaption>{p.who}</figcaption>
-          </figure>
-        ))}
-        <div class="proof-clips">
-          {work.slice(0, 3).map((w) => (
-            <figure
-              class="shot"
-              role="button"
-              tabindex="0"
-              aria-label={`شوف ${w.tag}`}
-              data-video={w.tag}
-              data-video-src={w.video}
-              data-video-poster={w.poster}
-              data-desc={w.caption}
+        <div class="hero__body">
+          <p class="hero__eyebrow meta">{hero.eyebrow}</p>
+          <h1 class="h-hero">{hero.title}</h1>
+          <p class="hero__sub lead">{hero.sub}</p>
+          <div class="hero__cta">
+            <a href="/book" class="btn btn--solid btn--lg">{CTA.primary}</a>
+            <a href="/work" class="btn btn--line btn--lg">{CTA.secondary}</a>
+            <button
+              type="button"
+              class="hero__reel"
+              data-reel={hero.video}
+              data-reel-poster={hero.poster}
             >
-              <div class="shot__media">
-                <video src={w.video} poster={w.poster} muted loop playsinline preload="none"></video>
-                <div class="shot__play" aria-hidden="true"><span></span></div>
-              </div>
-              <figcaption><span class="tag latin">{w.tag}</span></figcaption>
-            </figure>
+              <span class="hero__reel-dot" aria-hidden="true"></span>
+              {hero.reelLabel}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- oversized decorative wordmark — the H1 above carries the message -->
+      <p class="hero__wordmark latin" aria-hidden="true">NEXT LEVEL</p>
+    </section>
+
+    <!-- ═══ 02 · COMPACT TRUST (facts only) ═══ -->
+    <section class="on-light section--sm trust">
+      <div class="container">
+        <div class="trust__grid">
+          <p class="trust__note">{trust.note}</p>
+          <ul class="trust__caps" role="list">
+            {trust.capabilities.map((c, i) => (
+              <li class="latin"><span class="trust__n latin">0{i + 1}</span>{c}</li>
+            ))}
+          </ul>
+          <p class="trust__fields">
+            {trust.fields.map((f, i) => (
+              <>
+                <span>{f}</span>{i < trust.fields.length - 1 && <i aria-hidden="true">·</i>}
+              </>
+            ))}
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 03 · SELECTED WORK ═══ -->
+    <section class="section work-sec" id="work">
+      <div class="container">
+        <div class="sindex"><b>03</b> Selected Work</div>
+        <div class="work-sec__head reveal">
+          <h2 class="h-display">{workIntro.title}</h2>
+          <p class="lead">{workIntro.sub}</p>
+        </div>
+      </div>
+      <div class="work-sec__stage reveal">
+        <WorkGallery client:visible items={galleryItems} />
+      </div>
+      <div class="container work-sec__foot">
+        <a href="/work" class="btn btn--line">{workIntro.cta} <span class="arrow" aria-hidden="true">←</span></a>
+      </div>
+    </section>
+
+    <!-- ═══ 04 · TWO SERVICE PATHS (red band) ═══ -->
+    <section class="on-red section svc">
+      <div class="container">
+        <div class="svc__head reveal">
+          <h2 class="h-display">{servicesIntro.title}</h2>
+          <p class="svc__sub">{servicesIntro.sub}</p>
+        </div>
+
+        <div class="svc__panels reveal-stagger">
+          {services.map((s, i) => (
+            <article class={`svc__panel ${i === 0 ? 'svc__panel--solid' : 'svc__panel--line'}`}>
+              <span class="svc__index latin">{s.index}</span>
+              <h3 class="svc__name latin">{s.name}</h3>
+              <p class="svc__ar">{s.nameAr}</p>
+              <p class="svc__copy">{s.copy}</p>
+              <p class="svc__process latin" dir="ltr">{s.process.join(' → ')}</p>
+              <p class="svc__who">{s.forWho}</p>
+              <a href={`/services#${s.slug}`} class={`btn ${i === 0 ? 'btn--line svc__btn-ondark' : 'svc__btn-fill'}`}>
+                {s.cta} <span class="arrow" aria-hidden="true">←</span>
+              </a>
+            </article>
           ))}
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="zone zone--medium zone--edge" id="packs">
-    <span class="zindex"><b>07</b> — Packs</span>
-    <div class="container reveal">
-      <p class="overline">Partnership</p>
-      <h2 class="tiers-title">اختار مستوى الـ <span class="accent latin">Partnership</span></h2>
-      <p class="lead center">موش feature list - مستويات شراكة. من fit للـ system الكاملة.</p>
-      <div class="tiers">
-        {tiers.map((t) => (
-          <div class={`tier ${t.featured ? 'tier--featured' : ''}`}>
-            {t.featured && <span class="tier__badge latin">الأكثر اختياراً</span>}
-            <h3 class="tier__name latin">{t.name}</h3>
-            <p class="tier__ar">{t.ar}</p>
-            <div class="tier__price latin">{t.price}<small>{t.per}</small></div>
-            <ul class="tier__outcomes">
-              {t.outcomes.map((o) => <li><i>✓</i>{o}</li>)}
-            </ul>
-            <p class="tier__best">{t.best}</p>
-            {t.name === 'Signature' && hasRealWhatsapp
-              ? <a href={whatsappLink('السلام عليكم، نحب نقدّم طلب للـ Signature.')} target="_blank" rel="noopener" class="btn btn--ghost tier__cta">{t.cta} ←</a>
-              : <BookCta class="btn btn--ghost tier__cta" label={`${t.cta} ←`} />}
+    <!-- ═══ 05 · CLIENT PORTAL DEMO ═══ -->
+    <section class="section portal-sec">
+      <div class="container">
+        <div class="sindex"><b>05</b> Client Portal</div>
+        <div class="portal-sec__grid">
+          <div class="portal-sec__head reveal">
+            <h2 class="h-display">{portalIntro.title}</h2>
+            <p class="lead">{portalIntro.sub}</p>
+            <div class="portal-sec__soon">
+              <p class="portal-sec__product latin">{portalIntro.productName}</p>
+              <p class="portal-sec__badge latin">{portalIntro.soon}</p>
+              <p class="portal-sec__soonline">{portalIntro.soonLine}</p>
+              <a href="/portal" class="btn btn--line">شوف الـ Portal <span class="arrow" aria-hidden="true">←</span></a>
+            </div>
           </div>
-        ))}
+          <div class="reveal">
+            <PortalCalendar />
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="promise watermark" data-word="AUTHORITY">
-    <div class="promise__bg" aria-hidden="true"></div>
-    <div class="container reveal">
-      <p class="overline">{hero.promiseEn}</p>
-      <h2 class="promise__title">إنت تحضر.<br /><span class="accent">احنا نتكفّلوا بالباقي.</span></h2>
-      <BookCta class="btn btn--solid btn--lg" label={CTA.primary} />
-    </div>
-  </section>
-
-  <section class="zone zone--quiet zone--edge" id="faq">
-    <span class="zindex"><b>08</b> — FAQ</span>
-    <div class="container narrow reveal">
-      <p class="overline">Questions</p>
-      <h2 class="faq-title">أسئلة</h2>
-      <div class="faq">
-        {faqs.map((f) => (
-          <details class="faq__item">
-            <summary>{f.q}<i>+</i></summary>
-            <p>{f.a}</p>
-          </details>
-        ))}
+    <!-- ═══ 06 · FOUNDERS TEASER ═══ -->
+    <section class="on-light section founders-sec">
+      <div class="container">
+        <div class="sindex"><b>06</b> The Studio</div>
+        <div class="founders-sec__grid">
+          <h2 class="h-display reveal">{foundersIntro.title}</h2>
+          <div class="founders-sec__people reveal-stagger">
+            {founders.map((f) => (
+              <div class="founder">
+                {f.photo ? (
+                  <img src={f.photo} alt={`صورة ${f.name}`} class="founder__photo" width="480" height="600" loading="lazy" />
+                ) : (
+                  <div class="founder__pending" role="img" aria-label={`صورة ${f.name} — قريبًا`}>
+                    <span class="latin">Portrait<br />coming</span>
+                  </div>
+                )}
+                <p class="founder__name latin">{f.name}</p>
+                <p class="founder__role latin">{f.role}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <a href="/studio" class="btn btn--line founders-sec__cta">{foundersIntro.cta} <span class="arrow" aria-hidden="true">←</span></a>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <!-- ═══ 07 · FINAL CTA ═══ -->
+    <section class="section cta-sec">
+      <div class="container reveal">
+        <h2 class="h-display">{finalCta.title}</h2>
+        <p class="lead">{finalCta.sub}</p>
+        <div class="cta-sec__actions">
+          <a href="/book" class="btn btn--solid btn--lg">{CTA.primary}</a>
+          <a href={whatsappLink('السلام عليكم Next Level 👋 نحب نحكي معاكم.')} target="_blank" rel="noopener" class="btn btn--line btn--lg">{CTA.whatsapp}</a>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <Modal />
+  <ReelModal />
   <Footer />
 </Base>
 
 <style>
-  .narrow { max-width: 760px; }
-  .lead { color: var(--dim); font-size: clamp(16px,2vw,19px); line-height: 1.7; margin-top: 22px; max-width: 62ch; }
-  .lead.center { margin-inline: auto; text-align: center; }
-
-  /* ═══════════ FULLSCREEN FILM HERO ═══════════ */
-  .hero { position: relative; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end;
-    overflow: hidden; isolation: isolate; }
-  .hero__film { position: absolute; inset: 0; z-index: -1; }
-  .hero__film video { width: 100%; height: 100%; object-fit: cover; transform: scale(1.06) translateY(var(--py,0)); }
-  /* legibility scrim — dark at bottom-start where the copy sits, plus a red wash */
-  .hero__scrim { position: absolute; inset: 0; z-index: 0; pointer-events: none;
-    background:
-      linear-gradient(to top, rgba(5,5,5,.94) 4%, rgba(5,5,5,.62) 34%, rgba(5,5,5,.15) 62%, rgba(5,5,5,.55) 100%),
-      radial-gradient(120% 80% at 15% 100%, rgba(var(--red-rgb),.22), transparent 55%); }
-  .hero__grain { position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: .05; mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
-
-  .hero__topbar { position: absolute; top: 0; inset-inline: 0; z-index: 2; display: flex; justify-content: space-between;
-    padding-top: clamp(88px,11vh,120px); }
-  .hero__topbar .meta-label { color: rgba(250,250,250,.7); }
-
-  .hero__content { position: relative; z-index: 2; padding-bottom: clamp(64px,9vh,120px); max-width: var(--maxw); }
-  .hero__eyebrow { display: inline-flex; }
-  .hero__title { font-family: var(--font-ar); font-weight: 900; line-height: 1.02;
-    font-size: clamp(40px,7vw,104px); margin-top: 18px; max-width: 16ch; text-wrap: balance;
-    text-shadow: 0 4px 40px rgba(0,0,0,.5); }
-  .hero__en { font-family: var(--font-display); font-weight: 700; color: var(--dim);
-    font-size: clamp(15px,1.8vw,22px); margin-top: 16px; letter-spacing: -.01em; }
-  .hero__promise { font-family: var(--font-ar); font-weight: 900; font-size: clamp(19px,2.4vw,28px); margin-top: 22px; }
-  .hero__cta { display: flex; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
-  .hero__cta .playdot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); box-shadow: 0 0 10px var(--red); display: inline-block; }
-  .hero__reel { background: rgba(255,255,255,.06); backdrop-filter: blur(10px); }
-  .hero__trust { color: var(--dim); font-size: 13.5px; margin-top: 26px; max-width: 44ch; }
-
-  /* central click-to-open-reel target (invisible, spans the film) */
-  .hero__playbig { position: absolute; inset: 0; z-index: 1; border: none; background: transparent; cursor: pointer; }
-  .hero__playbig span { position: absolute; top: 42%; left: 50%; transform: translate(-50%,-50%);
-    width: 84px; height: 84px; border-radius: 50%; background: rgba(var(--red-rgb),.92); display: grid; place-items: center;
-    box-shadow: 0 0 60px -6px rgba(var(--red-rgb),.85); transition: transform .35s var(--ease), background .3s; }
-  .hero__playbig span::after { content: ''; width: 0; height: 0; border-style: solid; border-width: 13px 0 13px 22px;
-    border-color: transparent transparent transparent #fff; margin-left: 6px; }
-  .hero__playbig:hover span { transform: translate(-50%,-50%) scale(1.08); background: var(--red); }
-
-  .hero__scroll { position: absolute; bottom: 26px; inset-inline-end: clamp(20px,5vw,60px); z-index: 2;
-    display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--dim); }
-  .hero__scroll .latin { font-family: var(--font-display); font-weight: 700; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; }
-  .hero__scroll-line { width: 1px; height: 46px; background: linear-gradient(var(--red), transparent); position: relative; overflow: hidden; }
-  .hero__scroll-line::after { content: ''; position: absolute; top: -46px; left: 0; width: 1px; height: 46px; background: var(--white); animation: scrolldrop 2.2s var(--ease) infinite; }
-  @keyframes scrolldrop { 0% { top: -46px; } 60%,100% { top: 46px; } }
-  @media (max-width: 640px) { .hero__scroll, .hero__topbar { display: none; } }
-
-  .reframe-wrap { max-width: 760px; }
-  .reframe-title, .who-title, .proof-title, .tiers-title, .faq-title, .cadence-title, .system-title, .ba-title {
-    font-family: var(--font-ar); font-weight: 900; line-height: 1.12; margin-top: 14px;
+  /* ═══ hero ═══ */
+  .hero {
+    position: relative; min-height: 100svh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    overflow: hidden; isolation: isolate;
   }
-  .reframe-title { font-size: clamp(30px,4.4vw,58px); }
-  .reframe { margin-top: 30px; }
-  .reframe__row { display: grid; grid-template-columns: 40px 190px 1fr; gap: 22px; align-items: baseline; padding: 26px 0; border-top: 1px solid var(--line); }
-  .reframe__n { font-family: var(--font-display); font-weight: 800; color: var(--red); font-size: 14px; }
-  .reframe__row b { font-family: var(--font-display); font-weight: 700; font-size: 19px; }
-  .reframe__v { color: var(--dim); }
+  .hero__media { position: absolute; inset: 0; z-index: -2; }
+  .hero__media video { width: 100%; height: 100%; object-fit: cover; }
+  .hero__scrim {
+    position: absolute; inset: 0; z-index: -1;
+    background: linear-gradient(to top,
+      rgba(10, 8, 8, 0.96) 6%, rgba(10, 8, 8, 0.55) 38%,
+      rgba(10, 8, 8, 0.18) 62%, rgba(10, 8, 8, 0.5) 100%);
+  }
+  .hero__frame { width: 100%; padding-bottom: clamp(96px, 15vh, 170px); }
+  .hero__meta {
+    position: absolute; top: 96px; inset-inline: var(--gutter);
+    display: flex; justify-content: space-between; gap: 12px;
+  }
+  .hero__body { max-width: 720px; }
+  .hero__eyebrow { color: var(--white-70); }
+  .hero__body h1 { margin-top: 16px; }
+  .hero__sub { margin-top: 20px; color: var(--white-70); }
+  .hero__cta { display: flex; align-items: center; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
+  .hero__reel {
+    display: inline-flex; align-items: center; gap: 10px;
+    min-height: 52px; padding: 12px 16px;
+    font-weight: 600; font-size: var(--text-sm); color: var(--white-70);
+    transition: color 0.2s; cursor: pointer;
+  }
+  .hero__reel:hover { color: var(--color-white); }
+  .hero__reel-dot {
+    width: 10px; height: 10px; border-radius: 50%; background: var(--color-red);
+    flex: none;
+  }
 
-  .ba-zone { padding-block: clamp(80px,10vw,150px); }
-  .ba-head { text-align: center; }
-  .ba-title { font-size: clamp(30px,5vw,66px); }
-  .ba-stage { margin-block: clamp(40px,6vw,60px); padding-inline: clamp(16px,4vw,40px); }
-  .ba { position: relative; max-width: 1060px; margin-inline: auto; aspect-ratio: 16/9; overflow: hidden; cursor: ew-resize; user-select: none; border-radius: var(--radius); border: 1px solid var(--line-2); box-shadow: 0 50px 110px -50px rgba(var(--red-rgb),.5); }
-  .ba__layer { position: absolute; inset: 0; }
-  .ba__layer img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .ba__before { clip-path: inset(0 0 0 50%); }
-  .ba__tag { position: absolute; top: 18px; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: .06em; padding: 7px 15px; border-radius: 999px; background: rgba(0,0,0,.5); backdrop-filter: blur(6px); }
-  .ba__tag--b { inset-inline-start: 18px; color: var(--dim); }
-  .ba__tag--a { inset-inline-end: 18px; color: var(--red-ink); background: var(--red); }
-  .ba__handle { position: absolute; inset-block: 0; left: 50%; width: 2px; background: var(--white); transform: translateX(-50%); z-index: 3; box-shadow: 0 0 20px rgba(var(--red-rgb),.7); }
-  .ba__grip { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 52px; height: 52px; border-radius: 50%; background: var(--red); color: var(--red-ink); display: grid; place-items: center; font-size: 17px; box-shadow: 0 10px 30px -6px rgba(var(--red-rgb),.9); }
-  .ba-sub { text-align: center; color: var(--dim); max-width: 620px; margin: 0 auto; }
+  /* decorative wordmark — clipped to hero bottom, behind content */
+  .hero__wordmark {
+    position: absolute; bottom: -0.14em; inset-inline-start: 0; z-index: -1;
+    width: 100%;
+    font-weight: 700; font-size: clamp(64px, 12.5vw, 190px);
+    line-height: 1; letter-spacing: -0.02em; white-space: nowrap;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--white-16);
+    text-align: center;
+    pointer-events: none; user-select: none;
+    direction: ltr;
+  }
 
-  .system-zone { padding-block: 0; }
-  .system-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(32px,5vw,72px); align-items: start; padding-block: clamp(80px,10vw,140px); }
-  .system-head { position: sticky; top: 100px; }
-  .system-title { font-size: clamp(30px,4.6vw,60px); }
-  .system-foot { margin-top: 28px; color: var(--white); font-weight: 600; font-size: clamp(16px,1.9vw,19px); max-width: 42ch; border-inline-start: 2px solid var(--red); padding-inline-start: 18px; }
-  .system-steps { display: flex; flex-direction: column; }
-  .sstep { display: grid; grid-template-columns: 64px 1fr; gap: 22px; align-items: start; padding: clamp(24px,3vw,38px) 0; border-top: 1px solid var(--line); opacity: .34; transition: opacity .5s var(--ease); }
-  .sstep:first-child { border-top: none; }
-  .sstep.on { opacity: 1; }
-  .sstep__n { font-family: var(--font-display); font-weight: 800; font-size: clamp(30px,3.4vw,46px); color: transparent; -webkit-text-stroke: 1.5px var(--red); }
-  .sstep.on .sstep__n { color: var(--red); -webkit-text-stroke: 0; }
-  .sstep__body h3 { font-family: var(--font-display); font-weight: 700; font-size: clamp(20px,2.2vw,27px); }
-  .sstep__ar { color: var(--dim); font-weight: 400; font-size: .7em; }
-  .sstep__body p { color: var(--dim); margin-top: 8px; line-height: 1.6; }
+  /* ═══ trust ═══ */
+  .trust__grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: var(--space-5); align-items: start; }
+  .trust__note { font-weight: 700; font-size: var(--text-xl); line-height: 1.5; text-wrap: balance; }
+  .trust__caps { display: flex; flex-wrap: wrap; gap: 0; border-top: 1px solid var(--black-16); }
+  .trust__caps li {
+    display: flex; align-items: baseline; gap: 10px;
+    font-weight: 600; font-size: var(--text-base);
+    padding: 16px 26px 16px 0; margin-inline-end: 26px;
+  }
+  .trust__n { font-size: var(--text-xs); color: var(--color-red); font-weight: 600; }
+  .trust__fields { grid-column: 2; color: var(--black-64); font-size: var(--text-sm); display: flex; gap: 10px; flex-wrap: wrap; }
+  .trust__fields i { font-style: normal; color: var(--color-red); }
 
-  .cadence-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(32px,5vw,64px); align-items: center; }
-  .cadence-title { font-size: clamp(28px,4vw,52px); }
-  .compare { display: grid; gap: 16px; }
-  .compare__col { padding: 30px 28px; border-radius: var(--radius); border: 1px solid var(--line); background: var(--fill-card); }
-  .compare__col--good { border-color: rgba(var(--red-rgb),.35); background: linear-gradient(180deg, rgba(var(--red-rgb),.06), var(--surface)); }
-  .compare__tag { display: inline-block; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; padding: 6px 14px; border-radius: 999px; background: var(--surface-3); color: var(--dim); margin-bottom: 20px; }
-  .compare__tag--accent { background: var(--red); color: var(--red-ink); }
-  .compare__col ul { display: flex; flex-direction: column; gap: 12px; }
-  .compare__col li { display: flex; gap: 12px; font-size: 15.5px; color: var(--dim); }
-  .compare__col--good li { color: var(--white); }
-  .compare__col li i { font-style: normal; font-weight: 800; color: var(--dim-2); }
-  .compare__col--good li i { color: var(--red); }
+  /* ═══ work ═══ */
+  .work-sec__head { display: flex; flex-direction: column; gap: 16px; max-width: 640px; }
+  .work-sec__stage { margin-top: var(--space-5); }
+  .work-sec__foot { margin-top: var(--space-4); }
 
-  .who-title { font-size: clamp(28px,4.4vw,58px); max-width: 20ch; }
-  .who { margin-top: 44px; }
-  .who__row { display: grid; grid-template-columns: 44px 320px 1fr; gap: 22px; align-items: baseline; padding: 24px 0; border-top: 1px solid var(--line); transition: background .3s; }
-  .who__row:hover { background: rgba(255,255,255,.015); }
-  .who__n { font-family: var(--font-display); font-weight: 800; color: var(--red); font-size: 14px; }
-  .who__row b { font-family: var(--font-ar); font-weight: 900; font-size: clamp(19px,2.4vw,26px); }
-  .who__why { color: var(--dim); }
-  .who__note { margin-top: 40px; color: var(--dim); font-size: clamp(16px,2vw,19px); max-width: 640px; border-inline-start: 2px solid var(--red); padding-inline-start: 20px; }
+  /* ═══ services (red band) ═══ */
+  .svc__head { max-width: 640px; }
+  .svc__sub { margin-top: 16px; font-size: var(--text-lg); line-height: 1.7; color: rgba(244, 241, 238, 0.85); }
+  .svc__panels {
+    margin-top: var(--space-6);
+    display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 20px; align-items: start;
+  }
+  .svc__panel {
+    padding: clamp(28px, 4vw, 44px);
+    border-radius: var(--radius-medium);
+    display: flex; flex-direction: column; align-items: flex-start;
+  }
+  .svc__panel--solid { background: var(--color-black); color: var(--color-white); }
+  .svc__panel--line { border: 1px solid rgba(10, 8, 8, 0.35); color: var(--color-white); margin-top: var(--space-5); }
+  .svc__index { font-size: var(--text-xs); font-weight: 600; letter-spacing: 0.2em; opacity: 0.6; }
+  .svc__name { margin-top: 14px; font-weight: 700; font-size: var(--text-xl); letter-spacing: -0.01em; }
+  .svc__ar { color: inherit; opacity: 0.65; font-size: var(--text-sm); margin-top: 2px; }
+  .svc__copy { margin-top: 18px; line-height: 1.8; }
+  .svc__process { margin-top: 18px; font-size: var(--text-xs); font-weight: 600; letter-spacing: 0.06em; opacity: 0.75; }
+  .svc__panel--solid .svc__process { color: var(--color-red); opacity: 1; }
+  .svc__who { margin-top: 10px; font-size: var(--text-sm); opacity: 0.65; }
+  .svc__panel .btn { margin-top: 26px; }
+  .svc__btn-ondark { border-color: var(--white-16); color: var(--color-white); }
+  .svc__btn-ondark:hover { border-color: var(--color-red); color: var(--color-red); }
+  .svc__btn-fill { background: var(--color-black); color: var(--color-white); }
+  .svc__btn-fill:hover { background: #1d1717; }
 
-  .proof-head { text-align: center; }
-  .proof-title { font-size: clamp(28px,4.4vw,56px); }
-  .proof-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(24px,3vw,44px); margin-top: clamp(44px,6vw,64px); align-items: start; }
-  .proof-lead { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line-2); background: var(--surface-2); }
-  .proof-lead__media { aspect-ratio: 4/5; overflow: hidden; background: var(--fill-dark); }
-  .proof-lead__media img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(.3); transition: filter .5s var(--ease), transform .6s var(--ease); }
-  .proof-lead:hover .proof-lead__media img { filter: grayscale(0); transform: scale(1.03); }
-  .proof-lead blockquote { padding: 28px 30px 6px; font-family: var(--font-ar); font-weight: 700; font-size: clamp(19px,2.4vw,26px); line-height: 1.5; }
-  .proof-lead figcaption { padding: 0 30px 28px; color: var(--red); font-family: var(--font-display); font-weight: 600; font-size: 13px; }
-  .proof-side { display: flex; flex-direction: column; gap: 18px; }
-  .proof-quote { border-radius: var(--radius); border: 1px solid var(--line); background: var(--fill-card); padding: 26px 28px; }
-  .proof-quote blockquote { font-size: 17px; line-height: 1.6; }
-  .proof-quote figcaption { color: var(--red); font-family: var(--font-display); font-weight: 600; font-size: 12.5px; margin-top: 12px; }
-  .proof-clips { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
-  .shot { border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--line); background: var(--surface-2); cursor: pointer; transition: transform .4s var(--ease), border-color .4s; }
-  .shot:hover { transform: translateY(-6px); border-color: rgba(var(--red-rgb),.5); }
-  .shot__media { aspect-ratio: 9/14; position: relative; background: var(--fill-dark); overflow: hidden; }
-  .shot__media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
-  .shot__media::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(to top, rgba(5,5,5,.6), transparent 55%); }
-  .shot__play { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 2; width: 38px; height: 38px; border-radius: 50%; background: var(--red); display: grid; place-items: center; transition: opacity .3s; }
-  .shot__play span { width: 0; height: 0; border-style: solid; border-width: 6px 0 6px 10px; border-color: transparent transparent transparent #fff; margin-left: 3px; direction: ltr; }
-  .shot:hover .shot__play { opacity: 0; }
-  .shot figcaption { padding: 10px; }
-  .tag { display: inline-block; background: var(--red); color: var(--red-ink); font-family: var(--font-display); font-weight: 700; font-size: 10px; padding: 3px 9px; border-radius: 999px; }
+  /* ═══ portal ═══ */
+  .portal-sec__grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: var(--space-5); align-items: start; }
+  .portal-sec__head { display: flex; flex-direction: column; gap: 16px; }
+  .portal-sec__soon { margin-top: var(--space-4); border-top: 1px solid var(--white-08); padding-top: var(--space-4); display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+  .portal-sec__product { font-weight: 600; font-size: var(--text-sm); }
+  .portal-sec__badge {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--color-red); border: 1px solid var(--red-40); border-radius: var(--radius-small);
+    padding: 5px 12px;
+  }
+  .portal-sec__soonline { color: var(--white-70); font-size: var(--text-sm); max-width: 40ch; }
+  .portal-sec__soon .btn { margin-top: 12px; }
 
-  .tiers-title { font-size: clamp(28px,4.4vw,56px); text-align: center; }
-  .tiers-title + .lead { text-align: center; margin-inline: auto; }
-  .tiers { display: grid; grid-template-columns: 1fr 1.12fr 1fr; gap: 18px; margin-top: clamp(44px,6vw,64px); align-items: center; }
-  .tier { padding: 38px 32px; border-radius: var(--radius-lg); border: 1px solid var(--line); background: var(--fill-card); display: flex; flex-direction: column; position: relative; transition: border-color .4s, transform .4s var(--ease); }
-  .tier:hover { border-color: var(--line-2); transform: translateY(-4px); }
-  .tier--featured { border-color: rgba(var(--red-rgb),.45); background: linear-gradient(180deg, rgba(var(--red-rgb),.08), var(--surface)); box-shadow: 0 0 80px -22px rgba(var(--red-rgb),.5); padding-top: 54px; }
-  .tier__badge { position: absolute; top: 18px; left: 50%; transform: translateX(-50%); background: var(--red); color: var(--red-ink); font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: .04em; padding: 6px 16px; border-radius: 999px; white-space: nowrap; }
-  .tier__name { font-family: var(--font-display); font-weight: 800; font-size: 26px; }
-  .tier__ar { color: var(--dim); font-size: 14.5px; margin: 8px 0 20px; min-height: 42px; }
-  .tier__price { font-family: var(--font-display); font-weight: 800; font-size: 32px; padding-bottom: 22px; border-bottom: 1px solid var(--line); margin-bottom: 22px; }
-  .tier__price small { font-family: var(--font-ar); font-weight: 400; font-size: 14px; color: var(--dim); margin-inline-start: 6px; }
-  .tier--featured .tier__price { color: var(--red); }
-  .tier__outcomes { display: flex; flex-direction: column; gap: 12px; margin-bottom: 22px; }
-  .tier__outcomes li { display: flex; gap: 10px; color: var(--dim); font-size: 14.5px; }
-  .tier__outcomes li i { font-style: normal; color: var(--red); font-weight: 800; }
-  .tier__best { color: var(--dim-2); font-size: 13px; margin-bottom: 24px; margin-top: auto; }
-  .tier__cta { width: 100%; }
-  .tier--featured .tier__cta { background: var(--red); border-color: var(--red); color: #fff; }
-  .tier--featured .tier__cta:hover { background: var(--red-hot); border-color: var(--red-hot); }
+  /* ═══ founders ═══ */
+  .founders-sec__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); align-items: start; }
+  .founders-sec__people { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .founder__photo, .founder__pending {
+    aspect-ratio: 4 / 5; width: 100%; object-fit: cover;
+    border-radius: var(--radius-medium);
+  }
+  .founder__pending {
+    display: grid; place-items: center;
+    background: var(--black-08); border: 1px dashed var(--black-16);
+    color: var(--black-64); font-size: var(--text-xs); text-align: center;
+    letter-spacing: 0.12em; text-transform: uppercase; line-height: 1.8;
+  }
+  .founder__name { margin-top: 14px; font-weight: 700; font-size: var(--text-base); }
+  .founder__role { color: var(--color-red); font-size: var(--text-xs); font-weight: 600; letter-spacing: 0.06em; }
+  .founders-sec__cta { margin-top: var(--space-5); }
 
-  .promise { position: relative; overflow: hidden; text-align: center; padding-block: clamp(110px,16vw,220px); background: #030303; border-block: 1px solid var(--line); }
-  .promise__bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(60% 90% at 50% 45%, rgba(var(--red-rgb),.20), transparent 62%); }
-  .promise .container { position: relative; z-index: 1; }
-  .promise__title { font-family: var(--font-ar); font-weight: 900; font-size: clamp(44px,9vw,120px); line-height: 1.02; margin: 18px 0 38px; text-wrap: balance; }
+  /* ═══ final cta ═══ */
+  .cta-sec { text-align: start; }
+  .cta-sec .lead { margin-top: 16px; }
+  .cta-sec__actions { display: flex; gap: 12px; margin-top: var(--space-4); flex-wrap: wrap; }
 
-  .faq-title { font-size: clamp(34px,5vw,64px); }
-  .faq { margin-top: clamp(40px,5vw,52px); display: flex; flex-direction: column; gap: 12px; }
-  .faq__item { border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface-2); overflow: hidden; }
-  .faq__item[open] { border-color: var(--line-2); }
-  .faq__item summary { list-style: none; cursor: pointer; padding: 22px 24px; font-weight: 600; font-size: 17px; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
-  .faq__item summary::-webkit-details-marker { display: none; }
-  .faq__item summary i { font-style: normal; color: var(--red); font-size: 26px; transition: transform .3s var(--ease); }
-  .faq__item[open] summary i { transform: rotate(45deg); }
-  .faq__item p { color: var(--dim); padding: 0 24px 24px; line-height: 1.7; }
-
+  /* ═══ responsive ═══ */
   @media (max-width: 1000px) {
-    .hero__grid, .system-grid, .cadence-grid, .proof-grid { grid-template-columns: 1fr; }
-    .hero__meta { align-items: center; text-align: center; }
-    .hero__cta { justify-content: center; }
-    .hero__sub, .hero__trust { max-width: 42ch; }
-    .system-head { position: static; }
-    .tiers { grid-template-columns: 1fr; }
-    .tier--featured { order: -1; }
-    .who__row { grid-template-columns: 34px 1fr; }
-    .who__why { grid-column: 2; }
+    .portal-sec__grid, .founders-sec__grid { grid-template-columns: 1fr; }
+    .svc__panels { grid-template-columns: 1fr; }
+    .svc__panel--line { margin-top: 0; }
   }
-
-  @media (max-width: 900px) {
-    /* trim the mobile-only floor of these clamps; desktop values unchanged */
-    .system-grid { padding-block: clamp(52px, 9vw, 140px); }
-    .promise { padding-block: clamp(72px, 13vw, 220px); }
-    .ba-zone { padding-block: clamp(52px, 9vw, 150px); }
-    .ba-stage { padding-inline: 20px; }   /* keep the >=20px page gutter */
+  @media (max-width: 760px) {
+    .trust__grid { grid-template-columns: 1fr; gap: var(--space-4); }
+    .trust__fields { grid-column: auto; }
+    .hero__meta { top: 88px; }
+    .hero__frame { padding-bottom: clamp(72px, 12vh, 120px); }
+    /* wordmark must never sit over the CTAs: shrink + fade further behind */
+    .hero__wordmark { font-size: clamp(44px, 11vw, 72px); opacity: 0.5; }
   }
-
-  @media (max-width: 640px) {
-    .reframe__row { grid-template-columns: 30px 1fr; }
-    .reframe__v { grid-column: 2; }
-    .ba { aspect-ratio: 16/11; }
-  }
-
   @media (max-width: 560px) {
-    /* three 9:16 clips in ~280px: tighten the frame so the tag pill still fits */
-    .proof-clips { gap: 8px; }
-    .shot figcaption { padding: 8px 6px; }
-    .tag { font-size: 9.5px; padding: 3px 7px; }
+    .founders-sec__people { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .hero__cta .btn { flex: 1 1 100%; }
+    .hero__reel { padding-inline: 0; }
   }
 </style>

@@ -2,179 +2,149 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import BookCta from '../components/BookCta.astro';
-import { studio, system, CTA } from '../config';
+import { studioPage, founders, CTA } from '../config';
 ---
 <Base
-  title="Next Level — The Studio"
-  description="ورا كل authority، فمّا production تتكفّل بيها. Team واحد، full-stack، يخدم كـ partner واحد."
+  title="الـ Studio — Next Level"
+  description="قصة Next Level، المؤسسين Walif Doukh وHeythem Hsairi، ومبادئ الخدمة اللي يخدم بيها الـ studio."
 >
   <Nav current="/studio" />
 
   <main id="main-content">
-  <!-- FOUNDER OPEN -->
-  <section class="section studio-hero">
-    <div class="container reveal narrow">
-      <span class="eyebrow">{studio.eyebrow}</span>
-      <h1 class="studio-hero__title">{studio.title}</h1>
-      <div class="founder">
-        <div class="founder__photo"><span class="latin">{studio.founder.initials}</span></div>
-        <div class="founder__body">
-          <blockquote>“{studio.founder.statement}”</blockquote>
-          <div class="founder__sig">
-            <b class="latin">{studio.founder.name}</b>
-            <span class="latin">{studio.founder.role}</span>
+    <section class="section st-hero">
+      <div class="container">
+        <p class="meta"><span class="accent">●</span> The Studio</p>
+        <h1 class="h-hero">{studioPage.title}</h1>
+      </div>
+    </section>
+
+    <!-- story -->
+    <section class="section--sm">
+      <div class="container st-story">
+        <h2 class="meta">القصة</h2>
+        <div class="st-story__body">
+          {studioPage.story.map((p) => <p>{p}</p>)}
+        </div>
+      </div>
+    </section>
+
+    <!-- founders -->
+    <section class="on-light section st-founders">
+      <div class="container">
+        <div class="sindex"><b>·</b> Founders</div>
+        <div class="st-founders__grid">
+          {founders.map((f) => (
+            <div class="st-founder">
+              {f.photo ? (
+                <img src={f.photo} alt={`صورة ${f.name}`} width="600" height="750" loading="lazy" />
+              ) : (
+                <div class="st-founder__pending" role="img" aria-label={`صورة ${f.name} — قريبًا`}>
+                  <span class="latin">Portrait coming</span>
+                </div>
+              )}
+              <h3 class="latin">{f.name}</h3>
+              <p class="latin">{f.role}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- principles -->
+    <section class="section">
+      <div class="container">
+        <div class="sindex"><b>·</b> كيفاش نخدمو</div>
+        <div class="st-prin">
+          {studioPage.principles.map((p, i) => (
+            <div class="st-prin__item">
+              <span class="latin">0{i + 1}</span>
+              <h3>{p.t}</h3>
+              <p>{p.d}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- capabilities (real team names not yet published → labelled Capabilities) -->
+    <section class="section--sm st-caps">
+      <div class="container">
+        <h2 class="meta">{studioPage.capabilities.title}</h2>
+        <p class="st-caps__note">{studioPage.capabilities.note}</p>
+        <ul class="st-caps__list">
+          {studioPage.capabilities.list.map((c) => (
+            <li>
+              <b class="latin">{c.name}</b>
+              <span>{c.role}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section--sm st-cta">
+      <div class="container">
+        <hr class="rule" />
+        <div class="st-cta__row">
+          <p class="h-display">تحب الـ studio هاذي تخدم معاك؟</p>
+          <div class="st-cta__btns">
+            <a href="/services" class="btn btn--line">شوف الخدمات</a>
+            <a href="/book" class="btn btn--solid btn--lg">{CTA.primary}</a>
           </div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- VALUES / WHY -->
-  <section class="section section--alt">
-    <div class="container reveal">
-      <span class="eyebrow">كيفاش نفكرو</span>
-      <h2 class="section__title">3 حاجات تفرّق <span class="accent latin">Next Level</span></h2>
-      <div class="vals">
-        {studio.values.map((v, i) => (
-          <div class="val">
-            <span class="val__n latin">0{i + 1}</span>
-            <b class="latin">{v.title}</b>
-            <p>{v.body}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- PROCESS (the chain, expanded) -->
-  <section class="section section--line">
-    <div class="container reveal">
-      <span class="eyebrow">الـ Process</span>
-      <h2 class="section__title">إنت تحضر مرّة. <span class="accent">الباقي يصير بلاك.</span></h2>
-      <div class="chain">
-        {system.steps.map((s) => (
-          <div class="chain__step">
-            <span class="chain__n latin">{s.n}</span>
-            <h3 class="latin">{s.title}</h3>
-            <p class="chain__ar">{s.ar}</p>
-            <p>{s.body}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- TEAM -->
-  <section class="section section--alt">
-    <div class="container reveal">
-      <span class="eyebrow">The People</span>
-      <h2 class="section__title">Team واحد — coverage كاملة</h2>
-      <p class="lead">موش أشخاص للكراء. أدوار في آلة وحدة: brand، direction، film، edit، refine.</p>
-      <div class="team-grid">
-        {studio.team.map((m) => (
-          <div class="member">
-            <div class="member__photo"><span class="latin">{m.initials}</span></div>
-            <div class="member__body">
-              <h3 class="latin">{m.name}</h3>
-              <div class="member__role latin">{m.role}</div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="promise-band">
-    <div class="container reveal">
-      <h2 class="promise-band__title">تحب الـ <span class="accent latin">Studio</span> هاذي تخدم معاك؟</h2>
-      <p class="promise-band__en latin">You show up. We handle the rest.</p>
-      <BookCta class="btn btn--solid btn--lg" label={CTA.primary} />
-    </div>
-  </section>
+    </section>
   </main>
 
   <Footer />
 </Base>
 
 <style>
-  .narrow { max-width: 860px; }
-  .section__title { margin-top: 14px; }
+  .st-hero { padding-top: clamp(140px, 20vh, 220px); padding-bottom: var(--space-4); }
+  .st-hero h1 { margin-top: 16px; max-width: 18ch; }
 
-  .studio-hero { padding-top: clamp(70px,10vw,120px); }
-  .studio-hero__title { font-family: var(--font-ar); font-weight: 900; line-height: 1.12;
-    font-size: clamp(34px,5.4vw,68px); margin-top: 18px; text-wrap: balance; }
+  .st-story { display: grid; grid-template-columns: 200px 1fr; gap: var(--space-5); align-items: start; }
+  .st-story__body { max-width: 62ch; display: flex; flex-direction: column; gap: 18px; }
+  .st-story__body p { font-size: var(--text-lg); line-height: 1.85; color: var(--white-70); }
+  .st-story__body p:first-child { color: var(--color-white); }
 
-  .founder { display: grid; grid-template-columns: 160px 1fr; gap: 34px; align-items: center; margin-top: 48px;
-    padding-top: 40px; border-top: 1px solid var(--line); }
-  .founder__photo { aspect-ratio: 1; border-radius: var(--radius); overflow: hidden; display: grid; place-items: center;
-    background: var(--fill-dark); border: 1px solid var(--line); }
-  .founder__photo span { font-family: var(--font-display); font-weight: 800; font-size: 44px; color: #3a2a2c; }
-  .founder__body blockquote { font-family: var(--font-ar); font-weight: 700; font-size: clamp(19px,2.6vw,26px);
-    line-height: 1.5; }
-  .founder__sig { margin-top: 18px; display: flex; flex-direction: column; }
-  .founder__sig b { font-family: var(--font-display); font-weight: 700; font-size: 16px; }
-  .founder__sig span { color: var(--red); font-size: 13px; font-weight: 600; }
+  .st-founders__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 4vw, 48px); max-width: 880px; }
+  .st-founder img, .st-founder__pending { aspect-ratio: 4 / 5; width: 100%; object-fit: cover; border-radius: var(--radius-medium); }
+  .st-founder__pending {
+    display: grid; place-items: center;
+    background: var(--black-08); border: 1px dashed var(--black-16);
+    color: var(--black-64); font-size: var(--text-xs);
+    letter-spacing: 0.12em; text-transform: uppercase;
+  }
+  .st-founder h3 { margin-top: 16px; font-weight: 700; font-size: var(--text-xl); }
+  .st-founder p { color: var(--color-red); font-weight: 600; font-size: var(--text-sm); margin-top: 2px; }
 
-  .vals { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-top: clamp(44px,6vw,60px); }
-  .val { padding: 36px 30px; border-radius: var(--radius); border: 1px solid var(--line); background: var(--fill-card);
-    transition: border-color .4s; }
-  .val:hover { border-color: var(--line-2); }
-  .val__n { font-family: var(--font-display); font-weight: 800; font-size: 14px; color: var(--red); letter-spacing: .12em; }
-  .val b { display: block; font-family: var(--font-display); font-weight: 700; font-size: 22px; margin: 12px 0 10px; }
-  .val p { color: var(--dim); }
+  .st-prin { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .st-prin__item { border-top: 1px solid var(--white-10); padding-top: 16px; }
+  .st-prin__item span { font-size: var(--text-xs); font-weight: 600; color: var(--color-red); letter-spacing: 0.14em; }
+  .st-prin__item h3 { margin-top: 10px; font-size: var(--text-lg); font-weight: 700; }
+  .st-prin__item p { margin-top: 8px; color: var(--white-70); font-size: var(--text-sm); line-height: 1.75; }
 
-  /* chain (shared look with home) */
-  .chain { display: grid; grid-template-columns: repeat(5,1fr); gap: 0; margin-top: clamp(44px,6vw,64px); border-top: 1px solid var(--line); }
-  .chain__step { padding: 34px 26px 34px 0; border-inline-start: 1px solid var(--line); padding-inline-start: 26px; }
-  .chain__step:first-child { border-inline-start: none; padding-inline-start: 0; }
-  .chain__n { font-family: var(--font-display); font-weight: 800; font-size: 15px; color: var(--red); letter-spacing: .1em; }
-  .chain__step h3 { font-family: var(--font-display); font-weight: 700; font-size: 22px; margin: 14px 0 2px; }
-  .chain__ar { color: var(--dim); font-size: 14px; margin-bottom: 10px; }
-  .chain__step p:last-child { color: var(--dim); font-size: 14px; line-height: 1.6; }
+  .st-caps__note { margin-top: 10px; color: var(--white-55); font-size: var(--text-sm); }
+  .st-caps__list { margin-top: 18px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0 32px; }
+  .st-caps__list li {
+    display: flex; flex-direction: column; gap: 2px;
+    padding-block: 14px; border-bottom: 1px solid var(--white-08);
+  }
+  .st-caps__list b { font-weight: 600; font-size: var(--text-sm); }
+  .st-caps__list span { color: var(--white-55); font-size: var(--text-xs); }
 
-  .team-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: clamp(40px,6vw,56px); }
-  .member { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); background: var(--surface-2);
-    display: flex; align-items: center; gap: 18px; padding: 18px; transition: border-color .4s; }
-  .member:hover { border-color: var(--line-2); }
-  .member__photo { width: 64px; height: 64px; flex: none; border-radius: 50%; display: grid; place-items: center;
-    background: var(--fill-dark); }
-  .member__photo span { font-family: var(--font-display); font-weight: 800; font-size: 22px; color: #3a2a2c; }
-  .member__body h3 { font-family: var(--font-display); font-weight: 700; font-size: 17px; }
-  .member__role { color: var(--red); font-size: 12.5px; font-weight: 600; }
-
-  .promise-band { padding-block: clamp(90px,12vw,150px); text-align: center; border-block: 1px solid var(--line);
-    background: radial-gradient(70% 100% at 50% 0%, rgba(var(--red-rgb),.10), transparent 60%), var(--surface); }
-  .promise-band__title { font-family: var(--font-ar); font-weight: 900; font-size: clamp(32px,5.6vw,64px); line-height: 1.1; text-wrap: balance; }
-  .promise-band__en { font-family: var(--font-display); font-weight: 700; color: var(--dim); margin: 14px 0 34px; }
+  .st-cta__row { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-top: var(--space-5); flex-wrap: wrap; }
+  .st-cta__btns { display: flex; gap: 12px; flex-wrap: wrap; }
 
   @media (max-width: 900px) {
-    .founder { grid-template-columns: 1fr; gap: 24px; }
-    .founder__photo { max-width: 140px; }
-    .vals { grid-template-columns: 1fr; }
-    .chain { grid-template-columns: 1fr 1fr; }
-    .chain__step { border-inline-start: none; border-top: 1px solid var(--line); padding-inline-start: 0; padding-top: 28px; }
-    .chain__step:first-child { border-top: none; }
-    .team-grid { grid-template-columns: 1fr 1fr; }
+    .st-story { grid-template-columns: 1fr; gap: 16px; }
+    .st-prin { grid-template-columns: 1fr 1fr; }
+    .st-caps__list { grid-template-columns: 1fr 1fr; }
   }
   @media (max-width: 560px) {
-    .team-grid { grid-template-columns: 1fr; }
-
-    /* 5 process steps read as a single vertical timeline instead of two cramped
-       columns. The rail sits on the inline-start edge, so it follows RTL. */
-    .chain { grid-template-columns: 1fr; border-top: none; margin-top: 36px; }
-    .chain__step {
-      position: relative; border-top: none; padding: 0 0 30px;
-      padding-inline-start: 30px; margin-inline-start: 4px;
-      border-inline-start: 1px solid var(--line);
-    }
-    .chain__step:last-child { padding-bottom: 0; border-inline-start-color: transparent; }
-    .chain__step::before {
-      content: ''; position: absolute; top: 6px; inset-inline-start: -5px;
-      width: 9px; height: 9px; border-radius: 50%;
-      background: var(--red); box-shadow: 0 0 12px var(--red);
-    }
-    .chain__step h3 { margin-top: 8px; font-size: 20px; }
+    .st-prin, .st-caps__list { grid-template-columns: 1fr; }
+    .st-founders__grid { grid-template-columns: 1fr 1fr; gap: 14px; }
   }
 </style>
