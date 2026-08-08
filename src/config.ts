@@ -79,12 +79,16 @@ export const CTA = {
    No copy, no CTAs: nav + tiny metadata + solid filled NEXT LEVEL wordmark.
    The semantic message (page H1) lives in the Intro Film section below. */
 export const hero = {
-  /* responsive sources — site.js picks one; never load both */
+  /* responsive sources — the HeroScroll island picks one; never load both */
   videoDesktop: '/media/hero/hero-desktop.mp4',
   videoMobile: '/media/hero/hero-mobile.mp4',
   posterDesktop: '/media/hero/hero-desktop-poster.webp',
   posterMobile: '/media/hero/hero-mobile-poster.webp',
   meta: { location: 'Tunis, TN', label: 'Hero Video' },
+  /* short statement, lower-right of the hero (the wordmark sits lower-left) */
+  copy: 'من الفكرة للنشر، نبنيو حضور يوازي خبرتك.',
+  copyLinkLabel: 'اكتشف كيف نخدموا ↓',
+  copyLinkHref: '#intro',
 };
 
 /* ---- 03 · INTRO VIDEO — carries the primary value proposition + page H1 ----

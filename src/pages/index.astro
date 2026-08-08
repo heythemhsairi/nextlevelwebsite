@@ -5,6 +5,7 @@ import Footer from '../components/Footer.astro';
 import ReelModal from '../components/ReelModal.astro';
 import PortalCalendar from '../components/PortalCalendar.astro';
 import WorkGallery from '../components/react/WorkGallery';
+import HeroScroll from '../components/react/HeroScroll';
 import { existsSync } from 'node:fs';
 import {
   hero, introVideo, trust, workIntro, workItems, servicesIntro, services,
@@ -36,39 +37,21 @@ const introVideoReady = existsSync(new URL(`../../public${introVideo.video}`, im
   <Nav current="/" />
 
   <main id="main-content">
-    <!-- ═══ 01 · CINEMATIC HERO ═══ -->
-    <section class="hero">
-      <div class="hero__media" aria-hidden="true">
-        <!-- No src in markup: site.js picks the right file per breakpoint so a
-             phone never downloads the desktop hero. Reduced-motion / Save-Data
-             users keep the static poster only. No-JS = poster. -->
-        <video
-          id="heroVideo"
-          poster={hero.posterDesktop}
-          data-src-desktop={hero.videoDesktop}
-          data-src-mobile={hero.videoMobile}
-          data-poster-desktop={hero.posterDesktop}
-          data-poster-mobile={hero.posterMobile}
-          muted
-          loop
-          playsinline
-          preload="none"
-        ></video>
-      </div>
-      <div class="hero__scrim" aria-hidden="true"></div>
-
-      <div class="hero__meta">
-        <span class="meta"><span class="accent">●</span> REC — {hero.meta.label}</span>
-        <span class="meta latin">{hero.meta.location}</span>
-      </div>
-
-      <!-- film-title wordmark: solid fill, decorative (nav logo identifies the
-           brand accessibly; the semantic H1 lives in the Intro Film below) -->
-      <p class="hero__wordmark" aria-hidden="true" dir="ltr">
-        <span class="hero__wordmark-next">NEXT</span>
-        <span class="hero__wordmark-level">LEVEL</span>
-      </p>
-    </section>
+    <!-- ═══ 01 · CINEMATIC HERO — sticky scroll sequence (React island).
+         client:load: above the fold. Adapted from 21st.dev "Smooth Scroll
+         Hero" (ishamsu) + recreated Electric Gaze reveal (see HeroScroll.tsx). -->
+    <HeroScroll
+      client:load
+      videoDesktop={hero.videoDesktop}
+      videoMobile={hero.videoMobile}
+      posterDesktop={hero.posterDesktop}
+      posterMobile={hero.posterMobile}
+      metaLabel={hero.meta.label}
+      metaLocation={hero.meta.location}
+      copy={hero.copy}
+      copyLinkLabel={hero.copyLinkLabel}
+      copyLinkHref={hero.copyLinkHref}
+    />
 
     <!-- ═══ 02 · COMPACT TRUST (facts only) ═══ -->
     <section class="on-light section--sm trust">
@@ -93,7 +76,7 @@ const introVideoReady = existsSync(new URL(`../../public${introVideo.video}`, im
 
     <!-- ═══ 03 · INTRO VIDEO — one editorial composition: header row, wide film,
          text grid below (H1 8 cols · details 4 cols) ═══ -->
-    <section class="ifilm">
+    <section class="ifilm" id="intro">
       <div class="ifilm__container">
         <header class="ifilm__head reveal">
           <span class="meta"><b class="accent">01</b> — INTRO VIDEO</span>
@@ -264,50 +247,7 @@ const introVideoReady = existsSync(new URL(`../../public${introVideo.video}`, im
 </Base>
 
 <style>
-  /* ═══ hero ═══ */
-  .hero {
-    position: relative; min-height: 100svh;
-    display: flex; flex-direction: column; justify-content: flex-end;
-    overflow: hidden; isolation: isolate;
-  }
-  .hero__media { position: absolute; inset: 0; z-index: -2; }
-  .hero__media { background: var(--color-black); } /* no flash before poster/video */
-  .hero__media video {
-    width: 100%; height: 100%; object-fit: cover;
-    /* focal point: keep the subject readable behind bottom-start copy */
-    object-position: var(--hero-focal, 50% 38%);
-  }
-  @media (max-width: 760px) {
-    .hero__media video { --hero-focal: 50% 30%; }
-  }
-  /* lighter scrim — the video is the show; darken only what the wordmark
-     and nav need to stay readable */
-  .hero__scrim {
-    position: absolute; inset: 0; z-index: -1;
-    background: linear-gradient(to top,
-      rgba(10, 8, 8, 0.78) 0%, rgba(10, 8, 8, 0.22) 26%,
-      rgba(10, 8, 8, 0.08) 58%, rgba(10, 8, 8, 0.45) 100%);
-  }
-  .hero__meta {
-    position: absolute; top: 96px; inset-inline: var(--gutter);
-    display: flex; justify-content: space-between; gap: 12px;
-  }
-  .hero__meta .meta { color: var(--white-55); }
-
-  /* film-title wordmark — solid fill, Inter 900, anchored near the lower edge */
-  .hero__wordmark {
-    font-family: var(--font-latin);
-    font-weight: 900;
-    font-size: clamp(72px, 11vw, 200px);
-    line-height: 0.78;
-    letter-spacing: -0.065em;
-    text-align: center;
-    margin-bottom: clamp(28px, 6vh, 64px);
-    padding-inline: var(--gutter);
-    pointer-events: none; user-select: none;
-  }
-  .hero__wordmark-next { color: var(--color-white); }
-  .hero__wordmark-level { color: var(--color-red); margin-inline-start: 0.22em; }
+  /* hero styles live in the HeroScroll island (HeroScroll.css) */
 
   /* ═══ trust ═══ */
   .trust__grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: var(--space-5); align-items: start; }
