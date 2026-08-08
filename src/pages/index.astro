@@ -6,16 +6,21 @@ import ReelModal from '../components/ReelModal.astro';
 import PortalCalendar from '../components/PortalCalendar.astro';
 import WorkGallery from '../components/react/WorkGallery';
 import {
-  hero, trust, workIntro, projects, servicesIntro, services,
+  hero, trust, workIntro, workItems, servicesIntro, services,
   portalIntro, foundersIntro, founders, finalCta, CTA, whatsappLink,
 } from '../config';
 
-const galleryItems = projects.map((p) => ({
-  image: p.poster,
-  text: p.title,
-  category: p.category,
-  href: `/work/${p.slug}`,
-  placeholder: p.placeholder,
+/* homepage order interleaves the two collections (config already alternates) */
+const galleryItems = workItems.map((w) => ({
+  image: w.poster,
+  text: w.title,
+  category: w.client,
+  href: `/work/${w.slug}`,
+  client: w.client,
+  title: w.title,
+  categoryLabel: w.categoryAr,
+  fullVideo: w.fullVideo,
+  poster: w.poster,
 }));
 ---
 <Base
@@ -28,14 +33,20 @@ const galleryItems = projects.map((p) => ({
     <!-- ═══ 01 · CINEMATIC HERO ═══ -->
     <section class="hero">
       <div class="hero__media" aria-hidden="true">
+        <!-- No src in markup: site.js picks the right file per breakpoint so a
+             phone never downloads the desktop hero. Reduced-motion / Save-Data
+             users keep the static poster only. No-JS = poster. -->
         <video
-          src={hero.video}
-          poster={hero.poster}
+          id="heroVideo"
+          poster={hero.posterDesktop}
+          data-src-desktop={hero.videoDesktop}
+          data-src-mobile={hero.videoMobile}
+          data-poster-desktop={hero.posterDesktop}
+          data-poster-mobile={hero.posterMobile}
           muted
           loop
-          autoplay
           playsinline
-          preload="metadata"
+          preload="none"
         ></video>
       </div>
       <div class="hero__scrim" aria-hidden="true"></div>
@@ -50,18 +61,12 @@ const galleryItems = projects.map((p) => ({
           <p class="hero__eyebrow meta">{hero.eyebrow}</p>
           <h1 class="h-hero">{hero.title}</h1>
           <p class="hero__sub lead">{hero.sub}</p>
+          <!-- No separate showreel trigger: the hero film IS the reel (5s loop,
+               no audio track). A silent 5-second modal would feel broken —
+               restore the button when a real long-form showreel is supplied. -->
           <div class="hero__cta">
             <a href="/book" class="btn btn--solid btn--lg">{CTA.primary}</a>
             <a href="/work" class="btn btn--line btn--lg">{CTA.secondary}</a>
-            <button
-              type="button"
-              class="hero__reel"
-              data-reel={hero.video}
-              data-reel-poster={hero.poster}
-            >
-              <span class="hero__reel-dot" aria-hidden="true"></span>
-              {hero.reelLabel}
-            </button>
           </div>
         </div>
       </div>
@@ -207,7 +212,15 @@ const galleryItems = projects.map((p) => ({
     overflow: hidden; isolation: isolate;
   }
   .hero__media { position: absolute; inset: 0; z-index: -2; }
-  .hero__media video { width: 100%; height: 100%; object-fit: cover; }
+  .hero__media { background: var(--color-black); } /* no flash before poster/video */
+  .hero__media video {
+    width: 100%; height: 100%; object-fit: cover;
+    /* focal point: keep the subject readable behind bottom-start copy */
+    object-position: var(--hero-focal, 50% 38%);
+  }
+  @media (max-width: 760px) {
+    .hero__media video { --hero-focal: 50% 30%; }
+  }
   .hero__scrim {
     position: absolute; inset: 0; z-index: -1;
     background: linear-gradient(to top,
@@ -224,17 +237,6 @@ const galleryItems = projects.map((p) => ({
   .hero__body h1 { margin-top: 16px; }
   .hero__sub { margin-top: 20px; color: var(--white-70); }
   .hero__cta { display: flex; align-items: center; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
-  .hero__reel {
-    display: inline-flex; align-items: center; gap: 10px;
-    min-height: 52px; padding: 12px 16px;
-    font-weight: 600; font-size: var(--text-sm); color: var(--white-70);
-    transition: color 0.2s; cursor: pointer;
-  }
-  .hero__reel:hover { color: var(--color-white); }
-  .hero__reel-dot {
-    width: 10px; height: 10px; border-radius: 50%; background: var(--color-red);
-    flex: none;
-  }
 
   /* decorative wordmark — clipped to hero bottom, behind content */
   .hero__wordmark {
@@ -346,6 +348,5 @@ const galleryItems = projects.map((p) => ({
   @media (max-width: 560px) {
     .founders-sec__people { grid-template-columns: 1fr 1fr; gap: 12px; }
     .hero__cta .btn { flex: 1 1 100%; }
-    .hero__reel { padding-inline: 0; }
   }
 </style>

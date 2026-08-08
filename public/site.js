@@ -88,40 +88,79 @@ document.addEventListener('DOMContentLoaded', () => {
   );
   document.querySelectorAll('.reveal, .reveal-stagger').forEach((el) => io.observe(el));
 
-  /* ---- showreel modal (single instance, [data-reel] triggers) ---- */
+  /* ---- responsive hero video ----
+     Pick ONE source per breakpoint. Reduced-motion or Save-Data users keep
+     the static poster (no video bytes at all). */
+  const heroVideo = document.getElementById('heroVideo');
+  if (heroVideo) {
+    const saveData = navigator.connection && navigator.connection.saveData === true;
+    const mobile = window.matchMedia('(max-width: 760px)');
+
+    const applyHero = () => {
+      const m = mobile.matches;
+      heroVideo.poster = m ? heroVideo.dataset.posterMobile : heroVideo.dataset.posterDesktop;
+      if (reduceMotion || saveData) return; // poster-only experience
+      const want = m ? heroVideo.dataset.srcMobile : heroVideo.dataset.srcDesktop;
+      if (heroVideo.getAttribute('src') !== want) {
+        heroVideo.src = want;
+        heroVideo.load();
+      }
+      heroVideo.play().catch(() => {});
+    };
+    applyHero();
+    // switch source only when the breakpoint actually flips
+    mobile.addEventListener('change', applyHero);
+  }
+
+  /* ---- showreel modal ----
+     Delegated [data-reel] so triggers added after load (React island) work. */
   const reel = document.getElementById('reelModal');
   if (reel) {
     const player = reel.querySelector('video');
     const closeBtn = reel.querySelector('.reel__close');
     let lastFocus = null;
 
-    const close = () => {
-      if (!reel.open) return;
-      reel.close();
-    };
     reel.addEventListener('close', () => {
       unlockScroll();
       if (player) { player.pause(); player.removeAttribute('src'); player.load(); }
-      if (lastFocus) lastFocus.focus();
+      if (lastFocus && document.contains(lastFocus)) lastFocus.focus();
     });
     reel.addEventListener('click', (e) => {
-      // click on the backdrop closes (dialog itself is the backdrop target)
-      if (e.target === reel) close();
+      if (e.target === reel) reel.close();
     });
-    closeBtn?.addEventListener('click', close);
+    closeBtn?.addEventListener('click', () => reel.close());
 
-    document.querySelectorAll('[data-reel]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        lastFocus = btn;
-        if (player) {
-          if (btn.dataset.reelPoster) player.setAttribute('poster', btn.dataset.reelPoster);
-          player.src = btn.dataset.reel;
-          player.load();
-        }
-        lockScroll();
-        reel.showModal();
-        if (player && !reduceMotion) player.play().catch(() => {});
-      });
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-reel]');
+      if (!btn) return;
+      lastFocus = btn;
+      if (player) {
+        if (btn.dataset.reelPoster) player.setAttribute('poster', btn.dataset.reelPoster);
+        player.src = btn.dataset.reel;
+        player.load();
+      }
+      lockScroll();
+      reel.showModal();
+      if (player && !reduceMotion) player.play().catch(() => {});
+    });
+  }
+
+  /* ---- work cards: muted preview on intentional hover/focus (pointer devices,
+     no reduced-motion). preload=none keeps previews off the wire until then. */
+  if (!reduceMotion && window.matchMedia('(hover: hover)').matches) {
+    document.querySelectorAll('[data-hover-preview]').forEach((card) => {
+      const v = card.querySelector('video');
+      if (!v) return;
+      const play = () => { v.play().catch(() => {}); card.classList.add('previewing'); };
+      const stop = () => {
+        v.pause();
+        try { v.currentTime = 0; } catch (e) {}
+        card.classList.remove('previewing');
+      };
+      card.addEventListener('mouseenter', play);
+      card.addEventListener('mouseleave', stop);
+      card.addEventListener('focusin', play);
+      card.addEventListener('focusout', stop);
     });
   }
 

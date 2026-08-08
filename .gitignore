@@ -19,3 +19,6 @@ Thumbs.db
 legacy/
 .vercel
 .env*
+
+# raw media downloads (Google Drive transfer source) — never commit originals
+.media-source/

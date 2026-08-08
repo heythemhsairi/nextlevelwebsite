@@ -11,9 +11,33 @@
 .wg-stage:active { cursor: grabbing; }
 .wg-stage canvas { display: block; }
 
+/* ---- active-item meta bar ---- */
+.wg-meta {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  max-width: 720px; margin: 4px auto 0; padding-inline: 20px;
+  flex-wrap: wrap;
+}
+.wg-meta__text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.wg-meta__client {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--color-red);
+}
+.wg-meta__title { font-weight: 700; font-size: var(--text-base); color: var(--color-white); }
+.wg-play {
+  display: inline-flex; align-items: center; gap: 10px;
+  min-height: 48px; padding: 10px 22px;
+  border: 1px solid var(--white-16); border-radius: var(--radius-small);
+  color: var(--color-white); font-weight: 700; font-size: var(--text-sm);
+  font-family: var(--font-arabic);
+  background: transparent; cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.wg-play:hover { border-color: var(--color-red); color: var(--color-red); }
+.wg-play svg { flex: none; }
+
 .wg-controls {
   display: flex; align-items: center; justify-content: center; gap: 18px;
-  margin-top: 8px;
+  margin-top: 14px;
 }
 .wg-btn {
   width: 48px; height: 48px;
@@ -45,6 +69,15 @@
   flex: 0 0 min(72vw, 300px);
   scroll-snap-align: center;
   display: flex; flex-direction: column; gap: 12px;
+  /* cards are <button>s now — neutralize UA styles */
+  background: none; border: 0; padding: 0; font: inherit; color: inherit;
+  text-align: start; cursor: pointer;
+}
+.wg-card__play {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 52px; height: 52px; border-radius: 50%;
+  background: var(--color-red); color: var(--color-white);
+  display: grid; place-items: center;
 }
 .wg-card__frame {
   position: relative; display: block;

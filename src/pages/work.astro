@@ -3,11 +3,11 @@ import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import ReelModal from '../components/ReelModal.astro';
-import { workPage, projects, workCategories, CTA } from '../config';
+import { workPage, workItems, workCollections, CTA } from '../config';
 ---
 <Base
   title="الأعمال — Next Level"
-  description="مشاريع Next Level: كيفاش نحولو خبرة الأطباء، المحامين، الـ consultants والـ founders إلى حضور واضح وثابت."
+  description="أعمال Next Level الحقيقية: سلسلة المحتوى التعليمي لسلمى الشارني وcreatives إعلانية لـ Focus Plus — من الكتابة للنشر."
 >
   <Nav current="/work" />
 
@@ -20,40 +20,58 @@ import { workPage, projects, workCategories, CTA } from '../config';
       </div>
     </section>
 
-    <section class="section--sm">
-      <div class="container">
-        <div class="wk-filters" id="workFilters" role="group" aria-label="فلترة حسب المجال">
-          {workCategories.map((c, i) => (
-            <button
-              type="button"
-              class={`wk-filter ${i === 0 ? 'active' : ''}`}
-              data-filter={c.key}
-              aria-pressed={i === 0 ? 'true' : 'false'}
-            >{c.label}</button>
-          ))}
-        </div>
+    {workCollections.map((col, ci) => {
+      const items = workItems.filter((w) => w.collection === col.key);
+      return (
+        <section class="section--sm wk-col" id={col.key}>
+          <div class="container">
+            <div class="sindex"><b>0{ci + 1}</b> {col.client}</div>
+            <header class="wk-col__head">
+              <h2 class="h-display latin">{col.client}</h2>
+              <div class="wk-col__meta">
+                <span class="wk-col__cat latin">{col.category}</span>
+                <p class="wk-col__intro">{col.intro}</p>
+              </div>
+            </header>
 
-        <div class="wk-grid">
-          {projects.map((p, i) => (
-            <a
-              href={`/work/${p.slug}`}
-              class={`wk-card ${i % 3 === 0 ? 'wk-card--tall' : ''}`}
-              data-project-cat={p.category}
-            >
-              <span class="wk-card__frame">
-                <img src={p.poster} alt="" width="720" height="900" loading={i < 2 ? 'eager' : 'lazy'} />
-                {p.placeholder && <span class="wk-badge">عيّنة — بانتظار مشاريع موثقة</span>}
-              </span>
-              <span class="wk-card__row">
-                <span class="wk-card__title">{p.title}</span>
-                <span class="wk-card__cat latin">{p.category}</span>
-              </span>
-              <span class="wk-card__sum">{p.summary}</span>
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
+            <div class="wk-grid" data-count={items.length}>
+              {items.map((w, i) => (
+                <article class="wk-card" data-hover-preview>
+                  <button
+                    type="button"
+                    class="wk-card__frame"
+                    data-reel={w.fullVideo}
+                    data-reel-poster={w.poster}
+                    aria-label={`شغّل: ${w.title}`}
+                  >
+                    <img
+                      src={w.poster}
+                      alt={`Poster — ${w.title} (${w.client})`}
+                      width="720" height="1280"
+                      loading={ci === 0 && i < 2 ? 'eager' : 'lazy'}
+                    />
+                    <video
+                      class="wk-card__preview"
+                      src={w.previewVideo}
+                      muted loop playsinline preload="none"
+                      aria-hidden="true"
+                      tabindex="-1"
+                    ></video>
+                    <span class="wk-card__playbtn" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    </span>
+                  </button>
+                  <div class="wk-card__body">
+                    <a href={`/work/${w.slug}`} class="wk-card__title latin" dir="ltr">{w.title}</a>
+                    <p class="wk-card__sum">{w.summary}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    })}
 
     <section class="section--sm wk-cta">
       <div class="container">
@@ -71,50 +89,67 @@ import { workPage, projects, workCategories, CTA } from '../config';
 </Base>
 
 <style>
-  .wk-hero { padding-top: clamp(140px, 20vh, 220px); padding-bottom: var(--space-5); }
+  .wk-hero { padding-top: clamp(140px, 20vh, 220px); padding-bottom: var(--space-4); }
   .wk-hero h1 { margin-top: 16px; }
   .wk-hero .lead { margin-top: 18px; }
 
-  .wk-filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: var(--space-5); }
-  .wk-filter {
-    min-height: 44px; padding: 10px 20px;
-    border: 1px solid var(--white-16); border-radius: var(--radius-small);
-    font-weight: 600; font-size: var(--text-sm); color: var(--white-70);
-    cursor: pointer; transition: 0.2s var(--ease);
-  }
-  .wk-filter:hover { color: var(--color-white); border-color: var(--white-40); }
-  .wk-filter.active { background: var(--color-red); border-color: var(--color-red); color: var(--color-white); }
+  .wk-col + .wk-col { border-top: 1px solid var(--white-08); }
 
-  .wk-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: clamp(16px, 2.5vw, 28px);
+  .wk-col__head {
+    display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);
+    align-items: end; margin-bottom: var(--space-5);
   }
-  .wk-card { display: flex; flex-direction: column; gap: 10px; }
+  .wk-col__cat {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--color-red);
+  }
+  .wk-col__intro { margin-top: 8px; color: var(--white-70); font-size: var(--text-sm); line-height: 1.75; max-width: 44ch; }
+
+  .wk-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(14px, 2vw, 24px); }
+  .wk-grid[data-count="3"] { grid-template-columns: repeat(3, 1fr); max-width: 980px; }
+
+  .wk-card { display: flex; flex-direction: column; gap: 12px; }
   .wk-card__frame {
-    position: relative; display: block; overflow: hidden;
-    aspect-ratio: 4 / 5; border-radius: var(--radius-medium);
+    position: relative; display: block; width: 100%; overflow: hidden;
+    aspect-ratio: 9 / 16; border-radius: var(--radius-medium);
     border: 1px solid var(--white-08); background: #141010;
+    padding: 0; cursor: pointer;
   }
-  .wk-card--tall .wk-card__frame { aspect-ratio: 3 / 4; }
-  .wk-card__frame img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--ease); }
-  .wk-card:hover .wk-card__frame img { transform: scale(1.04); }
-  .wk-badge {
-    position: absolute; bottom: 10px; inset-inline-start: 10px; inset-inline-end: 10px;
-    padding: 6px 10px; font-size: 11px; font-weight: 600; text-align: center;
-    background: var(--black-72); color: var(--white-70);
-    border: 1px solid var(--white-16); border-radius: var(--radius-small);
-    backdrop-filter: blur(6px);
+  .wk-card__frame img,
+  .wk-card__preview {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
   }
-  .wk-card__row { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
-  .wk-card__title { font-weight: 700; font-size: var(--text-lg); }
-  .wk-card__cat { font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-red); }
-  .wk-card__sum { color: var(--white-70); font-size: var(--text-sm); line-height: 1.7; }
+  .wk-card__preview { opacity: 0; transition: opacity 0.3s var(--ease); }
+  .wk-card.previewing .wk-card__preview { opacity: 1; }
+  .wk-card__playbtn {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--color-red); color: var(--color-white);
+    display: grid; place-items: center;
+    transition: transform 0.25s var(--ease), opacity 0.25s;
+  }
+  .wk-card:hover .wk-card__playbtn { transform: translate(-50%, -50%) scale(1.08); }
+  .wk-card__frame:focus-visible { box-shadow: var(--focus-ring); }
+
+  .wk-card__body { display: flex; flex-direction: column; gap: 6px; padding-inline: 2px; }
+  .wk-card__title {
+    font-weight: 700; font-size: var(--text-sm); color: var(--color-white);
+    min-height: 44px; display: inline-flex; align-items: center;
+  }
+  .wk-card__title:hover { color: var(--color-red); }
+  .wk-card__sum { color: var(--white-70); font-size: var(--text-xs); line-height: 1.7; }
 
   .wk-cta__row {
     display: flex; align-items: center; justify-content: space-between; gap: 20px;
     padding-top: var(--space-5); flex-wrap: wrap;
   }
 
-  @media (max-width: 1000px) { .wk-grid { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 620px) { .wk-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 1000px) {
+    .wk-grid, .wk-grid[data-count="3"] { grid-template-columns: repeat(2, 1fr); }
+    .wk-col__head { grid-template-columns: 1fr; align-items: start; }
+  }
+  @media (max-width: 560px) {
+    .wk-grid, .wk-grid[data-count="3"] { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .wk-card__playbtn { width: 44px; height: 44px; }
+  }
 </style>

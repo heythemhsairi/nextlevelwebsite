@@ -76,15 +76,20 @@ export const CTA = {
    HOMEPAGE
    ========================================================================= */
 
-/* ---- 01 · HERO ---- */
+/* ---- 01 · HERO (real Next Level footage) ---- */
 export const hero = {
   eyebrow: 'Media Production House — Tunisia',
   title: 'سمعتك سبقتك. يلزمها حضور يوازيها.',
   sub: 'نخططو، نكتبوا، نصوّرو وننتجو content يخلّي خبرتك تبان كيما تستاهل—من غير ما تسيّر production كاملة وحدك.',
-  video: '/media/intro.mp4', // TODO client: real showreel — current file is a licensed placeholder
-  poster: '/media/intro-poster.jpg',
-  reelLabel: 'شوف الـ Showreel',
-  meta: { location: 'Tunis, TN', label: 'Showreel — 01:30' },
+  /* responsive sources — site.js picks one; never load both */
+  videoDesktop: '/media/hero/hero-desktop.mp4',
+  videoMobile: '/media/hero/hero-mobile.mp4',
+  posterDesktop: '/media/hero/hero-desktop-poster.webp',
+  posterMobile: '/media/hero/hero-mobile-poster.webp',
+  /* NOTE: no dedicated long-form showreel was supplied — the hero film is a 5s
+     silent loop, so the modal reel trigger was removed. Add `reel: '<path>'`
+     back (and the button in index.astro) when a real showreel exists. */
+  meta: { location: 'Tunis, TN', label: 'Hero Film' },
 };
 
 /* ---- 02 · TRUST (facts only — no invented numbers) ---- */
@@ -101,104 +106,143 @@ export const workIntro = {
   cta: 'شوف كل الأعمال',
 };
 
-export interface Project {
+export interface WorkItem {
   slug: string;
-  title: string;
-  category: 'Doctor' | 'Legal' | 'Consultant' | 'Founder';
+  client: 'Salma Cherni' | 'Focus Plus';
+  collection: 'salma-cherni' | 'focus-plus';
+  category: string;      // verified-safe category only
   categoryAr: string;
+  title: string;         // real supplied deliverable title — do not embellish
   poster: string;
-  video?: string;
-  summary: string;
-  placeholder: boolean;
-  /* case-study body — factual only; empty until real info supplied */
-  challenge?: string;
-  approach?: string;
-  deliverables?: string[];
+  previewVideo: string;  // muted lightweight loop (hover/preview only)
+  fullVideo: string;     // explicit-action playback (modal / project page)
+  aspectRatio: 'portrait' | 'landscape' | 'square';
+  featured?: boolean;
+  summary: string;       // factual production description — no invented results
 }
 
-/* TODO client: replace with real projects (names, media, outcomes).
-   These entries are format demonstrations using licensed placeholder media —
-   flagged in the UI with a «عيّنة» badge and never presented as client work. */
-export const projects: Project[] = [
+/* Real client work from the Next Level archive (Google Drive transfer, re-encoded
+   for web). Titles are the supplied deliverable names. Summaries are factual
+   format descriptions — no invented results, testimonials or metrics. */
+const SC = '/media/work/salma-cherni';
+const FP = '/media/work/focus-plus';
+
+export const workItems: WorkItem[] = [
   {
-    slug: 'clinic-presence',
-    title: 'حضور عيادة طبية',
-    category: 'Doctor',
-    categoryAr: 'طبيب',
-    poster: '/media/poster-11.jpg',
-    video: '/media/clip1.mp4',
-    summary: 'مثال على شكل الحضور اللي نبنيوه لطبيب: تصوير هادئ، إيقاع واضح، ورسالة تبني الثقة قبل الموعد.',
-    placeholder: true,
-    approach: 'تخطيط شهري، تصوير في جلسة وحدة منظمة، مونتاج بإيقاع محترم للمشاهد.',
-    deliverables: ['خطة شهرية', 'Scripts', 'تصوير', 'مونتاج', 'نشر'],
+    slug: 'salma-three-things-allergies',
+    client: 'Salma Cherni',
+    collection: 'salma-cherni',
+    category: 'Educational Content',
+    categoryAr: 'محتوى تعليمي',
+    title: '3 Things to Avoid or Treat Allergies',
+    poster: `${SC}/three-things-allergies-poster.webp`,
+    previewVideo: `${SC}/three-things-allergies-preview.mp4`,
+    fullVideo: `${SC}/three-things-allergies.mp4`,
+    aspectRatio: 'portrait',
+    featured: true,
+    summary: 'فيديو من سلسلة المحتوى التعليمي لسلمى الشارني — كتابة، تصوير ومونتاج بصيغة عمودية قصيرة.',
   },
   {
-    slug: 'legal-standing',
-    title: 'صورة مكتب محاماة',
-    category: 'Legal',
-    categoryAr: 'محاماة',
-    poster: '/media/poster-24.jpg',
-    video: '/media/clip4.mp4',
-    summary: 'مثال على المعالجة البصرية لمحامي: تصوير رسمي بلا جمود، وصياغة تحترم طبيعة المهنة.',
-    placeholder: true,
-    approach: 'زوايا ثابتة، إضاءة محايدة، ونبرة مدروسة تناسب الإطار القانوني.',
-    deliverables: ['خطة شهرية', 'Scripts', 'تصوير', 'مونتاج'],
+    slug: 'focus-plus-creative-01',
+    client: 'Focus Plus',
+    collection: 'focus-plus',
+    category: 'E-commerce Creative',
+    categoryAr: 'إعلان E-commerce',
+    title: 'Focus Plus — Creative 01',
+    poster: `${FP}/focus-plus-creative-01-poster.webp`,
+    previewVideo: `${FP}/focus-plus-creative-01-preview.mp4`,
+    fullVideo: `${FP}/focus-plus-creative-01.mp4`,
+    aspectRatio: 'portrait',
+    featured: true,
+    summary: 'Creative إعلاني لمنتج Focus Plus — إنتاج موجه للمنصات الاجتماعية.',
   },
   {
-    slug: 'consultant-clarity',
-    title: 'محتوى consultant',
-    category: 'Consultant',
-    categoryAr: 'استشارات',
-    poster: '/media/poster-33.jpg',
-    video: '/media/clip3.mp4',
-    summary: 'مثال على تحويل الخبرة الاستشارية إلى محتوى منظم: فكرة واضحة في كل فيديو، بلا حشو.',
-    placeholder: true,
-    approach: 'تفكيك المواضيع الكبيرة إلى أفكار قصيرة قابلة للنشر أسبوعيًا.',
-    deliverables: ['استراتيجية', 'Scripts', 'مونتاج', 'نشر'],
+    slug: 'salma-why-you-wake-up-tired',
+    client: 'Salma Cherni',
+    collection: 'salma-cherni',
+    category: 'Educational Content',
+    categoryAr: 'محتوى تعليمي',
+    title: 'Why Do You Wake Up Tired?',
+    poster: `${SC}/why-you-wake-up-tired-poster.webp`,
+    previewVideo: `${SC}/why-you-wake-up-tired-preview.mp4`,
+    fullVideo: `${SC}/why-you-wake-up-tired.mp4`,
+    aspectRatio: 'portrait',
+    featured: true,
+    summary: 'فيديو من سلسلة المحتوى التعليمي لسلمى الشارني — معلومة وحدة، إيقاع واضح.',
   },
   {
-    slug: 'coach-energy',
-    title: 'حضور coach',
-    category: 'Consultant',
-    categoryAr: 'تدريب',
-    poster: '/media/poster-48.jpg',
-    video: '/media/clip2.mp4',
-    summary: 'مثال على معالجة أقرب للطاقة الطبيعية: كاميرا حرة أكثر، مع الحفاظ على مستوى الإنتاج.',
-    placeholder: true,
-    approach: 'تصوير حركي خفيف، مونتاج بإيقاع أسرع، وألوان دافئة.',
-    deliverables: ['خطة', 'تصوير', 'مونتاج'],
+    slug: 'focus-plus-creative-02',
+    client: 'Focus Plus',
+    collection: 'focus-plus',
+    category: 'E-commerce Creative',
+    categoryAr: 'إعلان E-commerce',
+    title: 'Focus Plus — Creative 02',
+    poster: `${FP}/focus-plus-creative-02-poster.webp`,
+    previewVideo: `${FP}/focus-plus-creative-02-preview.mp4`,
+    fullVideo: `${FP}/focus-plus-creative-02.mp4`,
+    aspectRatio: 'portrait',
+    featured: true,
+    summary: 'Creative إعلاني لمنتج Focus Plus — نسخة ثانية بزاوية مختلفة.',
   },
   {
-    slug: 'founder-face',
-    title: 'وجه founder',
-    category: 'Founder',
-    categoryAr: 'مؤسس',
-    poster: '/media/poster-52.jpg',
-    video: '/media/clip5.mp4',
-    summary: 'مثال على بناء حضور مؤسس يمثل الـ brand: قصة واضحة، وصورة تمشي مع طموح الشركة.',
-    placeholder: true,
-    approach: 'ربط قصة المؤسس بمنتج الشركة، وتثبيت هوية بصرية متكررة.',
-    deliverables: ['استراتيجية', 'Scripts', 'تصوير', 'مونتاج', 'نشر'],
+    slug: 'salma-bac-exams',
+    client: 'Salma Cherni',
+    collection: 'salma-cherni',
+    category: 'Educational Content',
+    categoryAr: 'محتوى تعليمي',
+    title: 'Get Ready for Your Bac Exams',
+    poster: `${SC}/bac-exams-poster.webp`,
+    previewVideo: `${SC}/bac-exams-preview.mp4`,
+    fullVideo: `${SC}/bac-exams.mp4`,
+    aspectRatio: 'portrait',
+    featured: true,
+    summary: 'فيديو من سلسلة المحتوى التعليمي لسلمى الشارني — موجه للتلامذة قبل الباكالوريا.',
   },
   {
-    slug: 'clinic-shorts',
-    title: 'Shorts عيادة',
-    category: 'Doctor',
-    categoryAr: 'طبيب',
-    poster: '/media/poster-52.jpg',
-    video: '/media/clip1.mp4',
-    summary: 'مثال على صيغة القصير العمودي: معلومة وحدة، إيقاع سريع، وختم بصري ثابت.',
-    placeholder: true,
-    deliverables: ['Scripts', 'مونتاج', 'نشر'],
+    slug: 'focus-plus-creative-03',
+    client: 'Focus Plus',
+    collection: 'focus-plus',
+    category: 'E-commerce Creative',
+    categoryAr: 'إعلان E-commerce',
+    title: 'Focus Plus — Creative 03',
+    poster: `${FP}/focus-plus-creative-03-poster.webp`,
+    previewVideo: `${FP}/focus-plus-creative-03-preview.mp4`,
+    fullVideo: `${FP}/focus-plus-creative-03.mp4`,
+    aspectRatio: 'portrait',
+    featured: true,
+    summary: 'Creative إعلاني لمنتج Focus Plus — نسخة ثالثة من نفس الحملة.',
+  },
+  {
+    slug: 'salma-michael-jackson',
+    client: 'Salma Cherni',
+    collection: 'salma-cherni',
+    category: 'Educational Content',
+    categoryAr: 'محتوى تعليمي',
+    title: 'How Michael Jackson Died',
+    poster: `${SC}/michael-jackson-poster.webp`,
+    previewVideo: `${SC}/michael-jackson-preview.mp4`,
+    fullVideo: `${SC}/michael-jackson.mp4`,
+    aspectRatio: 'portrait',
+    featured: true,
+    summary: 'فيديو من سلسلة المحتوى التعليمي لسلمى الشارني — سرد قصصي بمعالجة بصرية هادئة.',
   },
 ];
 
-export const workCategories = [
-  { key: 'all', label: 'الكل' },
-  { key: 'Doctor', label: 'أطباء' },
-  { key: 'Legal', label: 'محاماة' },
-  { key: 'Consultant', label: 'استشارات' },
-  { key: 'Founder', label: 'مؤسسين' },
+export const workCollections = [
+  {
+    key: 'salma-cherni',
+    client: 'Salma Cherni',
+    category: 'Educational Content',
+    categoryAr: 'محتوى تعليمي',
+    intro: 'سلسلة فيديوهات تعليمية قصيرة بصيغة عمودية — من الكتابة للنشر.',
+  },
+  {
+    key: 'focus-plus',
+    client: 'Focus Plus',
+    category: 'E-commerce Creative',
+    categoryAr: 'إعلان E-commerce',
+    intro: 'مجموعة creatives إعلانية لمتجر إلكتروني — مصممة للمنصات الاجتماعية.',
+  },
 ];
 
 /* ---- 04 · TWO SERVICE PATHS ---- */

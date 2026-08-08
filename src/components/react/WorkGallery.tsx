@@ -21,10 +21,14 @@ import './WorkGallery.css';
 
 export interface WorkItem {
   image: string;
-  text: string;       // short label rendered under the plane
-  category: string;
+  text: string;          // short label rendered under the plane
+  category: string;      // client/collection shown in the plane caption
   href: string;
-  placeholder?: boolean;
+  client: string;
+  title: string;
+  categoryLabel: string; // localized category for the meta bar
+  fullVideo: string;     // explicit-action playback via the shared reel modal
+  poster: string;
 }
 
 interface Props {
@@ -205,11 +209,16 @@ class GalleryApp {
   start = 0;
   private cleanupFns: (() => void)[] = [];
 
+  itemCount = 0;
+  onIndex: ((i: number) => void) | null = null;
+  private lastIndex = -1;
+
   constructor(
     private container: HTMLElement,
     items: WorkItem[],
     private conf: { bend: number; textColor: string; font: string },
   ) {
+    this.itemCount = items.length;
     this.renderer = new Renderer({ alpha: true, antialias: true, dpr: Math.min(window.devicePixelRatio || 1, 2) });
     this.gl = this.renderer.gl;
     this.gl.clearColor(0, 0, 0, 0);
@@ -324,6 +333,14 @@ class GalleryApp {
     this.medias.forEach((m) => m.update(this.scroll, dir));
     this.renderer.render({ scene: this.scene, camera: this.camera });
     this.scroll.last = this.scroll.current;
+
+    // report the centered item (normalized to the original, un-doubled list)
+    if (this.onIndex && this.itemCount > 0) {
+      const raw = Math.round(this.scroll.current / this.itemWidth());
+      const idx = ((raw % this.itemCount) + this.itemCount) % this.itemCount;
+      if (idx !== this.lastIndex) { this.lastIndex = idx; this.onIndex(idx); }
+    }
+
     this.raf = requestAnimationFrame(this.update);
   };
 
@@ -335,21 +352,33 @@ class GalleryApp {
   }
 }
 
-/* ---------------- fallback carousel (mobile / reduced-motion / no WebGL) ---------------- */
+/* ---------------- fallback carousel (mobile / reduced-motion / no WebGL) ----------------
+   Cards are play buttons: the delegated [data-reel] handler in site.js opens the
+   shared modal, so full playback happens only on explicit action. */
 function FallbackCarousel({ items }: { items: WorkItem[] }) {
   return (
     <div className="wg-fallback" role="list">
       {items.map((it) => (
-        <a key={it.href + it.text} href={it.href} className="wg-card" role="listitem">
+        <button
+          key={it.href + it.text}
+          type="button"
+          className="wg-card"
+          role="listitem"
+          data-reel={it.fullVideo}
+          data-reel-poster={it.poster}
+          aria-label={`شغّل: ${it.title} — ${it.client}`}
+        >
           <span className="wg-card__frame">
             <img src={it.image} alt="" loading="lazy" width={720} height={900} />
-            {it.placeholder && <span className="wg-badge latin">عيّنة</span>}
+            <span className="wg-card__play" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+            </span>
           </span>
           <span className="wg-card__meta">
-            <span className="wg-card__cat latin">{it.category}</span>
-            <span className="wg-card__title">{it.text}</span>
+            <span className="wg-card__cat latin">{it.client} · {it.categoryLabel}</span>
+            <span className="wg-card__title latin" dir="ltr">{it.title}</span>
           </span>
-        </a>
+        </button>
       ))}
     </div>
   );
@@ -361,6 +390,7 @@ export default function WorkGallery({ items, bend = 2.4, textColor = '#F4F1EE' }
   const appRef = useRef<GalleryApp | null>(null);
   // SSR + no-JS default is the accessible carousel; WebGL is a progressive upgrade
   const [mode, setMode] = useState<'webgl' | 'fallback'>('fallback');
+  const [active, setActive] = useState(0);
 
   useEffect(() => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -379,6 +409,7 @@ export default function WorkGallery({ items, bend = 2.4, textColor = '#F4F1EE' }
     const cs = getComputedStyle(host);
     const font = `600 28px ${cs.fontFamily}`;
     const app = new GalleryApp(host, items, { bend, textColor, font });
+    app.onIndex = setActive;
     appRef.current = app;
 
     // pause rendering while off-screen
@@ -401,15 +432,36 @@ export default function WorkGallery({ items, bend = 2.4, textColor = '#F4F1EE' }
 
   if (mode === 'fallback') return <FallbackCarousel items={items} />;
 
+  const current = items[active] ?? items[0];
+
   return (
     <div className="wg">
-      {/* canvas stage — decorative; the sr-only list below carries the content */}
+      {/* canvas stage — decorative; the meta bar below carries the content */}
       <div
         ref={hostRef}
         className="wg-stage"
         aria-hidden="true"
         style={{ visibility: mode === 'webgl' ? 'visible' : 'hidden' }}
       />
+
+      {/* active item: client · title · category + explicit play action */}
+      <div className="wg-meta" aria-live="polite">
+        <div className="wg-meta__text">
+          <span className="wg-meta__client latin">{current.client} · {current.categoryLabel}</span>
+          <span className="wg-meta__title latin" dir="ltr">{current.title}</span>
+        </div>
+        <button
+          type="button"
+          className="wg-play"
+          data-reel={current.fullVideo}
+          data-reel-poster={current.poster}
+          aria-label={`شغّل: ${current.title}`}
+        >
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+          شغّل الفيديو
+        </button>
+      </div>
+
       <div
         className="wg-controls"
         role="group"
@@ -424,11 +476,6 @@ export default function WorkGallery({ items, bend = 2.4, textColor = '#F4F1EE' }
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
         </button>
       </div>
-      {/* plain text for screen readers — deliberately NOT links, so keyboard
-          users get no invisible tab stops; navigation lives in the section CTA */}
-      <p className="sr-only">
-        المعروض في المعرض: {items.map((it) => `${it.text} (${it.category})`).join('، ')}.
-      </p>
     </div>
   );
 }
