@@ -1,5 +1,15 @@
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+/* Shared background-scroll lock. Counted, so the drawer and the video modal
+   can't unlock each other while one of them is still open. */
+let scrollLocks = 0;
+const lockScroll = () => {
+  if (++scrollLocks === 1) document.body.style.overflow = 'hidden';
+};
+const unlockScroll = () => {
+  if (scrollLocks > 0 && --scrollLocks === 0) document.body.style.overflow = '';
+};
+
 document.addEventListener('DOMContentLoaded', () => {
   const nav = document.getElementById('nav');
   const bar = document.getElementById('progress');
@@ -25,20 +35,72 @@ document.addEventListener('DOMContentLoaded', () => {
   const burger = document.getElementById('burger');
   const drawer = document.getElementById('drawer');
   if (burger && drawer) {
+    let lastFocus = null;
+
+    const focusables = () =>
+      Array.from(drawer.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'))
+        .filter((el) => el.offsetWidth > 0 || el.offsetHeight > 0);
+
     const setDrawer = (open) => {
+      if (open === drawer.classList.contains('open')) return;
+
       drawer.classList.toggle('open', open);
       burger.classList.toggle('open', open);
       burger.setAttribute('aria-expanded', String(open));
-      document.body.style.overflow = open ? 'hidden' : '';
+      drawer.setAttribute('aria-hidden', String(!open));
+
+      // `inert` removes the drawer from the tab order and the a11y tree while closed,
+      // so its links can never be focused behind the page.
+      if (open) drawer.removeAttribute('inert');
+      else drawer.setAttribute('inert', '');
+
+      if (open) {
+        lastFocus = document.activeElement;
+        lockScroll();
+        const first = focusables()[0];
+        if (first) first.focus();
+      } else {
+        unlockScroll();
+        const back = lastFocus && document.contains(lastFocus) ? lastFocus : burger;
+        back.focus();
+        lastFocus = null;
+      }
     };
 
     burger.addEventListener('click', () => setDrawer(!drawer.classList.contains('open')));
     drawer.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setDrawer(false)));
+
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && drawer.classList.contains('open')) {
+      if (!drawer.classList.contains('open')) return;
+
+      if (e.key === 'Escape') {
+        e.preventDefault();
         setDrawer(false);
-        burger.focus();
+        return;
       }
+
+      if (e.key === 'Tab') {
+        // keep focus cycling inside the drawer
+        const f = focusables();
+        if (!f.length) return;
+        const first = f[0];
+        const last = f[f.length - 1];
+        if (!drawer.contains(document.activeElement)) {
+          e.preventDefault();
+          (e.shiftKey ? last : first).focus();
+        } else if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    });
+
+    // a resize up to desktop must not leave the page scroll-locked behind a hidden drawer
+    window.addEventListener('resize', () => {
+      if (drawer.classList.contains('open') && window.innerWidth > 900) setDrawer(false);
     });
   }
 
@@ -62,8 +124,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let lastFocus = null;
 
     const close = () => {
+      if (!modal.classList.contains('open')) return;
       modal.classList.remove('open');
-      document.body.style.overflow = '';
+      unlockScroll();
       if (player) {
         player.pause();
         player.removeAttribute('src');
@@ -85,9 +148,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
+      if (modal.classList.contains('open')) return;
       lastFocus = el;
       modal.classList.add('open');
-      document.body.style.overflow = 'hidden';
+      lockScroll();
       closeBtn.focus();
     };
 

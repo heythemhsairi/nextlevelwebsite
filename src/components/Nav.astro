@@ -23,12 +23,14 @@ const { current = '/' } = Astro.props;
   </div>
 </header>
 
-<div class="drawer" id="drawer">
+<!-- Closed by default: inert + aria-hidden keep it out of the a11y tree and the tab order
+     until site.js opens it. Both are toggled together on open/close. -->
+<nav class="drawer" id="drawer" aria-label="القائمة" aria-hidden="true" inert>
   {nav.map((item) => (
     <a href={item.href} class={current === item.href ? 'active' : ''}>{item.label}</a>
   ))}
-  <BookCta class="btn btn--solid" label={CTA.primary} />
-</div>
+  <BookCta class="btn btn--solid drawer__cta" label={CTA.primary} />
+</nav>
 
 <style>
   .nav {
@@ -38,12 +40,12 @@ const { current = '/' } = Astro.props;
     border-bottom: 1px solid transparent; transition: border-color .3s, background .3s;
   }
   .nav.scrolled { border-color: var(--line); background: rgba(5,5,5,.85); }
-  .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 78px; }
+  .nav__inner { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 78px; }
 
   .logo {
     font-family: var(--font-display); font-weight: 800;
     font-size: 25px; letter-spacing: -.02em; display: inline-flex; align-items: center;
-    direction: ltr; unicode-bidi: isolate;
+    direction: ltr; unicode-bidi: isolate; flex: none;
   }
   .logo span { color: var(--red); }
   .logo__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); margin-inline-start: 5px;
@@ -60,9 +62,18 @@ const { current = '/' } = Astro.props;
     background: var(--red); box-shadow: 0 0 10px var(--red);
   }
   .nav__right { display: flex; align-items: center; gap: 14px; }
-  .nav__cta { padding: 11px 22px; font-size: 13.5px; }
+  /* NOTE: BookCta renders its own <a>, so it never carries this component's scope
+     attribute — any plain `.nav__cta {}` rule here compiles to `.nav__cta[data-astro-cid-…]`
+     and silently matches nothing. Use :global() for anything targeting it.
+     A compact `padding: 11px 22px; font-size: 13.5px` was written here originally but
+     never applied; reviving it would resize the live desktop CTA, so it is left out
+     deliberately. The desktop CTA keeps the default .btn sizing it renders with today. */
 
-  .burger { display: none; flex-direction: column; gap: 6px; background: none; border: none; cursor: pointer; padding: 6px; }
+  .burger {
+    display: none; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+    background: none; border: none; cursor: pointer; padding: 0;
+    width: 44px; height: 44px; flex: none;   /* 44×44 minimum touch target */
+  }
   .burger span { width: 26px; height: 2px; border-radius: 2px; background: var(--white); transition: .3s var(--ease); }
   .burger.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
   .burger.open span:nth-child(2) { opacity: 0; }
@@ -72,16 +83,22 @@ const { current = '/' } = Astro.props;
     position: fixed; inset: 0; z-index: 49;
     background: radial-gradient(120% 80% at 50% 0%, rgba(255,42,42,.12), transparent 55%), var(--black);
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+    /* clear the 78px sticky header, and stay scrollable on short/landscape screens */
+    padding: 90px 20px 32px; overflow-y: auto; overscroll-behavior: contain;
     opacity: 0; pointer-events: none; transition: opacity .3s var(--ease);
   }
   .drawer.open { opacity: 1; pointer-events: auto; }
-  .drawer a { font-family: var(--font-display); font-weight: 700; font-size: 28px; color: var(--dim); padding: 12px; }
+  .drawer a { font-family: var(--font-display); font-weight: 700; font-size: 28px; color: var(--dim); padding: 12px;
+    min-height: 44px; display: inline-flex; align-items: center; text-align: center; }
   .drawer a:hover, .drawer a.active { color: var(--red); }
-  .drawer .btn { margin-top: 22px; }
+  /* same scoping caveat as .nav__cta above — the drawer CTA is a BookCta element */
+  .drawer :global(.drawer__cta) { margin-top: 22px; }
 
   @media (max-width: 900px) {
     .nav__links { display: none; }
     .burger { display: flex; }
-    .nav__cta { display: none; }
+    .nav__right :global(.nav__cta) { display: none; }
+    /* logo is the only remaining left/right item — keep it a comfortable tap target */
+    .logo { min-height: 44px; }
   }
 </style>

@@ -60,6 +60,16 @@ const year = new Date().getFullYear();
   }
   .wa:hover { transform: scale(1.08); }
 
+  @media (max-width: 900px) {
+    /* 44px minimum tap targets — gap drops to 0 so the row height stays similar */
+    .footer__links { gap: 0; }
+    .footer__links a { min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; }
+    .footer__bar { row-gap: 0; }
+    .footer__wa { min-height: 44px; display: inline-flex; align-items: center; }
+    /* inline-flex is required for min-height to take effect on the anchor */
+    .footer .logo { min-height: 44px; display: inline-flex; align-items: center; }
+  }
+
   @media (max-width: 760px) {
     .footer__inner { grid-template-columns: 1fr; gap: 28px; justify-items: start; }
   }

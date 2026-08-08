@@ -229,6 +229,21 @@ ul { list-style: none; }
 .btn--ghost:hover { border-color: var(--red); color: #fff; background: rgba(var(--red-rgb), .08); transform: translateY(-3px); }
 .btn--lg { padding: 18px 38px; font-size: 16px; }
 
+/* ---- skip to content ---- */
+/* Parked off-screen until focused; sits above the film-grain overlay (z-index 9999).
+   No box-shadow while parked — the glow would bleed back over the top of the page. */
+.skip-link {
+  position: fixed; top: 12px; inset-inline-start: 12px; z-index: 10001;
+  padding: 14px 22px; min-height: 44px; display: inline-flex; align-items: center;
+  font-family: var(--font-ar); font-weight: 700; font-size: 15px;
+  background: var(--red); color: var(--red-ink); border-radius: var(--radius-sm);
+  transform: translateY(calc(-100% - 24px)); transition: transform .2s var(--ease);
+}
+.skip-link:focus {
+  transform: none;
+  box-shadow: 0 12px 36px -12px rgba(var(--red-rgb), .8), var(--focus-ring);
+}
+
 /* ---- shared keyboard focus ring ---- */
 :focus-visible { outline: none; box-shadow: var(--focus-ring); border-radius: 6px; }
 .btn:focus-visible, .sbtn:focus-visible, .social-cell:focus-visible,
@@ -273,6 +288,19 @@ ul { list-style: none; }
   .metric:nth-child(3) { border-inline-start: none; }
 }
 @media (max-width: 560px) { .metrics { grid-template-columns: 1fr 1fr; } }
+
+/* =========================================================================
+   MOBILE — tighter vertical rhythm + 44px touch targets.
+   Scoped to <=900px so the desktop layout is untouched.
+   ========================================================================= */
+@media (max-width: 900px) {
+  /* the clamp() minimums were tuned for desktop and leave 90-110px gaps on a
+     phone; shrink the floor only, the fluid desktop range is unaffected */
+  .zone--quiet  { padding-block: clamp(56px, 11vw, 190px); }
+  .zone--medium { padding-block: clamp(52px, 9vw, 150px); }
+  .zone--loud   { padding-block: clamp(48px, 8vw, 130px); }
+  .section      { padding-block: clamp(52px, 9vw, 140px); }
+}
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

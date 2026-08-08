@@ -14,6 +14,7 @@ const [proofLead, ...proofRest] = proof.items;
 <Base>
   <Nav current="/" />
 
+  <main id="main-content">
   <!-- ═══════════ FULLSCREEN FILM HERO ═══════════ -->
   <section class="hero" id="hero">
     <!-- the film fills the whole hero -->
@@ -259,6 +260,7 @@ const [proofLead, ...proofRest] = proof.items;
       </div>
     </div>
   </section>
+  </main>
 
   <Modal />
   <Footer />
@@ -451,10 +453,24 @@ const [proofLead, ...proofRest] = proof.items;
     .who__why { grid-column: 2; }
   }
 
+  @media (max-width: 900px) {
+    /* trim the mobile-only floor of these clamps; desktop values unchanged */
+    .system-grid { padding-block: clamp(52px, 9vw, 140px); }
+    .promise { padding-block: clamp(72px, 13vw, 220px); }
+    .ba-zone { padding-block: clamp(52px, 9vw, 150px); }
+    .ba-stage { padding-inline: 20px; }   /* keep the >=20px page gutter */
+  }
+
   @media (max-width: 640px) {
     .reframe__row { grid-template-columns: 30px 1fr; }
     .reframe__v { grid-column: 2; }
     .ba { aspect-ratio: 16/11; }
-    .proof-clips { grid-template-columns: 1fr 1fr 1fr; }
+  }
+
+  @media (max-width: 560px) {
+    /* three 9:16 clips in ~280px: tighten the frame so the tag pill still fits */
+    .proof-clips { gap: 8px; }
+    .shot figcaption { padding: 8px 6px; }
+    .tag { font-size: 9.5px; padding: 3px 7px; }
   }
 </style>
