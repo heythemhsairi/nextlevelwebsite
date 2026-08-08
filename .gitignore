@@ -17,3 +17,5 @@ Thumbs.db
 
 # keep the old single-file site out of the deploy repo
 legacy/
+.vercel
+.env*
