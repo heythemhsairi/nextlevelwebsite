@@ -33,10 +33,8 @@
   --red-40:   rgba(230, 51, 41, 0.40);
 
   /* ---- type ---- */
-  /* Thmanyah Sans files not yet supplied — stack falls through to the
-     temporary stand-in (IBM Plex Sans Arabic). Drop the real woff2 into
-     /public/fonts + add @font-face below and nothing else changes. */
-  --font-arabic: "Thmanyah Sans", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  /* Thmanyah Sans self-hosted from /public/fonts (client-supplied files) */
+  --font-arabic: "Thmanyah Sans", system-ui, sans-serif;
   --font-latin: "Inter", system-ui, sans-serif;
 
   /* fluid type scale */
@@ -71,6 +69,32 @@
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --focus-ring: 0 0 0 2px var(--color-black), 0 0 0 4px var(--color-red);
+}
+
+/* =========================================================================
+   FONTS — Thmanyah Sans, self-hosted (Arabic + Latin coverage)
+   ========================================================================= */
+@font-face {
+  font-family: "Thmanyah Sans";
+  src: url("/fonts/thmanyah-sans-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Thmanyah Sans";
+  src: url("/fonts/thmanyah-sans-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Thmanyah Sans";
+  src: url("/fonts/thmanyah-sans-700.woff2") format("woff2");
+  /* 600 requests (buttons/labels) resolve to the Bold file — no faux-bold */
+  font-weight: 600 900;
+  font-style: normal;
+  font-display: swap;
 }
 
 /* =========================================================================
