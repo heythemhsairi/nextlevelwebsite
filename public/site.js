@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }),
     { threshold: 0.12 },
   );
-  document.querySelectorAll('.reveal, .reveal-stagger').forEach((el) => io.observe(el));
+  document.querySelectorAll('.reveal, .reveal-stagger, .mask').forEach((el) => io.observe(el));
 
   /* ---- responsive hero video ----
      Pick ONE source per breakpoint. Reduced-motion or Save-Data users keep
@@ -123,6 +123,9 @@ document.addEventListener('DOMContentLoaded', () => {
     reel.addEventListener('close', () => {
       unlockScroll();
       if (player) { player.pause(); player.removeAttribute('src'); player.load(); }
+      // restore the background hero film after the modal experience
+      const hv = document.getElementById('heroVideo');
+      if (hv && hv.getAttribute('src') && !reduceMotion) hv.play().catch(() => {});
       if (lastFocus && document.contains(lastFocus)) lastFocus.focus();
     });
     reel.addEventListener('click', (e) => {
@@ -134,6 +137,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const btn = e.target.closest('[data-reel]');
       if (!btn) return;
       lastFocus = btn;
+      // pause the background hero film while a modal video plays
+      document.getElementById('heroVideo')?.pause();
       if (player) {
         if (btn.dataset.reelPoster) player.setAttribute('poster', btn.dataset.reelPoster);
         player.src = btn.dataset.reel;

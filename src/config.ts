@@ -68,7 +68,6 @@ export const nav = [
 
 export const CTA = {
   primary: 'احجز مكالمة 15 دقيقة',
-  secondary: 'شوف أعمالنا',
   whatsapp: 'احكينا على WhatsApp',
 };
 
@@ -76,20 +75,34 @@ export const CTA = {
    HOMEPAGE
    ========================================================================= */
 
-/* ---- 01 · HERO (real Next Level footage) ---- */
+/* ---- 01 · HERO — pure cinematic brand introduction ----
+   No copy, no CTAs: nav + tiny metadata + solid filled NEXT LEVEL wordmark.
+   The semantic message (page H1) lives in the Intro Film section below. */
 export const hero = {
-  eyebrow: 'Media Production House — Tunisia',
-  title: 'سمعتك سبقتك. يلزمها حضور يوازيها.',
-  sub: 'نخططو، نكتبوا، نصوّرو وننتجو content يخلّي خبرتك تبان كيما تستاهل—من غير ما تسيّر production كاملة وحدك.',
   /* responsive sources — site.js picks one; never load both */
   videoDesktop: '/media/hero/hero-desktop.mp4',
   videoMobile: '/media/hero/hero-mobile.mp4',
   posterDesktop: '/media/hero/hero-desktop-poster.webp',
   posterMobile: '/media/hero/hero-mobile-poster.webp',
-  /* NOTE: no dedicated long-form showreel was supplied — the hero film is a 5s
-     silent loop, so the modal reel trigger was removed. Add `reel: '<path>'`
-     back (and the button in index.astro) when a real showreel exists. */
   meta: { location: 'Tunis, TN', label: 'Hero Film' },
+};
+
+/* ---- 03 · INTRO FILM — carries the primary value proposition + page H1 ----
+   TODO client: the real horizontal service-introduction film does not exist in
+   the current Drive collection. Drop it at `video` below (16:9, with audio),
+   rebuild, and the play button activates automatically (index.astro checks
+   file existence at build time). Poster is a labelled temporary frame from
+   approved Next Level hero footage — replace together with the film. */
+export const introFilm = {
+  label: 'Intro Film',
+  system: 'THE NEXT LEVEL SYSTEM',
+  titleLines: ['سمعتك سبقتك.', 'يلزمها حضور يوازيها.'],
+  sub: 'في الفيلم هذا نوريّوك كيفاش نخدموا: من الفكرة والـscripts، للتصوير، للمونتاج والنشر.',
+  play: 'شغّل الفيلم',
+  soon: 'الفيلم الكامل قريبًا',
+  servicesLink: 'اكتشف خدماتنا',
+  video: '/media/intro/services-intro.mp4',
+  poster: '/media/intro/services-intro-poster.webp',
 };
 
 /* ---- 02 · TRUST (facts only — no invented numbers) ---- */
