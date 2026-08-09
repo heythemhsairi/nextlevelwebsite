@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import { studioPage, founders, CTA } from '../config';
+import { studioPage, founders, executiveTeam, creativeTeam, teamSection, CTA } from '../config';
 ---
 <Base
   title="الـ Studio — Next Level"
@@ -28,25 +28,102 @@ import { studioPage, founders, CTA } from '../config';
       </div>
     </section>
 
-    <!-- founders -->
-    <section class="on-light section st-founders">
+    <!-- ═══ TEAM — three labelled tiers, decreasing profile scale ═══ -->
+    <section class="on-light section st-team" id="team">
       <div class="container">
-        <div class="sindex"><b>·</b> Founders</div>
-        <div class="st-founders__grid">
+        <header class="st-team__head">
+          <h2 class="h-display">{teamSection.title}</h2>
+          <p class="st-team__sub">{teamSection.sub}</p>
+        </header>
+
+        <!-- 01 · FOUNDERS — large editorial pair -->
+        <div class="sindex"><b>01</b> {teamSection.groups.founders}</div>
+        <div class="st-founders">
           {founders.map((f) => (
-            <div class="st-founder">
-              {f.photo ? (
-                <img src={f.photo} alt={`صورة ${f.name}`} width="600" height="750" loading="lazy" />
-              ) : (
-                <div class="st-founder__pending" role="img" aria-label={`صورة ${f.name} — قريبًا`}>
-                  <span class="latin">Portrait coming</span>
-                </div>
-              )}
-              <h3 class="latin">{f.name}</h3>
-              <p class="latin">{f.role}</p>
-            </div>
+            <article class="st-founder">
+              <div class="st-founder__media">
+                {f.photo ? (
+                  <img src={f.photo} alt={`صورة ${f.name}، ${f.role}`} width="600" height="750" loading="lazy" />
+                ) : (
+                  <div class="st-frame" role="img" aria-label={`صورة ${f.name} — قريبًا`}>
+                    <span class="st-frame__initials latin">{f.initials}</span>
+                    <span class="st-frame__label latin">{teamSection.pendingLabel}</span>
+                  </div>
+                )}
+              </div>
+              <div class="st-founder__body">
+                <h3 class="st-founder__name latin">{f.name}</h3>
+                <p class="st-role latin">{f.role}</p>
+                <p class="st-bio">{f.bio}</p>
+              </div>
+            </article>
           ))}
         </div>
+
+        <!-- 02 · EXECUTIVE TEAM — medium profiles -->
+        <div class="sindex st-team__idx"><b>02</b> {teamSection.groups.executive}</div>
+        <div class="st-exec">
+          {executiveTeam.map((m) => (
+            <article class={`st-exec__item ${m.kind === 'ai' ? 'st-exec__item--ai' : ''}`}>
+              <div class="st-exec__media">
+                {m.kind === 'ai' ? (
+                  /* abstract, non-human identity — never a generated portrait */
+                  <div class="st-ai" role="img" aria-label={`${m.name} — ${m.role}، عضو AI في الـ team`}>
+                    <svg viewBox="0 0 120 120" aria-hidden="true">
+                      <defs>
+                        <clipPath id="aiclip"><circle cx="60" cy="60" r="44" /></clipPath>
+                      </defs>
+                      <g clip-path="url(#aiclip)">
+                        {Array.from({ length: 14 }).map((_, i) => (
+                          <line x1="16" y1={16 + i * 6.5} x2="104" y2={16 + i * 6.5}
+                            stroke={i % 4 === 0 ? '#E63329' : '#0A0808'}
+                            stroke-opacity={i % 4 === 0 ? '0.85' : '0.18'}
+                            stroke-width={i % 4 === 0 ? '2.4' : '1.2'} />
+                        ))}
+                      </g>
+                      <circle cx="60" cy="60" r="44" fill="none" stroke="#0A0808" stroke-opacity="0.18" stroke-width="1.5" />
+                      <circle cx="60" cy="60" r="7" fill="#E63329" />
+                    </svg>
+                  </div>
+                ) : m.photo ? (
+                  <img src={m.photo} alt={`صورة ${m.name}، ${m.role}`} width="400" height="500" loading="lazy" />
+                ) : (
+                  <div class="st-frame" role="img" aria-label={`صورة ${m.name} — قريبًا`}>
+                    <span class="st-frame__initials latin">{m.initials}</span>
+                    <span class="st-frame__label latin">{teamSection.pendingLabel}</span>
+                  </div>
+                )}
+              </div>
+              <div class="st-exec__body">
+                {m.kind === 'ai' && <span class="st-ai__tag latin">{teamSection.aiLabel}</span>}
+                <h3 class="st-exec__name latin">{m.name}</h3>
+                <p class="st-role latin">{m.role}</p>
+                <p class="st-bio">{m.bio}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <!-- 03 · CREATIVE TEAM — compact roster -->
+        <div class="sindex st-team__idx"><b>03</b> {teamSection.groups.creative}</div>
+        <ul class="st-crew">
+          {creativeTeam.map((m) => (
+            <li class="st-crew__item">
+              <div class="st-crew__media">
+                {m.photo ? (
+                  <img src={m.photo} alt={`صورة ${m.name}، ${m.role}`} width="320" height="320" loading="lazy" />
+                ) : (
+                  <div class="st-frame st-frame--sm" role="img" aria-label={`صورة ${m.name} — قريبًا`}>
+                    <span class="st-frame__initials latin">{m.initials}</span>
+                  </div>
+                )}
+              </div>
+              <h3 class="st-crew__name latin">{m.name}</h3>
+              <p class="st-role latin">{m.role}</p>
+              <p class="st-bio">{m.bio}</p>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
 
@@ -63,22 +140,6 @@ import { studioPage, founders, CTA } from '../config';
             </div>
           ))}
         </div>
-      </div>
-    </section>
-
-    <!-- capabilities (real team names not yet published → labelled Capabilities) -->
-    <section class="section--sm st-caps">
-      <div class="container">
-        <h2 class="meta">{studioPage.capabilities.title}</h2>
-        <p class="st-caps__note">{studioPage.capabilities.note}</p>
-        <ul class="st-caps__list">
-          {studioPage.capabilities.list.map((c) => (
-            <li>
-              <b class="latin">{c.name}</b>
-              <span>{c.role}</span>
-            </li>
-          ))}
-        </ul>
       </div>
     </section>
 
@@ -109,16 +170,64 @@ import { studioPage, founders, CTA } from '../config';
   .st-story__body p { font-size: var(--text-lg); line-height: 1.85; color: var(--white-70); }
   .st-story__body p:first-child { color: var(--color-white); }
 
-  .st-founders__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 4vw, 48px); max-width: 880px; }
-  .st-founder img, .st-founder__pending { aspect-ratio: 4 / 5; width: 100%; object-fit: cover; border-radius: var(--radius-medium); }
-  .st-founder__pending {
-    display: grid; place-items: center;
-    background: var(--black-08); border: 1px dashed var(--black-16);
-    color: var(--black-64); font-size: var(--text-xs);
-    letter-spacing: 0.12em; text-transform: uppercase;
+  /* ═══ team ═══ */
+  .st-team__head { max-width: 720px; margin-bottom: var(--space-5); }
+  .st-team__sub { margin-top: 16px; color: var(--black-72); font-size: var(--text-lg); line-height: 1.8; }
+  .st-team__idx { margin-top: var(--space-6); }
+
+  /* shared bits */
+  .st-role {
+    margin-top: 4px; color: var(--color-red); font-weight: 600;
+    font-size: var(--text-sm); letter-spacing: 0.01em;
   }
-  .st-founder h3 { margin-top: 16px; font-weight: 700; font-size: var(--text-xl); }
-  .st-founder p { color: var(--color-red); font-weight: 600; font-size: var(--text-sm); margin-top: 2px; }
+  .st-bio { margin-top: 12px; color: var(--black-72); line-height: 1.85; }
+  .st-frame {
+    display: grid; place-content: center; justify-items: center; gap: 8px;
+    width: 100%; aspect-ratio: 4 / 5;
+    background: var(--black-08); border: 1px dashed var(--black-16);
+    border-radius: var(--radius-medium);
+  }
+  .st-frame__initials { font-size: clamp(30px, 4vw, 52px); font-weight: 800; color: var(--black-16); }
+  .st-frame__label {
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--black-64);
+  }
+  .st-frame--sm { aspect-ratio: 1; }
+  .st-frame--sm .st-frame__initials { font-size: clamp(24px, 3vw, 34px); }
+
+  /* 01 founders — largest, alternating alignment */
+  .st-founders { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 72px); }
+  .st-founder__media img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius-medium); }
+  .st-founder__name { margin-top: 20px; font-weight: 800; font-size: var(--text-2xl); letter-spacing: -0.01em; }
+  .st-founder:nth-child(2) { margin-top: clamp(24px, 5vw, 64px); }
+
+  /* 02 executive — medium, image beside text */
+  .st-exec { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 56px); }
+  .st-exec__item { display: grid; grid-template-columns: minmax(0, 150px) 1fr; gap: 22px; align-items: start; }
+  .st-exec__media img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius-medium); }
+  .st-exec__name { margin-top: 2px; font-weight: 700; font-size: var(--text-xl); }
+  .st-exec__body .st-bio { font-size: var(--text-sm); }
+
+  /* Charlotte — abstract digital identity (no human likeness) */
+  .st-ai {
+    width: 100%; aspect-ratio: 4 / 5;
+    display: grid; place-items: center;
+    background: linear-gradient(180deg, rgba(10, 8, 8, 0.05), rgba(230, 51, 41, 0.06));
+    border: 1px solid var(--black-16); border-radius: var(--radius-medium);
+  }
+  .st-ai svg { width: 78%; height: auto; }
+  .st-ai__tag {
+    display: inline-block; margin-bottom: 8px;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.16em;
+    padding: 5px 10px; border: 1px solid var(--color-red); color: var(--color-red);
+    border-radius: var(--radius-small);
+  }
+
+  /* 03 creative — compact roster */
+  .st-crew { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 3vw, 40px); }
+  .st-crew__media img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius-medium); }
+  .st-crew__item { border-top: 1px solid var(--black-16); padding-top: 20px; }
+  .st-crew__name { margin-top: 16px; font-weight: 700; font-size: var(--text-lg); }
+  .st-crew__item .st-bio { font-size: var(--text-sm); }
 
   .st-prin { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
   .st-prin__item { border-top: 1px solid var(--white-10); padding-top: 16px; }
@@ -126,25 +235,22 @@ import { studioPage, founders, CTA } from '../config';
   .st-prin__item h3 { margin-top: 10px; font-size: var(--text-lg); font-weight: 700; }
   .st-prin__item p { margin-top: 8px; color: var(--white-70); font-size: var(--text-sm); line-height: 1.75; }
 
-  .st-caps__note { margin-top: 10px; color: var(--white-55); font-size: var(--text-sm); }
-  .st-caps__list { margin-top: 18px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0 32px; }
-  .st-caps__list li {
-    display: flex; flex-direction: column; gap: 2px;
-    padding-block: 14px; border-bottom: 1px solid var(--white-08);
-  }
-  .st-caps__list b { font-weight: 600; font-size: var(--text-sm); }
-  .st-caps__list span { color: var(--white-55); font-size: var(--text-xs); }
-
   .st-cta__row { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-top: var(--space-5); flex-wrap: wrap; }
   .st-cta__btns { display: flex; gap: 12px; flex-wrap: wrap; }
 
   @media (max-width: 900px) {
     .st-story { grid-template-columns: 1fr; gap: 16px; }
     .st-prin { grid-template-columns: 1fr 1fr; }
-    .st-caps__list { grid-template-columns: 1fr 1fr; }
+    /* tablet: two columns where they still breathe */
+    .st-exec { grid-template-columns: 1fr; }
+    .st-crew { grid-template-columns: 1fr 1fr; }
   }
-  @media (max-width: 560px) {
-    .st-prin, .st-caps__list { grid-template-columns: 1fr; }
-    .st-founders__grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 620px) {
+    /* mobile: one profile per row, group labels preserved */
+    .st-prin { grid-template-columns: 1fr; }
+    .st-founders { grid-template-columns: 1fr; gap: 36px; }
+    .st-founder:nth-child(2) { margin-top: 0; }
+    .st-crew { grid-template-columns: 1fr; }
+    .st-exec__item { grid-template-columns: minmax(0, 120px) 1fr; gap: 16px; }
   }
 </style>

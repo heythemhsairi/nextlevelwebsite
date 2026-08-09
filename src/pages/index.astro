@@ -234,15 +234,21 @@ const introVideoReady = existsSync(new URL(`../../public${introVideo.video}`, im
       <div class="container">
         <div class="sindex"><b>07</b> The Studio</div>
         <div class="founders-sec__grid">
-          <h2 class="h-display reveal">{foundersIntro.title}</h2>
+          <div class="reveal">
+            <h2 class="h-display">{foundersIntro.title}</h2>
+            <p class="founders-sec__sub">{foundersIntro.sub}</p>
+          </div>
+          <!-- homepage stays short: the two founders only; the full team
+               (executive + creative) lives on /studio#team -->
           <div class="founders-sec__people reveal-stagger">
             {founders.map((f) => (
               <div class="founder">
                 {f.photo ? (
-                  <img src={f.photo} alt={`صورة ${f.name}`} class="founder__photo" width="480" height="600" loading="lazy" />
+                  <img src={f.photo} alt={`صورة ${f.name}، ${f.role}`} class="founder__photo" width="480" height="600" loading="lazy" />
                 ) : (
                   <div class="founder__pending" role="img" aria-label={`صورة ${f.name} — قريبًا`}>
-                    <span class="latin">Portrait<br />coming</span>
+                    <span class="founder__initials latin">{f.initials}</span>
+                    <span class="founder__pending-label latin">Portrait pending</span>
                   </div>
                 )}
                 <p class="founder__name latin">{f.name}</p>
@@ -251,7 +257,7 @@ const introVideoReady = existsSync(new URL(`../../public${introVideo.video}`, im
             ))}
           </div>
         </div>
-        <a href="/studio" class="btn btn--line founders-sec__cta">{foundersIntro.cta} <span class="arrow" aria-hidden="true">←</span></a>
+        <a href={foundersIntro.ctaHref} class="btn btn--line founders-sec__cta">{foundersIntro.cta} <span class="arrow" aria-hidden="true">←</span></a>
       </div>
     </section>
 
@@ -579,11 +585,15 @@ const introVideoReady = existsSync(new URL(`../../public${introVideo.video}`, im
     border-radius: var(--radius-medium);
   }
   .founder__pending {
-    display: grid; place-items: center;
+    display: grid; place-items: center; align-content: center; gap: 8px;
     background: var(--black-08); border: 1px dashed var(--black-16);
-    color: var(--black-64); font-size: var(--text-xs); text-align: center;
-    letter-spacing: 0.12em; text-transform: uppercase; line-height: 1.8;
+    text-align: center;
   }
+  .founder__initials { font-size: clamp(28px, 4vw, 44px); font-weight: 800; color: var(--black-16); letter-spacing: 0.02em; }
+  .founder__pending-label {
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--black-64);
+  }
+  .founders-sec__sub { margin-top: 16px; color: var(--black-72); font-size: var(--text-base); line-height: 1.8; max-width: 40ch; }
   .founder__name { margin-top: 14px; font-weight: 700; font-size: var(--text-base); }
   .founder__role { color: var(--color-red); font-size: var(--text-xs); font-weight: 600; letter-spacing: 0.06em; }
   .founders-sec__cta { margin-top: var(--space-5); }

@@ -43,19 +43,99 @@ export const hasRealSocials = {
 export const whatsappLink = (text?: string) =>
   `https://wa.me/${site.whatsapp}${text ? `?text=${encodeURIComponent(text)}` : ''}`;
 
-/* ---- FOUNDERS ---- */
-export const founders = [
+/* =========================================================================
+   TEAM — official structure.
+   ONLY Walif Doukh and Heythem Hsairi are founders. Nobody else carries a
+   founder title anywhere. Charlotte GPT AI is an AI system, labelled as such
+   and given an abstract (non-human) identity — never a generated portrait.
+   Profile copy describes the ROLE only: no invented history, employers,
+   education, awards or client results.
+   ========================================================================= */
+export interface TeamMember {
+  name: string;
+  role: string;
+  initials: string;
+  bio: string;
+  photo: string | null;      // TODO client: real portraits — typographic frame until supplied
+  kind: 'human' | 'ai';
+}
+
+export const founders: TeamMember[] = [
   {
     name: 'Walif Doukh',
     role: 'CEO & Co-Founder',
-    photo: null as string | null, // TODO client: real portrait — UI shows labelled frame until supplied
+    initials: 'WD',
+    bio: 'يقود الرؤية، الـpositioning واتجاه Next Level كـproduction partner للـexperts والـpersonal brands.',
+    photo: null,
+    kind: 'human',
   },
   {
     name: 'Heythem Hsairi',
     role: 'COO & Co-Founder',
-    photo: null as string | null,
+    initials: 'HH',
+    bio: 'يقود العمليات، تنظيم الـproduction وتجربة الـclient من التخطيط حتى للتسليم.',
+    photo: null,
+    kind: 'human',
   },
 ];
+
+export const executiveTeam: TeamMember[] = [
+  {
+    name: 'Charlotte GPT AI',
+    role: 'Chief Technology Officer — AI',
+    initials: 'AI',
+    bio: 'AI system داخل Next Level تساعد في تنظيم المعرفة، تحسين الـworkflows ودعم تطوير الـClient Portal والعمليات الرقمية.',
+    photo: null,
+    kind: 'ai',
+  },
+  {
+    name: 'Adel Hadid',
+    role: 'Chief Financial Officer',
+    initials: 'AH',
+    bio: 'يتابع التخطيط المالي، الاستدامة وتنظيم القرارات المالية اللي تدعم نمو Next Level.',
+    photo: null,
+    kind: 'human',
+  },
+];
+
+export const creativeTeam: TeamMember[] = [
+  {
+    name: 'Mohamed Nour Wannes',
+    role: 'Senior Video Editor & Motion Designer',
+    initials: 'MW',
+    bio: 'مسؤول على المونتاج، الإيقاع، الـmotion والتفاصيل البصرية اللي تعطي لكل content المستوى النهائي متاعو.',
+    photo: null,
+    kind: 'human',
+  },
+  {
+    name: 'Mohamed Amine Shili',
+    role: 'Senior Videographer & Filmmaker',
+    initials: 'MS',
+    bio: 'مسؤول على التصوير، الإضاءة، الـframing وتحويل الـcreative direction إلى صورة قوية قدّام الكاميرا.',
+    photo: null,
+    kind: 'human',
+  },
+  {
+    name: 'Mokhles B. Cheikh',
+    role: 'Senior Marketer & Creative Strategist',
+    initials: 'MC',
+    bio: 'يربط بين أهداف الـbrand، فهم الجمهور والأفكار الإبداعية باش كل content يكون عندو دور واضح.',
+    photo: null,
+    kind: 'human',
+  },
+];
+
+export const teamSection = {
+  title: 'الناس والـsystems اللي ورا Next Level.',
+  sub: 'من الإدارة والتكنولوجيا، للـcreative direction والتصوير والمونتاج—كل دور يخدم على نفس الرؤية.',
+  groups: {
+    founders: 'Founders',
+    executive: 'Executive Team',
+    creative: 'Creative Team',
+  },
+  aiLabel: 'AI TEAM MEMBER',
+  pendingLabel: 'Portrait pending',
+};
 
 /* ---- NAV ---- */
 export const nav = [
@@ -370,10 +450,12 @@ export const demoMonth = {
   ] as DemoPost[],
 };
 
-/* ---- 06 · FOUNDERS TEASER ---- */
+/* ---- 06 · FOUNDERS TEASER (homepage shows the two founders only) ---- */
 export const foundersIntro = {
   title: 'ورا كل content قوي، فمّا team تعرف شنوّة تعمل.',
-  cta: 'اكتشف الـ Studio',
+  sub: 'ورا كل content قوي، فمّا team كاملة تخطط، تصوّر وتنتج.',
+  cta: 'تعرّف على الـ Team',
+  ctaHref: '/studio#team',
 };
 
 /* ---- 07 · FINAL CTA ---- */
@@ -445,18 +527,8 @@ export const studioPage = {
     { t: 'صوتك إنت', d: 'ما نلبسوكش شخصية. نخرجو أحسن نسخة من أسلوبك الحقيقي.' },
     { t: 'الاحترام للوقت', d: 'جلسات منظمة، مواعيد محترمة، وما نطلبو حضورك كان وين يلزم.' },
   ],
-  capabilities: {
-    title: 'Capabilities',
-    note: 'الأدوار اللي تغطيها الـ team في كل مشروع:',
-    list: [
-      { name: 'Creative Direction', role: 'الرؤية والمعيار النهائي' },
-      { name: 'Content Strategy', role: 'المواضيع، الإيقاع، وصياغة الرسالة' },
-      { name: 'Filming', role: 'كاميرا، إضاءة، وتأطير' },
-      { name: 'Editing', role: 'بنية، إيقاع، وصقل' },
-      { name: 'Motion & Sound', role: 'حركة، هوية سمعية، وعمق إنتاج' },
-      { name: 'Client Partner', role: 'نقطة اتصال وحدة من الخطة للتسليم' },
-    ],
-  },
+  /* the generic "Capabilities" list was replaced by the real named team —
+     see founders / executiveTeam / creativeTeam above */
 };
 
 /* ---- /portal ---- */

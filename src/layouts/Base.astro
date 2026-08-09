@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { site, hasRealSocials, hasRealWhatsapp } from '../config';
+import { site, hasRealSocials, hasRealWhatsapp, founders, executiveTeam, creativeTeam } from '../config';
 
 interface Props {
   title: string;
@@ -39,6 +39,22 @@ const orgSchema = {
         },
       }
     : {}),
+  /* Only the two actual founders are marked `founder`. Everyone else is a
+     plain employee — no founder title leaks into the graph. Charlotte GPT AI
+     is intentionally EXCLUDED from Person data (she is an AI system, not a
+     person); her role is disclosed visibly in the page content instead. */
+  founder: founders.map((f) => ({
+    '@type': 'Person',
+    name: f.name,
+    jobTitle: f.role,
+  })),
+  employee: [...founders, ...executiveTeam, ...creativeTeam]
+    .filter((m) => m.kind === 'human')
+    .map((m) => ({
+      '@type': 'Person',
+      name: m.name,
+      jobTitle: m.role,
+    })),
 };
 ---
 <!DOCTYPE html>
