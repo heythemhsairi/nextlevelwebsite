@@ -97,8 +97,29 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => el.classList.add('done'), 2500);
   });
 
-  /* (hero video source selection now lives inside the HeroScroll island;
-     the modal handlers below still pause/resume it via #heroVideo) */
+  /* ---- responsive hero video ----
+     Pick ONE source per breakpoint. Reduced-motion or Save-Data users keep
+     the static poster (no video bytes at all). */
+  const heroVideo = document.getElementById('heroVideo');
+  if (heroVideo) {
+    const saveData = navigator.connection && navigator.connection.saveData === true;
+    const mobile = window.matchMedia('(max-width: 760px)');
+
+    const applyHero = () => {
+      const m = mobile.matches;
+      heroVideo.poster = m ? heroVideo.dataset.posterMobile : heroVideo.dataset.posterDesktop;
+      if (reduceMotion || saveData) return; // poster-only experience
+      const want = m ? heroVideo.dataset.srcMobile : heroVideo.dataset.srcDesktop;
+      if (heroVideo.getAttribute('src') !== want) {
+        heroVideo.src = want;
+        heroVideo.load();
+      }
+      heroVideo.play().catch(() => {});
+    };
+    applyHero();
+    // switch source only when the breakpoint actually flips
+    mobile.addEventListener('change', applyHero);
+  }
 
   /* ---- showreel modal ----
      Delegated [data-reel] so triggers added after load (React island) work. */

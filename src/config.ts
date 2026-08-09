@@ -79,7 +79,7 @@ export const CTA = {
    No copy, no CTAs: nav + tiny metadata + solid filled NEXT LEVEL wordmark.
    The semantic message (page H1) lives in the Intro Film section below. */
 export const hero = {
-  /* responsive sources — the HeroScroll island picks one; never load both */
+  /* responsive sources — site.js picks one; never load both */
   videoDesktop: '/media/hero/hero-desktop.mp4',
   videoMobile: '/media/hero/hero-mobile.mp4',
   posterDesktop: '/media/hero/hero-desktop-poster.webp',

@@ -5,7 +5,6 @@ import Footer from '../components/Footer.astro';
 import ReelModal from '../components/ReelModal.astro';
 import PortalCalendar from '../components/PortalCalendar.astro';
 import WorkGallery from '../components/react/WorkGallery';
-import HeroScroll from '../components/react/HeroScroll';
 import { existsSync } from 'node:fs';
 import {
   hero, introVideo, trust, workIntro, workItems, servicesIntro, services,
@@ -37,21 +36,48 @@ const introVideoReady = existsSync(new URL(`../../public${introVideo.video}`, im
   <Nav current="/" />
 
   <main id="main-content">
-    <!-- ═══ 01 · CINEMATIC HERO — sticky scroll sequence (React island).
-         client:load: above the fold. Adapted from 21st.dev "Smooth Scroll
-         Hero" (ishamsu) + recreated Electric Gaze reveal (see HeroScroll.tsx). -->
-    <HeroScroll
-      client:load
-      videoDesktop={hero.videoDesktop}
-      videoMobile={hero.videoMobile}
-      posterDesktop={hero.posterDesktop}
-      posterMobile={hero.posterMobile}
-      metaLabel={hero.meta.label}
-      metaLocation={hero.meta.location}
-      copy={hero.copy}
-      copyLinkLabel={hero.copyLinkLabel}
-      copyLinkHref={hero.copyLinkHref}
-    />
+    <!-- ═══ 01 · CINEMATIC HERO — plain 100svh section, native scrolling.
+         (Smooth Scroll Hero + Electric Gaze removed by request; the approved
+         asymmetric composition stays: wordmark lower-left, statement lower-right.) -->
+    <section class="hero">
+      <div class="hero__media" aria-hidden="true">
+        <!-- No src in markup: site.js picks the right file per breakpoint so a
+             phone never downloads the desktop hero. Reduced-motion / Save-Data
+             users keep the static poster only. No-JS = poster. -->
+        <video
+          id="heroVideo"
+          poster={hero.posterDesktop}
+          data-src-desktop={hero.videoDesktop}
+          data-src-mobile={hero.videoMobile}
+          data-poster-desktop={hero.posterDesktop}
+          data-poster-mobile={hero.posterMobile}
+          muted
+          loop
+          playsinline
+          preload="none"
+        ></video>
+      </div>
+      <div class="hero__scrim" aria-hidden="true"></div>
+
+      <div class="hero__meta">
+        <span class="hero__meta-item"><b class="hero__dot">●</b> REC — {hero.meta.label}</span>
+        <span class="hero__meta-item">{hero.meta.location}</span>
+      </div>
+
+      <!-- asymmetric editorial row: wordmark lower-left, summary lower-right -->
+      <div class="hero__bottom">
+        <p class="hero__wordmark" aria-hidden="true" dir="ltr">
+          <span class="hero__wm-next">NEXT</span>
+          <span class="hero__wm-level">LEVEL</span>
+        </p>
+
+        <div class="hero__summary">
+          <i class="hero__rule" aria-hidden="true"></i>
+          <p>{hero.copy}</p>
+          <a href={hero.copyLinkHref} class="hero__link">{hero.copyLinkLabel}</a>
+        </div>
+      </div>
+    </section>
 
     <!-- ═══ 02 · COMPACT TRUST (facts only) ═══ -->
     <section class="on-light section--sm trust">
@@ -247,7 +273,112 @@ const introVideoReady = existsSync(new URL(`../../public${introVideo.video}`, im
 </Base>
 
 <style>
-  /* hero styles live in the HeroScroll island (HeroScroll.css) */
+  /* ═══ hero — plain section, approved asymmetric composition ═══ */
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    overflow: hidden;
+    isolation: isolate;
+    background: var(--color-black);
+  }
+  .hero__media { position: absolute; inset: 0; z-index: 0; }
+  .hero__media video {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: 50% 38%;
+    background: var(--color-black);
+  }
+  .hero__scrim {
+    position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background: linear-gradient(to top,
+      rgba(10, 8, 8, 0.78) 0%, rgba(10, 8, 8, 0.22) 26%,
+      rgba(10, 8, 8, 0.08) 58%, rgba(10, 8, 8, 0.45) 100%);
+  }
+
+  .hero__meta {
+    position: absolute; top: 96px; z-index: 2;
+    inset-inline: clamp(20px, 4vw, 64px);
+    display: flex; justify-content: space-between; gap: 12px;
+  }
+  .hero__meta-item {
+    font-family: var(--font-latin); font-weight: 600; font-size: var(--text-xs);
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--white-55);
+  }
+  .hero__dot { color: var(--color-red); font-weight: 400; }
+
+  /* asymmetric lower row: wordmark left · summary right (physical LTR) */
+  .hero__bottom {
+    position: absolute; z-index: 2;
+    inset-inline: clamp(20px, 4vw, 64px);
+    inset-block-end: clamp(24px, 4vw, 56px);
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(260px, 3fr);
+    gap: clamp(32px, 6vw, 96px);
+    align-items: end;
+    direction: ltr; /* physical composition only — Arabic content is dir=rtl inside */
+  }
+
+  .hero__wordmark {
+    min-width: 0; margin: 0;
+    font-family: var(--font-latin);
+    font-size: clamp(72px, 9.5vw, 176px);
+    font-weight: 900;
+    line-height: 0.78;
+    letter-spacing: -0.065em;
+    white-space: nowrap;
+    user-select: none; pointer-events: none;
+    /* single entrance fade — once, CSS only (reduced-motion zeroes it globally) */
+    animation: heroFade 0.7s var(--ease) both;
+  }
+  .hero__wm-next { color: var(--color-white); }
+  .hero__wm-level { color: var(--color-red); margin-left: 0.2em; }
+
+  .hero__summary {
+    direction: rtl;
+    justify-self: end;
+    max-width: 22rem;
+    min-width: 0;
+    text-align: right;
+    color: var(--color-white);
+    animation: heroFade 0.7s var(--ease) 0.15s both;
+  }
+  .hero__rule { display: block; width: 34px; height: 2px; background: var(--color-red); margin-bottom: 14px; }
+  .hero__summary p {
+    margin: 0;
+    font-family: var(--font-arabic);
+    font-size: clamp(17px, 1.4vw, 23px);
+    line-height: 1.65;
+  }
+  .hero__link {
+    display: inline-flex; align-items: center;
+    min-height: 44px; margin-top: 6px;
+    font-family: var(--font-arabic); font-weight: 600; font-size: var(--text-sm);
+    color: var(--white-70);
+    transition: color 0.2s;
+  }
+  .hero__link:hover { color: var(--color-white); }
+
+  @keyframes heroFade {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  /* tablet + mobile: the 7fr column can't hold the nowrap wordmark below
+     ~900px — switch to the deliberate stacked composition */
+  @media (max-width: 900px) {
+    .hero__bottom { display: flex; flex-direction: column; align-items: stretch; gap: 18px; }
+    .hero__wordmark { font-size: clamp(54px, 12vw, 104px); line-height: 0.84; }
+    /* deliberate two-line stack — no accidental break */
+    .hero__wm-next, .hero__wm-level { display: block; }
+    .hero__wm-level { margin-left: 0; }
+    .hero__summary { justify-self: auto; max-width: none; }
+  }
+  @media (max-width: 760px) {
+    .hero__media video { object-position: 50% 30%; }
+    .hero__meta { top: 88px; }
+    .hero__wordmark { font-size: clamp(54px, 17vw, 88px); }
+  }
 
   /* ═══ trust ═══ */
   .trust__grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: var(--space-5); align-items: start; }
