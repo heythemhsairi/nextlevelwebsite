@@ -41,7 +41,7 @@ import { servicesPage, services, CTA, whatsappLink } from '../config';
               <div>
                 <h3 class="meta">شنوّة يشمل</h3>
                 <ul class="sv-item__inc">
-                  {s.includes.map((inc) => <li>{inc}</li>)}
+                  {s.includes.map((inc) => <li dir="auto">{inc}</li>)}
                 </ul>
               </div>
             </div>
@@ -62,18 +62,18 @@ import { servicesPage, services, CTA, whatsappLink } from '../config';
             <span role="columnheader" class="latin">Remote</span>
           </div>
           {[
-            ['الخطة والاستراتيجية', 'علينا', 'علينا'],
+            ['الخطة والـstrategy', 'علينا', 'علينا'],
             ['كتابة الـ Scripts', 'علينا', 'علينا'],
-            ['التصوير', 'علينا — جلسة منظمة', 'عليك — بتوجيهنا وshot lists'],
-            ['رفع الملفات', '—', 'نظام رفع بسيط'],
+            ['Tournage', 'علينا — session منظمة', 'عليك — بتوجيهنا وshot lists'],
+            ['Espace d’upload', '—', 'نظام upload بسيط'],
             ['المونتاج والصوت', 'علينا', 'علينا'],
-            ['الموافقة', 'إنت توافق', 'إنت توافق'],
-            ['النشر والجدولة', 'علينا', 'علينا'],
+            ['Validation', 'إنت توافق', 'إنت توافق'],
+            ['Publication & programmation', 'علينا', 'علينا'],
           ].map(([stage, a, b]) => (
             <div class="sv-cmp__row" role="row">
-              <span role="cell">{stage}</span>
-              <span role="cell">{a}</span>
-              <span role="cell">{b}</span>
+              <span role="cell" dir="auto">{stage}</span>
+              <span role="cell" dir="auto">{a}</span>
+              <span role="cell" dir="auto">{b}</span>
             </div>
           ))}
         </div>
@@ -88,7 +88,7 @@ import { servicesPage, services, CTA, whatsappLink } from '../config';
           {servicesPage.monthly.steps.map((st) => (
             <li class="sv-flow__step">
               <span class="sv-flow__n latin">{st.n}</span>
-              <h3>{st.t}</h3>
+              <h3 class="latin" dir="ltr">{st.t}</h3>
               <p>{st.d}</p>
             </li>
           ))}
@@ -108,11 +108,11 @@ import { servicesPage, services, CTA, whatsappLink } from '../config';
           </ol>
         </div>
         <div>
-          <h2 class="meta">{servicesPage.responsibilities.title}</h2>
+          <h2 class="meta latin">{servicesPage.responsibilities.title}</h2>
           <div class="sv-resp">
             <div>
               <h3>علينا</h3>
-              <ul>{servicesPage.responsibilities.ours.map((r) => <li>{r}</li>)}</ul>
+              <ul>{servicesPage.responsibilities.ours.map((r) => <li class="latin" dir="ltr">{r}</li>)}</ul>
             </div>
             <div>
               <h3>عليك</h3>

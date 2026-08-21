@@ -40,28 +40,28 @@ const fallbackMailto =
               </label>
             ))}
 
-            <label>المجال
+            <label>{bookPage.areaLabel}
               <select name="area" required>
                 <option value="" disabled selected>اختار</option>
                 {bookPage.areas.map((a) => <option>{a}</option>)}
               </select>
             </label>
 
-            <label>وضعك الحالي مع الـ content
+            <label>{bookPage.situationLabel}
               <select name="situation" required>
                 <option value="" disabled selected>اختار</option>
                 {bookPage.situations.map((s) => <option>{s}</option>)}
               </select>
             </label>
 
-            <label>الصيغة اللي تلمّك
+            <label>{bookPage.serviceLabel}
               <select name="service" required>
                 <option value="" disabled selected>اختار</option>
                 {bookPage.serviceOptions.map((s) => <option>{s}</option>)}
               </select>
             </label>
 
-            <label>الهدف الرئيسي
+            <label>{bookPage.objectiveLabel}
               <select name="objective" required>
                 <option value="" disabled selected>اختار</option>
                 {bookPage.objectives.map((o) => <option>{o}</option>)}

@@ -65,7 +65,7 @@ export const founders: TeamMember[] = [
     name: 'Walif Doukh',
     role: 'CEO & Co-Founder',
     initials: 'WD',
-    bio: 'يقود الرؤية، الـpositioning واتجاه Next Level كـproduction partner للـexperts والـpersonal brands.',
+    bio: 'يقود الـvision، الـpositioning واتجاه Next Level كـproduction partner للـexperts والـpersonal brands.',
     photo: null,
     kind: 'human',
   },
@@ -73,7 +73,7 @@ export const founders: TeamMember[] = [
     name: 'Heythem Hsairi',
     role: 'COO & Co-Founder',
     initials: 'HH',
-    bio: 'يقود العمليات، تنظيم الـproduction وتجربة الـclient من التخطيط حتى للتسليم.',
+    bio: 'يقود الـoperations، تنظيم الـproduction وتجربة الـclient من أول planning للتسليم.',
     photo: null,
     kind: 'human',
   },
@@ -84,7 +84,7 @@ export const executiveTeam: TeamMember[] = [
     name: 'Charlotte GPT AI',
     role: 'Chief Technology Officer — AI',
     initials: 'AI',
-    bio: 'AI system داخل Next Level تساعد في تنظيم المعرفة، تحسين الـworkflows ودعم تطوير الـClient Portal والعمليات الرقمية.',
+    bio: 'AI system داخل Next Level يساعدنا ننظّموا المعرفة، نحسّنوا الـworkflows ونطوّروا الـClient Portal.',
     photo: null,
     kind: 'ai',
   },
@@ -92,7 +92,7 @@ export const executiveTeam: TeamMember[] = [
     name: 'Adel Hadid',
     role: 'Chief Financial Officer',
     initials: 'AH',
-    bio: 'يتابع التخطيط المالي، الاستدامة وتنظيم القرارات المالية اللي تدعم نمو Next Level.',
+    bio: 'يتابع الـfinance، الـbudget والقرارات المالية اللي تخلي Next Level تكبر بطريقة صحيحة.',
     photo: null,
     kind: 'human',
   },
@@ -103,7 +103,7 @@ export const creativeTeam: TeamMember[] = [
     name: 'Mohamed Nour Wannes',
     role: 'Senior Video Editor & Motion Designer',
     initials: 'MW',
-    bio: 'مسؤول على المونتاج، الإيقاع، الـmotion والتفاصيل البصرية اللي تعطي لكل content المستوى النهائي متاعو.',
+    bio: 'مسؤول على الـmontage، rythme، motion والتفاصيل البصرية اللي تعطي لكل content المستوى النهائي متاعو.',
     photo: null,
     kind: 'human',
   },
@@ -111,7 +111,7 @@ export const creativeTeam: TeamMember[] = [
     name: 'Mohamed Amine Shili',
     role: 'Senior Videographer & Filmmaker',
     initials: 'MS',
-    bio: 'مسؤول على التصوير، الإضاءة، الـframing وتحويل الـcreative direction إلى صورة قوية قدّام الكاميرا.',
+    bio: 'مسؤول على الـtournage، الإضاءة والـframing، ويحوّل الـcreative direction لصورة قوية قدّام الكاميرا.',
     photo: null,
     kind: 'human',
   },
@@ -119,7 +119,7 @@ export const creativeTeam: TeamMember[] = [
     name: 'Mokhles B. Cheikh',
     role: 'Senior Marketer & Creative Strategist',
     initials: 'MC',
-    bio: 'يربط بين أهداف الـbrand، فهم الجمهور والأفكار الإبداعية باش كل content يكون عندو دور واضح.',
+    bio: 'يربط أهداف الـbrand بفهم الجمهور والـcreative ideas، باش كل content يكون عندو دور واضح.',
     photo: null,
     kind: 'human',
   },
@@ -157,7 +157,7 @@ export const CTA = {
 
 /* ---- 01 · HERO — pure cinematic brand introduction ----
    No copy, no CTAs: nav + tiny metadata + solid filled NEXT LEVEL wordmark.
-   The semantic message (page H1) lives in the Intro Film section below. */
+   The semantic message (page H1) lives in the Intro Video section below. */
 export const hero = {
   /* responsive sources — site.js picks one; never load both.
      Filenames carry a version suffix so a replaced hero can never be served
@@ -168,8 +168,9 @@ export const hero = {
   posterMobile: '/media/hero/hero-mobile-poster-v2.webp',
   meta: { location: 'Tunis, TN', label: 'Hero Video' },
   /* short statement, lower-right of the hero (the wordmark sits lower-left) */
-  copy: 'من الفكرة للنشر، نبنيو حضور يوازي خبرتك.',
-  copyLinkLabel: 'اكتشف كيف نخدموا ↓',
+  copy: 'نبنيو حضور يبيّن خبرتك.',
+  copyLinkLabel: 'Explore our process ↓',
+  copyLinkSmall: 'OUR WORKFLOW',
   copyLinkHref: '#intro',
 };
 
@@ -180,8 +181,8 @@ export const hero = {
 export const introVideo = {
   label: 'Intro Video',
   system: 'THE NEXT LEVEL SYSTEM',
-  titleLines: ['سمعتك سبقتك.', 'يلزمها حضور يوازيها.'],
-  sub: 'في الفيديو هذا نوريّوك كيفاش نخدموا: من الفكرة والـscripts، للتصوير، للمونتاج والنشر.',
+  titleLines: ['سمعتك ديما تسبقك.', 'حضورك لازم يكون في مستواها.'],
+  sub: 'في الفيديو هذا نوريّوك كيفاش نخدموا: من الـconcept والـscripts، للتصوير، للمونتاج والنشر.',
   play: 'شغّل الفيديو',
   soon: 'الفيديو الكامل قريبًا',
   servicesLink: 'اكتشف خدماتنا',
@@ -194,15 +195,15 @@ export const introVideo = {
 
 /* ---- 02 · TRUST (facts only — no invented numbers) ---- */
 export const trust = {
-  note: 'ما نبيعوش وعود بالأرقام. نبيعو سلسلة إنتاج كاملة، تحت مسؤولية وحدة.',
+  note: 'ما نبيعوش أرقام ووعود وهمية. نوفّرولك production كاملة، من الـconcept للنتيجة، تحت مسؤولية team واحدة.',
   capabilities: ['Strategy', 'Scripts', 'Production', 'Editing', 'Publishing'],
-  fields: ['أطباء واختصاصيين', 'محامين', 'Consultants', 'Founders'],
+  /* audience line intentionally removed from the homepage (not replaced) */
 };
 
 /* ---- 03 · SELECTED WORK ---- */
 export const workIntro = {
-  title: 'الخدمة تحكي قبل الكلام.',
-  sub: 'شوف كيفاش نحولو expertise حقيقية إلى حضور أوضح، أقوى وأكثر ثبات.',
+  title: 'خدمتنا تحكي وحدها.',
+  sub: 'شوف كيفاش نحوّلوا expertise حقيقية لحضور واضح، قوي وثابت.',
   cta: 'شوف كل الأعمال',
 };
 
@@ -240,7 +241,7 @@ export const workItems: WorkItem[] = [
     fullVideo: `${SC}/three-things-allergies.mp4`,
     aspectRatio: 'portrait',
     featured: true,
-    summary: 'فيديو من سلسلة المحتوى التعليمي لسلمى الشارني — كتابة، تصوير ومونتاج بصيغة عمودية قصيرة.',
+    summary: 'Vidéo éducative courte — script, tournage et montage en format vertical.',
   },
   {
     slug: 'focus-plus-creative-01',
@@ -254,7 +255,7 @@ export const workItems: WorkItem[] = [
     fullVideo: `${FP}/focus-plus-creative-01.mp4`,
     aspectRatio: 'portrait',
     featured: true,
-    summary: 'Creative إعلاني لمنتج Focus Plus — إنتاج موجه للمنصات الاجتماعية.',
+    summary: 'Vidéo publicitaire pour Focus Plus — pensée pour les réseaux sociaux.',
   },
   {
     slug: 'salma-why-you-wake-up-tired',
@@ -268,7 +269,7 @@ export const workItems: WorkItem[] = [
     fullVideo: `${SC}/why-you-wake-up-tired.mp4`,
     aspectRatio: 'portrait',
     featured: true,
-    summary: 'فيديو من سلسلة المحتوى التعليمي لسلمى الشارني — معلومة وحدة، إيقاع واضح.',
+    summary: 'Vidéo éducative courte — une idée claire et un rythme direct.',
   },
   {
     slug: 'focus-plus-creative-02',
@@ -282,7 +283,7 @@ export const workItems: WorkItem[] = [
     fullVideo: `${FP}/focus-plus-creative-02.mp4`,
     aspectRatio: 'portrait',
     featured: true,
-    summary: 'Creative إعلاني لمنتج Focus Plus — نسخة ثانية بزاوية مختلفة.',
+    summary: 'Deuxième vidéo de la campagne, avec un angle différent.',
   },
   {
     slug: 'salma-bac-exams',
@@ -296,7 +297,7 @@ export const workItems: WorkItem[] = [
     fullVideo: `${SC}/bac-exams.mp4`,
     aspectRatio: 'portrait',
     featured: true,
-    summary: 'فيديو من سلسلة المحتوى التعليمي لسلمى الشارني — موجه للتلامذة قبل الباكالوريا.',
+    summary: 'Vidéo pensée pour les élèves avant le bac.',
   },
   {
     slug: 'focus-plus-creative-03',
@@ -310,7 +311,7 @@ export const workItems: WorkItem[] = [
     fullVideo: `${FP}/focus-plus-creative-03.mp4`,
     aspectRatio: 'portrait',
     featured: true,
-    summary: 'Creative إعلاني لمنتج Focus Plus — نسخة ثالثة من نفس الحملة.',
+    summary: 'Troisième variation de la même campagne.',
   },
   {
     slug: 'salma-michael-jackson',
@@ -324,7 +325,7 @@ export const workItems: WorkItem[] = [
     fullVideo: `${SC}/michael-jackson.mp4`,
     aspectRatio: 'portrait',
     featured: true,
-    summary: 'فيديو من سلسلة المحتوى التعليمي لسلمى الشارني — سرد قصصي بمعالجة بصرية هادئة.',
+    summary: 'Storytelling court avec un traitement visuel sobre.',
   },
 ];
 
@@ -334,45 +335,45 @@ export const workCollections = [
     client: 'Salma Cherni',
     category: 'Educational Content',
     categoryAr: 'محتوى تعليمي',
-    intro: 'سلسلة فيديوهات تعليمية قصيرة بصيغة عمودية — من الكتابة للنشر.',
+    intro: 'Série de vidéos éducatives en format vertical — du script à la publication.',
   },
   {
     key: 'focus-plus',
     client: 'Focus Plus',
     category: 'E-commerce Creative',
     categoryAr: 'إعلان E-commerce',
-    intro: 'مجموعة creatives إعلانية لمتجر إلكتروني — مصممة للمنصات الاجتماعية.',
+    intro: 'Série de vidéos publicitaires e-commerce, pensée pour les réseaux sociaux.',
   },
 ];
 
 /* ---- 04 · TWO SERVICE PATHS ---- */
 export const servicesIntro = {
-  title: 'زوز طرق. نفس الـ standard.',
-  sub: 'اختار كيفاش تحب تخدم معانا. في الحالتين، الخطة والـquality والـfollow-up يبقاو تحت مسؤولية team واحدة.',
+  title: 'زوز طرق. نفس الـstandard.',
+  sub: 'اختار كيفاش تحب تخدم معانا. في الزوز، الـplanning والـquality والـfollow‑up مسؤوليتنا.',
 };
 
 export const services = [
   {
     slug: 'full-stack',
     index: '01',
-    name: 'Full-Stack Production',
+    name: 'Full‑Stack Production',
     nameAr: 'إنتاج كامل',
-    copy: 'من أول فكرة حتى للنشر، team واحدة تتكفّل بالـcontent system كاملة. إنت تجيب الخبرة، واحنا نحوّلوها إلى حضور ثابت ومحسوب.',
+    copy: 'من الـconcept للنشر، team واحدة تتكفّل بكل شي: strategy، scripts، tournage، montage وpublication. إنت تجيب الـexpertise، واحنا نحوّلوها لحضور ثابت.',
     process: ['Plan', 'Write', 'Shoot', 'Edit', 'Approve', 'Publish'],
     includes: [
-      'فهم الـ brand والمحتوى',
-      'تخطيط شهري',
-      'استراتيجية محتوى',
-      'تطوير المواضيع',
-      'كتابة Scripts',
-      'إخراج إبداعي',
-      'تصوير',
-      'مونتاج',
-      'Motion وصوت',
-      'مراجعة وموافقة',
-      'نشر وجدولة',
+      'Brand & content brief',
+      'Planning mensuel',
+      'Stratégie de contenu',
+      'Développement des sujets',
+      'Écriture des scripts',
+      'Direction créative',
+      'Tournage',
+      'Montage',
+      'Motion design & sound',
+      'Révision & validation',
+      'Publication & programmation',
     ],
-    cta: 'اكتشف الـ Full-Stack',
+    cta: 'اكتشف الـ Full‑Stack',
     forWho: 'للّي يحب يسلّم الملف الكامل ويركّز على خدمتو.',
   },
   {
@@ -380,21 +381,21 @@ export const services = [
     index: '02',
     name: 'Remote Content System',
     nameAr: 'نظام عن بُعد',
-    copy: 'عندك القدرة تصوّر من عندك؟ نعطيوك الخطة، الـscripts والتوجيه، وإنت تبعث الـfootage. احنا نتكفّلوا بالمونتاج، التنظيم والنشر.',
+    copy: 'إنت تصوّر من عندك. إحنا نعطيوك الـstrategy، scripts وshot list، وبعد نتكفّلوا بالmontage، validation وpublication.',
     process: ['Plan', 'Write', 'Guide', 'Upload', 'Edit', 'Approve', 'Publish'],
     includes: [
-      'استراتيجية',
-      'تخطيط شهري',
-      'تطوير المواضيع',
-      'كتابة Scripts',
+      'Stratégie',
+      'Planning mensuel',
+      'Développement des sujets',
+      'Écriture des scripts',
       'Shot lists',
-      'توجيه تصوير عن بُعد',
-      'إنت تصوّر وتبعث الـ footage',
-      'نظام رفع ملفات',
-      'مونتاج',
-      'Motion وصوت',
-      'مراجعة وموافقة',
-      'نشر وجدولة',
+      'Direction de tournage à distance',
+      'إنت تصوّر وتبعث الـrushes',
+      'Espace d’upload',
+      'Montage',
+      'Motion design & sound',
+      'Révision & validation',
+      'Publication & programmation',
     ],
     cta: 'اكتشف الـ Remote System',
     forWho: 'للّي ينجم يصوّر وحدو ويحب نفس مستوى التنظيم والمونتاج.',
@@ -403,30 +404,42 @@ export const services = [
 
 /* ---- 05 · CLIENT PORTAL DEMO ---- */
 export const portalIntro = {
-  title: 'كل شهر واضح قبل ما يبدأ.',
-  sub: 'الخطة، الـscripts، المواعيد، الـfeedback وحالة كل content—الكل في بلاصة وحدة.',
+  title: 'كل شهر يكون واضح قبل ما يبدأ.',
+  sub: 'الـplanning، scripts، dates، feedback وstatut متاع كل content، الكل في بلاصة وحدة.',
   demoBadge: 'Demo — محتوى تجريبي',
   productName: 'Next Level Client Portal',
   soon: 'Coming soon',
-  soonLine: 'قريبًا، كل client باش يلقى الـcontent system متاعو واضحة، منظمة وسهلة للـapproval.',
+  soonLine: 'قريبًا، كل client باش يلقى الـcontent system متاعو منظّم، واضح وساهل للvalidation.',
 };
 
 export type PostStatus =
   | 'idea' | 'script' | 'shoot' | 'editing' | 'approval' | 'scheduled' | 'published';
 
+/* Short labels for calendar cells (small space, French/production terms per
+   the language system). Full context always lives in the detail dialog. */
 export const statusLabels: Record<PostStatus, string> = {
-  idea: 'فكرة',
-  script: 'Script جاهز',
-  shoot: 'جاهز للتصوير',
-  editing: 'مونتاج',
-  approval: 'في انتظار الموافقة',
-  scheduled: 'مجدول',
-  published: 'منشور',
+  idea: 'Idée',
+  script: 'Script prêt',
+  shoot: 'Prêt à tourner',
+  editing: 'En montage',
+  approval: 'À valider',
+  scheduled: 'Programmé',
+  published: 'Publié',
+};
+
+/* Field labels in the post-detail dialog */
+export const postFieldLabels = {
+  platform: 'Plateforme',
+  format: 'Format',
+  date: 'Date',
+  status: 'Statut',
+  stage: 'Étape actuelle',
 };
 
 export interface DemoPost {
   day: number;            // day of the demo month
-  title: string;
+  title: string;          // full title — used in the detail modal + accessible labels
+  shortTitle: string;     // short title for small calendar cells (grid + agenda)
   platform: 'Instagram' | 'TikTok' | 'YouTube' | 'LinkedIn';
   format: 'Reel' | 'Short' | 'Carousel' | 'Long-form';
   status: PostStatus;
@@ -441,29 +454,29 @@ export const demoMonth = {
   daysInMonth: 30,
   startOffset: 5, // demo month starts on Saturday (grid offset)
   posts: [
-    { day: 3,  title: 'غلطات شائعة في العناية بالبشرة', platform: 'Instagram', format: 'Reel',      status: 'published', deadline: '03', stage: 'تنشر وتوثّقت.' },
-    { day: 6,  title: 'شنوّة يصير في أول موعد؟',          platform: 'TikTok',    format: 'Short',     status: 'published', deadline: '06', stage: 'تنشر وتوثّقت.' },
-    { day: 10, title: 'حماية الشمس: سؤال وجواب',          platform: 'Instagram', format: 'Carousel',  status: 'scheduled', deadline: '10', stage: 'مجدول للنشر آليًا.' },
-    { day: 13, title: 'قصة حالة (بموافقة المريض)',        platform: 'YouTube',   format: 'Long-form', status: 'approval',  deadline: '12', stage: 'الفيديو عند الـ client للمراجعة.' },
-    { day: 17, title: 'روتين الشتاء للبشرة الجافة',       platform: 'Instagram', format: 'Reel',      status: 'editing',   deadline: '15', stage: 'في المونتاج — نسخة أولى قريبة.' },
-    { day: 20, title: 'أسئلة متكررة من العيادة',           platform: 'TikTok',    format: 'Short',     status: 'shoot',     deadline: '18', stage: 'Script موافق عليه — موعد التصوير محدد.' },
-    { day: 24, title: 'التقشير الكيميائي: الحقيقة',        platform: 'Instagram', format: 'Reel',      status: 'script',    deadline: '21', stage: 'Script جاهز — في انتظار الموافقة.' },
-    { day: 27, title: 'جولة في العيادة',                   platform: 'YouTube',   format: 'Long-form', status: 'idea',      deadline: '25', stage: 'فكرة مقترحة للشهر الجاي.' },
+    { day: 3,  title: '3 غلطات شائعة في العناية بالبشرة',        shortTitle: '3 غلطات في skincare',        platform: 'Instagram', format: 'Reel',      status: 'published', deadline: '03', stage: 'نشرت وتوثّقت في الـarchive.' },
+    { day: 6,  title: 'شنوّة يصير في أول rendez‑vous؟',           shortTitle: 'أول rendez‑vous: شنوّة يصير؟', platform: 'TikTok',    format: 'Short',     status: 'published', deadline: '06', stage: 'نشرت وتوثّقت في الـarchive.' },
+    { day: 10, title: 'Protection solaire: سؤال وجواب',           shortTitle: 'Protection solaire: Q&A',    platform: 'Instagram', format: 'Carousel',  status: 'scheduled', deadline: '10', stage: 'Programmé للنشر آليًا.' },
+    { day: 13, title: 'Cas patient (بموافقة المريض)',             shortTitle: 'Cas patient — avec accord',  platform: 'YouTube',   format: 'Long-form', status: 'approval',  deadline: '12', stage: 'الفيديو عند الـclient للvalidation.' },
+    { day: 17, title: 'Routine الشتاء للبشرة الجافة',             shortTitle: 'Routine hiver: peau sèche',  platform: 'Instagram', format: 'Reel',      status: 'editing',   deadline: '15', stage: 'En montage — première version قريبة.' },
+    { day: 20, title: 'FAQ من العيادة',                            shortTitle: 'FAQ de la clinique',         platform: 'TikTok',    format: 'Short',     status: 'shoot',     deadline: '18', stage: 'Script validé — date التصوير محددة.' },
+    { day: 24, title: 'Peeling chimique: الحقيقة',                shortTitle: 'Peeling chimique: الحقيقة',  platform: 'Instagram', format: 'Reel',      status: 'script',    deadline: '21', stage: 'Script prêt — في انتظار الـvalidation.' },
+    { day: 27, title: 'Tour de la clinique',                      shortTitle: 'Tour de la clinique',        platform: 'YouTube',   format: 'Long-form', status: 'idea',      deadline: '25', stage: 'Idée مقترحة للشهر الجاي.' },
   ] as DemoPost[],
 };
 
 /* ---- 06 · FOUNDERS TEASER (homepage shows the two founders only) ---- */
 export const foundersIntro = {
   title: 'ورا كل content قوي، فمّا team تعرف شنوّة تعمل.',
-  sub: 'ورا كل content قوي، فمّا team كاملة تخطط، تصوّر وتنتج.',
+  sub: 'ورا كل content قوي، فمّا team تخطّط، تصوّر وتنتج.',
   cta: 'تعرّف على الـ Team',
   ctaHref: '/studio#team',
 };
 
 /* ---- 07 · FINAL CTA ---- */
 export const finalCta = {
-  title: 'مستعد تخلي حضورك يعكس قيمتك؟',
-  sub: 'في مكالمة 15 دقيقة، نفهمو وين إنت اليوم ونشوفو شنوّة الـsystem المناسبة ليك.',
+  title: 'مستعد تخلي حضورك يبيّن قيمتك؟',
+  sub: 'في مكالمة 15 دقيقة، نفهمو وضعك اليوم ونشوفو أنهي system يناسبك.',
 };
 
 /* =========================================================================
@@ -473,45 +486,45 @@ export const finalCta = {
 /* ---- /work ---- */
 export const workPage = {
   title: 'أعمال تخلّي الخبرة تبان.',
-  sub: 'كل مشروع يبدأ من نفس السؤال: كيفاش نخلّيو الخبرة الحقيقية محسوسة من أول ثانية؟',
+  sub: 'كل projet يبدأ بسؤال واحد: كيفاش نخلّيو الـexpertise الحقيقية تبان من أول ثانية؟',
 };
 
 /* ---- /services ---- */
 export const servicesPage = {
-  title: 'من الفكرة للنشر. System تخدم معاك كل شهر.',
-  sub: 'زوز صيغ، نفس المسؤولية: خطة واضحة، إنتاج محسوب، ومتابعة ما تقصش.',
+  title: 'من الفكرة للنشر. System يخدم معاك كل شهر.',
+  sub: 'زوز formules، ونفس المسؤولية: planning واضح، production محسوبة وsuivi ما يوقفش.',
   monthly: {
     title: 'كيفاش يمشي الشهر',
     steps: [
-      { n: '01', t: 'تخطيط', d: 'نحددو مواضيع الشهر والـ formats والمواعيد — وتوافق عليها قبل ما نبداو.' },
-      { n: '02', t: 'كتابة', d: 'Scripts جاهزة للمراجعة، بصوتك ونبرتك، موش قوالب.' },
-      { n: '03', t: 'إنتاج', d: 'تصوير منظم في Full-Stack، أو توجيه ورفع ملفات في Remote.' },
-      { n: '04', t: 'مونتاج', d: 'قصّ، إيقاع، motion وصوت — بنفس الـ standard في الصيغتين.' },
-      { n: '05', t: 'موافقة', d: 'ما يتنشر شيء قبل موافقتك. الملاحظات تتسجل وتتنفذ.' },
-      { n: '06', t: 'نشر', d: 'جدولة ونشر وتوثيق — وتقرير بسيط في آخر الشهر.' },
+      { n: '01', t: 'Planning', d: 'نحدّدوا sujets الشهر، formats والdates. إنت توافق قبل ما نبداو.' },
+      { n: '02', t: 'Scripts', d: 'Scripts جاهزين للreview، بصوتك ونبرتك، موش templates.' },
+      { n: '03', t: 'Production', d: 'Tournage منظّم في Full‑Stack، أو remote direction وupload في Remote.' },
+      { n: '04', t: 'Montage', d: 'Cut، rythme، motion وsound — بنفس الـstandard في الزوز.' },
+      { n: '05', t: 'Validation', d: 'ما ننشرو حتى شي قبل الـvalidation متاعك. الـfeedback يتسجّل ويتطبّق.' },
+      { n: '06', t: 'Publication', d: 'Programmation، publication وarchivage، مع bilan بسيط آخر الشهر.' },
     ],
   },
   onboarding: {
     title: 'أول أسبوعين',
     steps: [
-      'مكالمة تعريفية: المجال، الجمهور، والهدف.',
-      'جلسة نبرة وأسلوب: كيفاش تحب تبان وكيفاش ما تحبش.',
-      'أول خطة شهرية للموافقة.',
-      'أول جلسة تصوير أو أول دفعة footage.',
+      'Call découverte: المجال، الجمهور والهدف.',
+      'Session tone of voice: كيفاش تحب تبان وكيفاش ما تحبّش.',
+      'أول planning mensuel للvalidation.',
+      'أول session de tournage أو أول batch de rushes.',
     ],
   },
   responsibilities: {
-    title: 'شكون مسؤول على شنوّة',
-    ours: ['الخطة والمواعيد', 'الكتابة والمراجعة', 'الإنتاج والمونتاج', 'الجدولة والنشر', 'التذكير والمتابعة'],
-    yours: ['الحضور وقت التصوير (أو إرسال الـ footage)', 'الموافقة على الخطة والـ scripts', 'ملاحظات في وقتها'],
+    title: 'Qui fait quoi ?',
+    ours: ['Planning & dates', 'Scripts & révisions', 'Production & montage', 'Programmation & publication', 'Follow-up'],
+    yours: ['الحضور وقت الـtournage أو إرسال الـrushes', 'Validation متاع الـplanning والـscripts', 'Feedback في وقتو'],
   },
   faqs: [
-    { q: 'قدّاش لازمني نكون متفرّغ؟', a: 'في Full-Stack: جلسة تصوير وحدة منظمة في الشهر تقريبًا، وموافقات قصيرة. في Remote: وقت التصوير متاعك، والباقي علينا.' },
-    { q: 'شكون يكتب الـ scripts؟', a: 'احنا. من مواضيعك وخبرتك، وبصوتك. إنت تراجع وتوافق قبل أي تصوير.' },
-    { q: 'وين تنشرو؟', a: 'على الحسابات متاعك. النشر والجدولة جزء من الخدمة في الصيغتين.' },
-    { q: 'نجم نبدل من صيغة لصيغة؟', a: 'نعم. برشة clients يبداو Remote وبعد يمشيو لـ Full-Stack. التبديل يتعمل من شهر لشهر.' },
+    { q: 'قدّاش لازمني نكون متفرّغ؟', a: 'في Full‑Stack: session تصوير وحدة منظمة في الشهر تقريبًا، وvalidations قصيرة. في Remote: وقت التصوير متاعك، والباقي علينا.' },
+    { q: 'شكون يكتب الـ scripts؟', a: 'احنا. من مواضيعك وخبرتك، وبصوتك. إنت تراجع وتوافق قبل أي tournage.' },
+    { q: 'وين تنشرو؟', a: 'على الحسابات متاعك. الـpublication والـprogrammation جزء من الخدمة في الصيغتين.' },
+    { q: 'نجم نبدل من صيغة لصيغة؟', a: 'نعم. برشة clients يبداو Remote وبعد يمشيو لـ Full‑Stack. التبديل يتعمل من شهر لشهر.' },
     { q: 'الأسعار؟', a: 'حسب الحجم والإيقاع. في مكالمة 15 دقيقة نعطيوك رقم واضح على قياس وضعيتك.' },
-    { q: 'كيفاش نبداو؟', a: 'احجز مكالمة. نفهمو وضعك، وإذا كان fit نبعثولك خطة أول شهر.' },
+    { q: 'كيفاش نبداو؟', a: 'احجز مكالمة. نفهمو وضعك، وإذا كان fit نبعثولك planning أول شهر.' },
   ],
 };
 
@@ -519,15 +532,15 @@ export const servicesPage = {
 export const studioPage = {
   title: 'ورا كل content قوي، فمّا production تعرف شنوّة تعمل.',
   story: [
-    'Next Level بدات من ملاحظة بسيطة: في تونس، برشة خبرات حقيقية — أطباء، محامين، consultants — تظهر أونلاين أضعف من قيمتها الفعلية.',
-    'المشكلة ما هيش الكاميرا. المشكلة هي السلسلة: فكرة هنا، مصور غادي، editor آخر، وما فمّاش حد مسؤول على النتيجة الكاملة.',
-    'فبنينا studio يملك السلسلة كاملة — من الفهم للنشر — تحت مسؤولية وحدة، وبمستوى ثابت كل شهر.',
+    'Next Level بدات من ملاحظة بسيطة: في تونس، فمّا برشة ناس عندهم expertise حقيقية، أما حضورهم online ما يبيّنش قيمتهم.',
+    'المشكلة موش في الكاميرا. المشكلة في الـworkflow: فكرة عند شخص، tournage عند شخص آخر، montage عند واحد ثالث، وما فمّاش شكون مسؤول على النتيجة الكاملة.',
+    'على خاطر هكا، بنينا studio يتحمّل الـworkflow كامل، من أول brief للنشر، وبنفس الـquality كل شهر.',
   ],
   principles: [
     { t: 'المسؤولية وحدة', d: 'ما فمّاش «هذا موش خدمتي». من الفكرة للنشر، النتيجة علينا.' },
-    { t: 'الثبات قبل الضجة', d: 'حضور محترم كل شهر أهم من فيديو viral مرة في العام.' },
-    { t: 'صوتك إنت', d: 'ما نلبسوكش شخصية. نخرجو أحسن نسخة من أسلوبك الحقيقي.' },
-    { t: 'الاحترام للوقت', d: 'جلسات منظمة، مواعيد محترمة، وما نطلبو حضورك كان وين يلزم.' },
+    { t: 'الاستمرارية قبل الضجة', d: 'حضور قوي كل شهر خير من فيديو viral مرّة في العام.' },
+    { t: 'صوتك إنت', d: 'ما نبدلوش شخصيتك. نطلّعوا أحسن نسخة من أسلوبك الحقيقي.' },
+    { t: 'وقتك مهم', d: 'Sessions منظمة، مواعيد محترمة، وما نطلبوش حضورك كان وقت يلزم.' },
   ],
   /* the generic "Capabilities" list was replaced by the real named team —
      see founders / executiveTeam / creativeTeam above */
@@ -535,27 +548,31 @@ export const studioPage = {
 
 /* ---- /portal ---- */
 export const portalPage = {
-  title: 'الـcontent system متاعك، واضحة في بلاصة وحدة.',
-  sub: 'هذا شكل الأداة اللي نحضرو فيها. المعروض هنا demo بمحتوى تجريبي — الأداة الفعلية قادمة.',
+  title: 'الـcontent system متاعك، الكل في بلاصة وحدة.',
+  sub: 'هذا preview للأداة اللي قاعدين نطوّروا فيها. اللي تشوفو demo، والـClient Portal الرسمي قريب.',
   benefits: [
-    { t: 'رؤية كاملة', d: 'الشهر الجاي معروض قدامك قبل ما يبدأ: المواضيع، المواعيد، والحالة.' },
-    { t: 'موافقة أسهل', d: 'Scripts وفيديوهات تتراجع وتتوافق من نفس البلاصة، بلا سلاسل إيمايلات.' },
-    { t: 'حالة واضحة', d: 'كل content عندها مرحلة معروفة: من الفكرة حتى للنشر.' },
-    { t: 'أرشيف منظم', d: 'كل اللي تنشر يتوثق — تلقاه وقت ما تحتاجو.' },
+    { t: 'Vue d’ensemble', d: 'الشهر الجاي تشوفو كامل قبل ما يبدأ: sujets، dates وstatut.' },
+    { t: 'Validation أسهل', d: 'Scripts وفيديوهات تراجعهم وتعمل validation من نفس البلاصة، بلا chaînes d’e-mails.' },
+    { t: 'Statut واضح', d: 'كل content عندو étape واضحة: من الفكرة للنشر.' },
+    { t: 'Archive منظّمة', d: 'كل content منشور يتسجّل في الـarchive وتلقاه وقت تحتاجو.' },
   ],
   cta: 'احكي معانا على شراكة إنتاج',
 };
 
 /* ---- /book ---- */
 export const bookPage = {
-  title: 'مكالمة قصيرة. رؤية أوضح.',
-  sub: 'في 15 دقيقة، نفهمو مجالك، حضورك الحالي وشنوّة تحب تبدّل. إذا كان ثمة fit، نحدّدوا الخطوة اللي بعد.',
+  title: '15 دقيقة. خطوة أوضح.',
+  sub: 'في 15 دقيقة، نفهمو مجالك، حضورك اليوم وشنوّة تحب تبدّل. إذا كان فمّا fit، نتفقو على الخطوة الجاية.',
   fields: [
     { name: 'name', label: 'الاسم', placeholder: 'مثال: د. أحمد بن صالح', type: 'text', required: true },
     { name: 'phone', label: 'نومرو WhatsApp', placeholder: '216 XX XXX XXX', type: 'tel', required: true },
   ],
+  areaLabel: 'المجال',
+  situationLabel: 'وضعك الحالي مع الـcontent',
+  serviceLabel: 'الصيغة اللي تناسبك',
+  objectiveLabel: 'هدفك الرئيسي',
   areas: ['طبيب / اختصاصي', 'محامي', 'Consultant / Coach', 'Founder / Personal brand', 'مجال آخر'],
   situations: ['ما عنديش حضور منتظم', 'ننشر بلا خطة واضحة', 'عندي فريق/شخص أما النتيجة ما ترضينيش', 'عندي حضور باهي ونحب نطوّرو'],
-  serviceOptions: ['Full-Stack Production', 'Remote Content System', 'موش متأكد — نحب نفهم الفرق'],
-  objectives: ['نبني ثقة قبل أول موعد/اجتماع', 'نثبّت حضور شهري منتظم', 'نحسّن مستوى الصورة والإنتاج', 'هدف آخر'],
+  serviceOptions: ['Full‑Stack Production', 'Remote Content System', 'موش متأكد — نحب نفهم الفرق'],
+  objectives: ['نبني ثقة قبل أول موعد/اجتماع', 'نثبّت حضور شهري منتظم', 'نحسّن الصورة والـproduction', 'هدف آخر'],
 };

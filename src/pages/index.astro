@@ -74,7 +74,10 @@ const introVideoReady = existsSync(new URL(`../../public${introVideo.video}`, im
         <div class="hero__summary">
           <i class="hero__rule" aria-hidden="true"></i>
           <p>{hero.copy}</p>
-          <a href={hero.copyLinkHref} class="hero__link">{hero.copyLinkLabel}</a>
+          <a href={hero.copyLinkHref} class="hero__link">
+            <span class="hero__link-small latin" dir="ltr">{hero.copyLinkSmall}</span>
+            <span class="latin" dir="ltr">{hero.copyLinkLabel}</span>
+          </a>
         </div>
       </div>
     </section>
@@ -89,13 +92,6 @@ const introVideoReady = existsSync(new URL(`../../public${introVideo.video}`, im
               <li class="latin"><span class="trust__n latin">0{i + 1}</span>{c}</li>
             ))}
           </ul>
-          <p class="trust__fields">
-            {trust.fields.map((f, i) => (
-              <>
-                <span>{f}</span>{i < trust.fields.length - 1 && <i aria-hidden="true">·</i>}
-              </>
-            ))}
-          </p>
         </div>
       </div>
     </section>
@@ -357,13 +353,17 @@ const introVideoReady = existsSync(new URL(`../../public${introVideo.video}`, im
     line-height: 1.65;
   }
   .hero__link {
-    display: inline-flex; align-items: center;
-    min-height: 44px; margin-top: 6px;
-    font-family: var(--font-arabic); font-weight: 600; font-size: var(--text-sm);
+    display: inline-flex; flex-direction: column; align-items: flex-start; gap: 4px;
+    min-height: 44px; margin-top: 6px; justify-content: center;
     color: var(--white-70);
     transition: color 0.2s;
   }
   .hero__link:hover { color: var(--color-white); }
+  .hero__link-small {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+    opacity: 0.65;
+  }
+  .hero__link > span:last-child { font-weight: 600; font-size: var(--text-sm); }
 
   @keyframes heroFade {
     from { opacity: 0; transform: translateY(14px); }
@@ -396,8 +396,6 @@ const introVideoReady = existsSync(new URL(`../../public${introVideo.video}`, im
     padding: 16px 26px 16px 0; margin-inline-end: 26px;
   }
   .trust__n { font-size: var(--text-xs); color: var(--color-red); font-weight: 600; }
-  .trust__fields { grid-column: 2; color: var(--black-64); font-size: var(--text-sm); display: flex; gap: 10px; flex-wrap: wrap; }
-  .trust__fields i { font-style: normal; color: var(--color-red); }
 
   /* ═══ intro film — one editorial grid composition ═══ */
   .ifilm {
@@ -628,7 +626,6 @@ const introVideoReady = existsSync(new URL(`../../public${introVideo.video}`, im
   }
   @media (max-width: 760px) {
     .trust__grid { grid-template-columns: 1fr; gap: var(--space-4); }
-    .trust__fields { grid-column: auto; }
     .hero__meta { top: 88px; }
     /* deliberate two-line wordmark — one line would shrink below readability */
     .hero__wordmark { font-size: clamp(52px, 18vw, 92px); line-height: 0.82; }

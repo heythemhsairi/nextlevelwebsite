@@ -2,7 +2,7 @@
 /* Portal calendar demo — dark glass, fictional content, clearly labelled demo.
    Clicking a post opens the shared #postDialog (controller in site.js).
    `expanded` = /portal variant (taller cells, activity rail visible on desktop). */
-import { demoMonth, statusLabels, portalIntro, type DemoPost } from '../config';
+import { demoMonth, statusLabels, postFieldLabels, portalIntro, type DemoPost } from '../config';
 interface Props { expanded?: boolean; }
 const { expanded = false } = Astro.props;
 
@@ -53,7 +53,7 @@ const progress = Math.round((done / demoMonth.posts.length) * 100);
           >
             <span class="cal__num latin">{c.day}</span>
             <span class="cal__dot" data-status={c.post.status} aria-hidden="true"></span>
-            <span class="cal__ptitle">{c.post.title}</span>
+            <span class="cal__ptitle">{c.post.shortTitle}</span>
             <span class="cal__pstatus" data-status={c.post.status}>{statusLabels[c.post.status]}</span>
           </button>
         ) : (
@@ -83,7 +83,7 @@ const progress = Math.round((done / demoMonth.posts.length) * 100);
         >
           <span class="cal__aday latin">{String(p.day).padStart(2, '0')}</span>
           <span class="cal__abody">
-            <span class="cal__atitle">{p.title}</span>
+            <span class="cal__atitle">{p.shortTitle}</span>
             <span class="cal__astatus"><i class="cal__dot" data-status={p.status} aria-hidden="true"></i>{statusLabels[p.status]}</span>
           </span>
         </button>
@@ -106,12 +106,12 @@ const progress = Math.round((done / demoMonth.posts.length) * 100);
   <p class="pd__demo latin">{portalIntro.demoBadge}</p>
   <h3 class="pd__title" id="pdTitle" data-f="title"></h3>
   <dl class="pd__meta">
-    <div><dt>المنصة</dt><dd class="latin" data-f="platform"></dd></div>
-    <div><dt>الصيغة</dt><dd class="latin" data-f="format"></dd></div>
-    <div><dt>الموعد</dt><dd data-f="deadline"></dd></div>
-    <div><dt>الحالة</dt><dd><span class="pd__status" data-f="status"></span></dd></div>
+    <div><dt>{postFieldLabels.platform}</dt><dd class="latin" data-f="platform"></dd></div>
+    <div><dt>{postFieldLabels.format}</dt><dd class="latin" data-f="format"></dd></div>
+    <div><dt>{postFieldLabels.date}</dt><dd data-f="deadline"></dd></div>
+    <div><dt>{postFieldLabels.status}</dt><dd><span class="pd__status" data-f="status"></span></dd></div>
   </dl>
-  <p class="pd__stage-label">المرحلة الحالية</p>
+  <p class="pd__stage-label">{postFieldLabels.stage}</p>
   <p class="pd__stage" data-f="stage"></p>
 </dialog>
 
@@ -142,7 +142,7 @@ const progress = Math.round((done / demoMonth.posts.length) * 100);
   }
   .cal__days { margin-top: 4px; }
   .cal__cell {
-    min-height: 58px; border-radius: var(--radius-small);
+    min-height: 58px; min-width: 0; border-radius: var(--radius-small);
     border: 1px solid var(--white-05); background: rgba(10, 8, 8, 0.3);
     padding: 6px; display: flex; flex-direction: column; gap: 3px; align-items: flex-start;
     font: inherit; color: inherit; text-align: start; position: relative;
