@@ -162,10 +162,10 @@ export const hero = {
   /* responsive sources — site.js picks one; never load both.
      Filenames carry a version suffix so a replaced hero can never be served
      from a browser or CDN cache: bump -v2 -> -v3 when the media changes. */
-  videoDesktop: '/media/hero/hero-desktop-v2.mp4',
-  videoMobile: '/media/hero/hero-mobile-v2.mp4',
-  posterDesktop: '/media/hero/hero-desktop-poster-v2.webp',
-  posterMobile: '/media/hero/hero-mobile-poster-v2.webp',
+  videoDesktop: '/media/hero/hero-desktop-v3.mp4',
+  videoMobile: '/media/hero/hero-mobile-v3.mp4',
+  posterDesktop: '/media/hero/hero-desktop-poster-v3.webp',
+  posterMobile: '/media/hero/hero-mobile-poster-v3.webp',
   meta: { location: 'Tunis, TN', label: 'Hero Video' },
   /* short statement, lower-right of the hero (the wordmark sits lower-left) */
   copy: 'نبنيو حضور يبيّن خبرتك.',
